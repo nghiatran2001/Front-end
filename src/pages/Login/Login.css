@@ -1,48 +1,14 @@
 .loginPage {
-  margin: 30px auto 0;
+  margin: 50px auto 0;
   margin-bottom: 100px;
   display: flex;
   justify-content: center;
 }
 .loginPage_right {
-  width: 500px;
-  padding: 15px;
-  .formControl {
-    display: flex;
-    margin-bottom: 20px;
-    label {
-      width: 150px;
-      position: relative;
-      top: 0;
-      left: 0;
-      line-height: 30px;
-    }
-    input {
-      width: 255px;
-    }
-  }
+  width: 1000px;
+  padding: 115px;
 }
 
-.loginPage_left {
-  width: 500px;
-
-  padding: 15px;
-  .formControl {
-    display: flex;
-    margin-bottom: 20px;
-    label {
-      width: 150px;
-      position: relative;
-      top: 0;
-      left: 0;
-      line-height: 30px;
-    }
-    input {
-      width: 255px;
-    }
-  }
-}
-.form_left,
 .form_right {
   background-color: #000000;
   opacity: 0.8;
@@ -50,7 +16,20 @@
   padding: 20px 30px;
   border-radius: 20px;
 }
-
+.form_right .formControl {
+  display: flex;
+  margin-bottom: 20px;
+  label {
+    width: 150px;
+    position: relative;
+    top: 0;
+    left: 0;
+    line-height: 30px;
+  }
+  input {
+    width: 255px;
+  }
+}
 .btn_log {
   background: rgb(0, 38, 255);
   color: rgb(255, 255, 255);

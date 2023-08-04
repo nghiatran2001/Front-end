@@ -16,9 +16,27 @@ import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
-
-const pages = ["Trang chủ", "Theo dõi đơn hàng", "Quản lý"];
-const settings = ["Thông tin", "Đăng nhập"];
+import { Link, NavLink } from "react-router-dom";
+import "./Header.css";
+const pages = [
+  <Link to="/" className="header-link">
+    Trang chủ
+  </Link>,
+  <Link to="/order" className="header-link">
+    Theo dõi đơn hàng
+  </Link>,
+  <Link to="/admin" className="header-link">
+    Quản lý
+  </Link>,
+];
+const settings = [
+  <Link to="/user" className="header-link">
+    Thông tin cá nhân
+  </Link>,
+  <Link to="/login" className="header-link">
+    Đăng nhập
+  </Link>,
+];
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -110,7 +128,12 @@ export default function Header() {
                 inputProps={{ "aria-label": "search" }}
               />
             </Search>
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: "flex", md: "none" },
+              }}
+            >
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -174,8 +197,8 @@ export default function Header() {
                     my: 2,
                     color: "white",
                     display: "block",
-                    paddingLeft: 5,
-                    paddingRight: 5,
+                    paddingLeft: 4,
+                    paddingRight: 4,
                   }}
                 >
                   {page}
@@ -185,34 +208,18 @@ export default function Header() {
 
             <Box sx={{ flexGrow: 0, paddingRight: 5 }}>
               <Tooltip title="Open settings">
-                <IconButton>
-                  <ShoppingCart></ShoppingCart>
-                </IconButton>
+                <NavLink to="/cart">
+                  <IconButton>
+                    <ShoppingCart></ShoppingCart>
+                  </IconButton>
+                </NavLink>
               </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
             </Box>
-
+            <Box sx={{ flexGrow: 0, paddingRight: 5 }}>
+              <Tooltip title="Open settings">
+                <h4>Hello! Nghĩa Trần</h4>
+              </Tooltip>
+            </Box>
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

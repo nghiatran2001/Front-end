@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
 import logo from "../../images/banner-3.jpg";
 import "./Main.css";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 export default function Main() {
   return (
     <div className="main">
@@ -21,11 +21,13 @@ export default function Main() {
             </Typography>
           </CardContent>
         </CardActionArea>
-        <CardActions>
-          <Button size="small" color="primary">
-            Xem chi tiết
-          </Button>
-        </CardActions>
+        <NavLink to="/product" className="main-link">
+          <CardActions>
+            <Button size="small" color="primary">
+              Xem chi tiết
+            </Button>
+          </CardActions>
+        </NavLink>
       </Card>
 
       <Card className="card" sx={{ maxWidth: 250 }}>
@@ -40,11 +42,13 @@ export default function Main() {
             </Typography>
           </CardContent>
         </CardActionArea>
-        <CardActions>
-          <Button size="small" color="primary">
-            Xem chi tiết
-          </Button>
-        </CardActions>
+        <NavLink to="/product" className="main-link">
+          <CardActions>
+            <Button size="small" color="primary">
+              Xem chi tiết
+            </Button>
+          </CardActions>
+        </NavLink>
       </Card>
       <Card className="card" sx={{ maxWidth: 250 }}>
         <CardActionArea>
@@ -58,11 +62,13 @@ export default function Main() {
             </Typography>
           </CardContent>
         </CardActionArea>
-        <CardActions>
-          <Button size="small" color="primary">
-            Xem chi tiết
-          </Button>
-        </CardActions>
+        <NavLink to="/product" className="main-link">
+          <CardActions>
+            <Button size="small" color="primary">
+              Xem chi tiết
+            </Button>
+          </CardActions>
+        </NavLink>
       </Card>
       <Card className="card" sx={{ maxWidth: 250 }}>
         <CardActionArea>
@@ -76,11 +82,13 @@ export default function Main() {
             </Typography>
           </CardContent>
         </CardActionArea>
-        <CardActions>
-          <Button size="small" color="primary">
-            Xem chi tiết
-          </Button>
-        </CardActions>
+        <NavLink to="/product" className="main-link">
+          <CardActions>
+            <Button size="small" color="primary">
+              Xem chi tiết
+            </Button>
+          </CardActions>
+        </NavLink>
       </Card>
       <Card className="card" sx={{ maxWidth: 250 }}>
         <CardActionArea>
@@ -94,11 +102,13 @@ export default function Main() {
             </Typography>
           </CardContent>
         </CardActionArea>
-        <CardActions>
-          <Button size="small" color="primary">
-            Xem chi tiết
-          </Button>
-        </CardActions>
+        <NavLink to="/product" className="main-link">
+          <CardActions>
+            <Button size="small" color="primary">
+              Xem chi tiết
+            </Button>
+          </CardActions>
+        </NavLink>
       </Card>
     </div>
   );

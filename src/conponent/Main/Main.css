@@ -3,5 +3,8 @@
   flex-wrap: wrap;
 }
 .card {
-  margin: 10px 10px 10px 50px;
+  margin: 10px 10px 30px 30px;
+}
+.main-link {
+  text-decoration: none;
 }
