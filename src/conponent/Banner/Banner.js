@@ -8,7 +8,7 @@ import React from "react";
 export default function Banner() {
   return (
     <div>
-      <img src={logo1} alt="" width="100%"></img>
+      <img src={logo2} alt="" width="100%"></img>
     </div>
   );
 }

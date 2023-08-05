@@ -56,7 +56,7 @@ export default function Sidebar() {
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
-          <ListItemText primary="Tên hãng" />
+          <ListItemText primary="Ram" />
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
         <Collapse in={open} timeout="auto" unmountOnExit>
@@ -65,13 +65,13 @@ export default function Sidebar() {
               <ListItemIcon>
                 <StarBorder />
               </ListItemIcon>
-              <ListItemText primary="Dell" />
+              <ListItemText primary="8GB" />
             </ListItemButton>
             <ListItemButton sx={{ pl: 4 }}>
               <ListItemIcon>
                 <StarBorder />
               </ListItemIcon>
-              <ListItemText primary="Asus" />
+              <ListItemText primary="16GB" />
             </ListItemButton>
           </List>
         </Collapse>

@@ -1,11 +1,12 @@
 import React from "react";
 
 import "./Register.css";
-import { Link } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
+import { Button, Input, InputLabel } from "@mui/material";
 export default function Register() {
   return (
     <div>
-      <div className="loginPage">
+      {/* <div className="loginPage">
         <div className="loginPage_left">
           <h2>Đăng Ký</h2>
           <div className="form_left">
@@ -41,6 +42,43 @@ export default function Register() {
             </form>
           </div>
         </div>
+      </div> */}
+      <div className="auth">
+        <h1>ĐĂNG KÝ</h1>
+        <Form className="form">
+          <InputLabel className="label">Họ Tên</InputLabel>
+          <Input
+            required
+            type="text"
+            placeholder="Họ tên"
+            className="input"
+          ></Input>
+          <InputLabel className="label">Email</InputLabel>
+          <Input
+            required
+            type="email"
+            placeholder="Email"
+            className="input"
+          ></Input>
+          <InputLabel className="label">Mật Khẩu</InputLabel>
+          <Input
+            required
+            type="password"
+            placeholder="Mật khẩu"
+            className="input"
+          ></Input>
+          <InputLabel className="label">Số Điện Thoại</InputLabel>
+          <Input
+            required
+            type="phone"
+            placeholder="Số điện thoại"
+            className="input"
+          ></Input>
+          <Button className="button">Đăng ký</Button>
+          <span>
+            Bạn đã có tài khoản? <Link to="/login">Đăng nhập</Link>
+          </span>
+        </Form>
       </div>
     </div>
   );
