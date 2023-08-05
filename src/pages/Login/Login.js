@@ -1,34 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Input, InputLabel } from "@mui/material";
 import "./Login.css";
-import { Form, Link } from "react-router-dom";
+import { notification } from "antd";
+import { Form, Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { user as userAPI } from "../../API/index";
+import userSlice from "../../redux/userSlice";
 
 export default function Login() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [api, contextHolder] = notification.useNotification();
+
+  const [loginInfo, setLoginInfo] = useState({});
+
+  const login = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await userAPI.login(loginInfo);
+      if (result.data.user.disable) {
+        api.open({
+          type: "error",
+          message: "Tài khỏan bạn đã bị khóa vui lòng liên hệ admin để mở!!!!",
+        });
+      } else {
+        dispatch(userSlice.actions.setUser(result.data.user));
+        document.cookie = `token=${result.data.refreshToken}`;
+        navigate("/");
+      }
+    } catch (error) {
+      api.open({
+        type: "error",
+        message: "Email hoặc mật khẩu không chính xác.",
+      });
+    }
+  };
+
+  const handleLoginInfoChange = (key, value) => {
+    setLoginInfo((pre) => {
+      return { ...pre, [key]: value };
+    });
+  };
+
   return (
     <div>
-      {/* <div className="loginPage">
-        <div className="loginPage_right">
-          <h2>Đăng nhập</h2>
-          <div className="form_right">
-            <form>
-              <div className="formControl">
-                <label htmlFor="email">Email(*)</label>
-                <input type="text" id="emailLogin" name="email" />
-              </div>
-              <div className="formControl">
-                <label htmlFor="password">Mật khẩu(*)</label>
-                <input type="password" id="passwordLogin" name="password" />
-              </div>
-              <div>
-                Bạn chưa có tài khoản? <Link to="/register">đăng ký</Link>
-              </div>
-              <button className="btn_log" type="submit">
-                Đăng nhập
-              </button>
-            </form>
-          </div>
-        </div>
-      </div> */}
+      {contextHolder}
       <div className="auth">
         <h1>ĐĂNG NHẬP</h1>
         <Form className="form">
@@ -38,6 +55,9 @@ export default function Login() {
             type="email"
             placeholder="Email"
             className="input"
+            onChange={(e) => {
+              handleLoginInfoChange("email", e.target.value);
+            }}
           ></Input>
           <InputLabel className="label">Mật Khẩu</InputLabel>
           <Input
@@ -45,8 +65,14 @@ export default function Login() {
             type="password"
             placeholder="Mật khẩu"
             className="input"
+            onChange={(e) => {
+              e.preventDefault();
+              handleLoginInfoChange("password", e.target.value);
+            }}
           ></Input>
-          <Button className="button">Đăng nhập</Button>
+          <Button className="button" onClick={login}>
+            Đăng nhập
+          </Button>
           <span>
             Bạn chưa có tài khoản? <Link to="/register">Đăng ký</Link>
           </span>
