@@ -7,8 +7,8 @@ import React from "react";
 
 export default function Banner() {
   return (
-    <div>
-      <img src={logo2} alt="" width="100%"></img>
+    <div className="banner">
+      <img src={logo2} alt="" width="100%" height="500px"></img>
     </div>
   );
 }

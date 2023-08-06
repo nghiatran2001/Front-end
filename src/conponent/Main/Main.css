@@ -2,9 +2,12 @@
   display: flex;
   flex-wrap: wrap;
 }
-.card {
+.main .card {
   margin: 10px 10px 30px 30px;
 }
 .main-link {
   text-decoration: none;
+}
+.main .card .text {
+  text-decoration: line-through;
 }

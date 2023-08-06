@@ -1,81 +1,33 @@
 import React from "react";
-
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Collapse from "@mui/material/Collapse";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import StarBorder from "@mui/icons-material/StarBorder";
+import Box from "@mui/material/Box";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
 
 export default function Sidebar() {
-  const [open, setOpen] = React.useState(true);
+  const [value, setValue] = React.useState(0);
 
-  const handleClick = () => {
-    setOpen(!open);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
   };
   return (
     <div>
-      <List
-        sx={{
-          width: "100%",
-          maxWidth: 200,
-          bgcolor: "#999999",
-          marginTop: 5,
-          marginBottom: 5,
-        }}
-        component="nav"
-        aria-labelledby="nested-list-subheader"
-      >
-        <ListItemButton onClick={handleClick}>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Tên hãng" />
-          {open ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 4 }}>
-              <ListItemIcon>
-                <StarBorder />
-              </ListItemIcon>
-              <ListItemText primary="Dell" />
-            </ListItemButton>
-            <ListItemButton sx={{ pl: 4 }}>
-              <ListItemIcon>
-                <StarBorder />
-              </ListItemIcon>
-              <ListItemText primary="Asus" />
-            </ListItemButton>
-          </List>
-        </Collapse>
-        <ListItemButton onClick={handleClick}>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Ram" />
-          {open ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 4 }}>
-              <ListItemIcon>
-                <StarBorder />
-              </ListItemIcon>
-              <ListItemText primary="8GB" />
-            </ListItemButton>
-            <ListItemButton sx={{ pl: 4 }}>
-              <ListItemIcon>
-                <StarBorder />
-              </ListItemIcon>
-              <ListItemText primary="16GB" />
-            </ListItemButton>
-          </List>
-        </Collapse>
-      </List>
+      <Box sx={{ width: "100%", bgcolor: "background.paper", marginBottom: 5 }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          centered
+          textColor="primary"
+          indicatorColor="secondary"
+        >
+          <Tab label="Asus" />
+          <Tab label="Dell" />
+          <Tab label="Apple" />
+          <Tab label="HP" />
+          <Tab label="MSI" />
+          <Tab label="Acer" />
+          <Tab label="Lenovo" />
+        </Tabs>
+      </Box>
     </div>
   );
 }
