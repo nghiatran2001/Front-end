@@ -1,16 +1,16 @@
-.auth {
+.register {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100vh;
   flex-direction: column;
 }
-.auth h1 {
+.register h1 {
   font-size: 40px;
   color: rgb(0, 0, 0);
   margin-bottom: 20px;
 }
-.auth .form {
+.register .form {
   display: flex;
   flex-direction: column;
   padding: 30px;
@@ -18,23 +18,23 @@
   width: 400px;
   gap: 10px;
 }
-.auth .form .label {
+.register .form .label {
   font-size: 20px;
   font-weight: bold;
 }
-.auth .form .input {
+.register .form .input {
   padding: 10px;
   border: none;
   border-bottom: 1px solid gray;
 }
-.auth .form .button {
+.register .form .button {
   padding: 10px;
   border: none;
   background-color: teal;
   cursor: pointer;
   color: white;
 }
-.auth .form span {
+.register .form span {
   font-size: 17px;
   text-align: center;
 }

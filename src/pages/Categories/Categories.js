@@ -1,7 +1,8 @@
 import { Box } from "@mui/material";
 import React from "react";
 import Admin from "../Admin/Admin";
-export default function Product() {
+
+export default function Categories() {
   return (
     <div>
       <Box
@@ -19,7 +20,7 @@ export default function Product() {
         >
           <Admin></Admin>
         </Box>
-        <Box>This is Product</Box>
+        <Box>This is Categories</Box>
       </Box>
     </div>
   );

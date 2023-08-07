@@ -9,21 +9,27 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button, Input } from "@mui/material";
-
+import { Link } from "react-router-dom";
 export default function Cart() {
   return (
     <div className="cart">
       <TableContainer component={Paper}>
-        <Table sx={{ maxWidth: 1200, margin: 3 }} aria-label="spanning table">
+        <Table
+          sx={{ maxWidth: "90%", margin: 5, border: 1 }}
+          aria-label="spanning table"
+        >
           <TableHead>
             <TableRow>
-              <TableCell align="center" colSpan={5}>
+              <TableCell align="center" colSpan={6}>
                 <h1>Chi tiết sản phẩm</h1>
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell>
                 <h3>Tên sản phẩm</h3>
+              </TableCell>
+              <TableCell>
+                <h3>Hình ảnh</h3>
               </TableCell>
               <TableCell align="right">
                 <h3>Số lượng</h3>
@@ -42,6 +48,7 @@ export default function Cart() {
           <TableBody>
             <TableRow>
               <TableCell>Laptop Dell</TableCell>
+              <TableCell>Hình</TableCell>
               <TableCell align="right">
                 <Input
                   type="number"
@@ -62,6 +69,7 @@ export default function Cart() {
             </TableRow>
             <TableRow>
               <TableCell>Laptop Dell</TableCell>
+              <TableCell>Hình</TableCell>
               <TableCell align="right">
                 <Input
                   type="number"
@@ -80,38 +88,26 @@ export default function Cart() {
                 <Button variant="contained">Xóa</Button>
               </TableCell>
             </TableRow>
+          </TableBody>
+        </Table>
+        <Table
+          sx={{ maxWidth: "30%", margin: 5, border: 1 }}
+          aria-label="spanning table"
+        >
+          <TableBody>
             <TableRow>
-              <TableCell>Laptop Dell</TableCell>
-              <TableCell align="right">
-                <Input
-                  type="number"
-                  slotProps={{
-                    input: {
-                      min: 1,
-                      max: 5,
-                      step: 1,
-                    },
-                  }}
-                />
-              </TableCell>
-              <TableCell align="right">100</TableCell>
-              <TableCell align="right">100</TableCell>
-              <TableCell align="right">
-                <Button variant="contained">Xóa</Button>
-              </TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell rowSpan={3} />
               <TableCell colSpan={2}>Tổng phụ:</TableCell>
               <TableCell align="right">100</TableCell>
             </TableRow>
             <TableRow>
               <TableCell colSpan={2}>Tổng cộng:</TableCell>
               <TableCell align="right">105</TableCell>
-              <TableCell align="right">
-                <Button variant="contained">Thanh toán</Button>
-              </TableCell>
             </TableRow>
+            <TableCell align="right">
+              <Link to="/order">
+                <Button variant="contained">Tiếp tục thanh toán</Button>
+              </Link>
+            </TableCell>
           </TableBody>
         </Table>
       </TableContainer>

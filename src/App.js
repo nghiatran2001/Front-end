@@ -10,7 +10,11 @@ import User from "./pages/User/User";
 import Cart from "./pages/Cart/Cart";
 import Order from "./pages/Order/Order";
 import Admin from "./pages/Admin/Admin";
-const Layout = () => {
+import InfoUser from "./pages/InfoUser/InfoUser";
+import ProductDetail from "./pages/ProductDetail/ProductDetail";
+import Payment from "./pages/Payment/Payment";
+import Categories from "./pages/Categories/Categories";
+const LayoutPage = () => {
   return (
     <>
       <Header />
@@ -19,11 +23,18 @@ const Layout = () => {
     </>
   );
 };
-
+const LayoutAdmin = () => {
+  return (
+    <>
+      <Admin />
+      <Outlet />
+    </>
+  );
+};
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: <LayoutPage />,
     children: [
       {
         path: "/",
@@ -38,12 +49,8 @@ const router = createBrowserRouter([
         element: <Register />,
       },
       {
-        path: "/product",
-        element: <Product />,
-      },
-      {
-        path: "/user",
-        element: <User />,
+        path: "/productdetail",
+        element: <ProductDetail />,
       },
       {
         path: "/cart",
@@ -53,11 +60,31 @@ const router = createBrowserRouter([
         path: "/order",
         element: <Order />,
       },
+      {
+        path: "/infouser",
+        element: <InfoUser />,
+      },
+      {
+        path: "/payment",
+        element: <Payment />,
+      },
     ],
   },
   {
     path: "/admin",
-    element: <Admin />,
+    element: <LayoutAdmin />,
+  },
+  {
+    path: "/user",
+    element: <User />,
+  },
+  {
+    path: "/product",
+    element: <Product />,
+  },
+  {
+    path: "/categories",
+    element: <Categories />,
   },
 ]);
 

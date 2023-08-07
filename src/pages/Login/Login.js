@@ -7,7 +7,7 @@ import { Form, Link } from "react-router-dom";
 export default function Login() {
   return (
     <div>
-      <div className="auth">
+      <div className="login">
         <h1>ĐĂNG NHẬP</h1>
         <Form className="form">
           <InputLabel className="label">Email</InputLabel>

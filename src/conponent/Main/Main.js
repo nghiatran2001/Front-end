@@ -26,7 +26,7 @@ export default function Main() {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <NavLink to="/product" className="main-link">
+          <NavLink to="/productdetail" className="main-link">
             <Button variant="contained" size="small">
               Xem chi tiết
             </Button>

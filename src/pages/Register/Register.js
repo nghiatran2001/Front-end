@@ -8,7 +8,7 @@ import { Form, Link } from "react-router-dom";
 export default function Register() {
   return (
     <div>
-      <div className="auth">
+      <div className="register">
         <h1>ĐĂNG KÝ</h1>
         <Form className="form">
           <InputLabel className="label">Họ Tên</InputLabel>
