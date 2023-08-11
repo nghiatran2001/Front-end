@@ -1,8 +1,6 @@
-import { Box, Button, Typography } from "@mui/material";
 import React from "react";
+import { Box, Button, Typography } from "@mui/material";
 import Admin from "../Admin/Admin";
-import logo from "../../images/dell-vostro-3400.png";
-
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,7 +9,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Link } from "react-router-dom";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -32,8 +29,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
-
-export default function Product() {
+export default function OrderAdmin() {
   return (
     <div>
       <Box
@@ -52,70 +48,61 @@ export default function Product() {
           <Admin></Admin>
         </Box>
         <Box sx={{ marginTop: 5, marginLeft: 5 }}>
-          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography variant="h5" sx={{ marginBottom: 5 }}>
-              Danh sách sản phẩm
-            </Typography>
-            <Typography variant="h5" sx={{ marginBottom: 5 }}>
-              <Link to="/addproduct">
-                <Button variant="contained">Thêm sản phẩm</Button>
-              </Link>
-            </Typography>
-          </Box>
+          <Typography variant="h5" sx={{ marginBottom: 5 }}>
+            Danh sách đơn hàng
+          </Typography>
           <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 1000 }} aria-label="customized table">
+            <Table sx={{ minWidth: 1100 }} aria-label="customized table">
               <TableHead>
                 <TableRow>
-                  <StyledTableCell>STT</StyledTableCell>
-                  <StyledTableCell>Tên sản phẩm</StyledTableCell>
-                  <StyledTableCell>Hình ảnh</StyledTableCell>
-                  <StyledTableCell>Giá gốc</StyledTableCell>
-                  <StyledTableCell>Giá bán</StyledTableCell>
-                  <StyledTableCell>Số lượng kho</StyledTableCell>{" "}
+                  <StyledTableCell>Mã đơn hàng</StyledTableCell>
+                  <StyledTableCell>Họ Tên</StyledTableCell>
+                  <StyledTableCell>Email</StyledTableCell>
+                  <StyledTableCell>Số Điện Thoại</StyledTableCell>
+                  <StyledTableCell>Trạng thái</StyledTableCell>
+                  <StyledTableCell>Chi tiết sản phẩm</StyledTableCell>
                   <StyledTableCell>Thao tác</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 <StyledTableRow>
                   <StyledTableCell component="th" scope="row">
-                    1
+                    Ma45465454
                   </StyledTableCell>
-                  <StyledTableCell>HP Dark</StyledTableCell>
+                  <StyledTableCell>Huu Nghia</StyledTableCell>
+                  <StyledTableCell>huunghia@gnail.com</StyledTableCell>
+                  <StyledTableCell>092323232</StyledTableCell>
+                  <StyledTableCell>Đang xử lý</StyledTableCell>
                   <StyledTableCell>
-                    <img src={logo} alt="" height="100px"></img>
+                    <p>Tên: ưqeqw</p>
+                    <p>Số lượng: 1</p>
+                    <p>Đơn giá: 424242</p>
+                    <p>Tổng tiền: 42112421</p>
                   </StyledTableCell>
-                  <StyledTableCell>13.000.000</StyledTableCell>
-                  <StyledTableCell>10.000.000</StyledTableCell>
-                  <StyledTableCell>5</StyledTableCell>
                   <StyledTableCell>
                     <Button sx={{ marginRight: 2 }} variant="contained">
-                      Sửa
-                    </Button>
-                    <Button sx={{ marginRight: 2 }} variant="contained">
-                      Xóa
+                      Cập nhật
                     </Button>
                   </StyledTableCell>
                 </StyledTableRow>
-              </TableBody>
 
-              <TableBody>
                 <StyledTableRow>
                   <StyledTableCell component="th" scope="row">
-                    1
+                    Ma45465454
                   </StyledTableCell>
-                  <StyledTableCell>Dell Vostro</StyledTableCell>
+                  <StyledTableCell>Huu Nghia</StyledTableCell>
+                  <StyledTableCell>huunghia@gnail.com</StyledTableCell>
+                  <StyledTableCell>092323232</StyledTableCell>
+                  <StyledTableCell>Đang xử lý</StyledTableCell>
                   <StyledTableCell>
-                    <img src={logo} alt="" height="100px"></img>
+                    <p>Tên: ưqeqw</p>
+                    <p>Số lượng: 1</p>
+                    <p>Đơn giá: 424242</p>
+                    <p>Tổng tiền: 42112421</p>
                   </StyledTableCell>
-                  <StyledTableCell>10.000.000</StyledTableCell>
-                  <StyledTableCell>8.000.000</StyledTableCell>
-                  <StyledTableCell>10</StyledTableCell>
                   <StyledTableCell>
                     <Button sx={{ marginRight: 2 }} variant="contained">
-                      Sửa
-                    </Button>
-                    <Button sx={{ marginRight: 2 }} variant="contained">
-                      Xóa
+                      Cập nhật
                     </Button>
                   </StyledTableCell>
                 </StyledTableRow>

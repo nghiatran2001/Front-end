@@ -10,3 +10,7 @@ export { default as Order } from "./Order/Order";
 export { default as Admin } from "./Admin/Admin";
 export { default as Payment } from "./Payment/Payment";
 export { default as Categories } from "./Categories/Categories";
+export { default as Follow } from "./Follow/Follow";
+export { default as OrderAdmin } from "./OrderAdmin/OrderAdmin";
+export { default as AddCategory } from "./AddCategory/AddCategory";
+export { default as AddProduct } from "./AddProduct/AddProduct";

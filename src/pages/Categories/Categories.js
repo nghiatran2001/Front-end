@@ -54,7 +54,7 @@ export default function Categories() {
             Danh sách loại sản phẩm
           </Typography>
           <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 1000 }} aria-label="customized table">
+            <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
                 <TableRow>
                   <StyledTableCell>STT</StyledTableCell>
@@ -68,6 +68,7 @@ export default function Categories() {
                     1
                   </StyledTableCell>
                   <StyledTableCell>Dell</StyledTableCell>
+
                   <StyledTableCell>
                     <Button sx={{ marginRight: 2 }} variant="contained">
                       Sửa
@@ -78,13 +79,13 @@ export default function Categories() {
                   </StyledTableCell>
                 </StyledTableRow>
               </TableBody>
-
               <TableBody>
                 <StyledTableRow>
                   <StyledTableCell component="th" scope="row">
-                    2
+                    1
                   </StyledTableCell>
-                  <StyledTableCell>HP</StyledTableCell>
+                  <StyledTableCell>Dell</StyledTableCell>
+
                   <StyledTableCell>
                     <Button sx={{ marginRight: 2 }} variant="contained">
                       Sửa

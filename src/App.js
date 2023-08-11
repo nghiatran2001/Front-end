@@ -14,6 +14,10 @@ import InfoUser from "./pages/InfoUser/InfoUser";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import Payment from "./pages/Payment/Payment";
 import Categories from "./pages/Categories/Categories";
+import Follow from "./pages/Follow/Follow";
+import OrderAdmin from "./pages/OrderAdmin/OrderAdmin";
+import AddCategory from "./pages/AddCategory/AddCategory";
+import AddProduct from "./pages/AddProduct/AddProduct";
 const LayoutPage = () => {
   return (
     <>
@@ -68,6 +72,10 @@ const router = createBrowserRouter([
         path: "/payment",
         element: <Payment />,
       },
+      {
+        path: "/follow",
+        element: <Follow />,
+      },
     ],
   },
   {
@@ -85,6 +93,18 @@ const router = createBrowserRouter([
   {
     path: "/categories",
     element: <Categories />,
+  },
+  {
+    path: "/orderadmin",
+    element: <OrderAdmin />,
+  },
+  {
+    path: "/addproduct",
+    element: <AddProduct />,
+  },
+  {
+    path: "/addcategory",
+    element: <AddCategory />,
   },
 ]);
 

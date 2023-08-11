@@ -22,7 +22,7 @@ const pages = [
   <Link to="/" className="header-link">
     Trang chủ
   </Link>,
-  <Link to="/" className="header-link">
+  <Link to="/follow" className="header-link">
     Theo dõi đơn hàng
   </Link>,
   <Link to="/admin" className="header-link">

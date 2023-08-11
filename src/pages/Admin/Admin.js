@@ -107,7 +107,7 @@ export default function Admin() {
             <Collapse in={open} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 <ListItemButton sx={{ pl: 4 }}>
-                  <Link to="/user" className="admin-link">
+                  <Link to="/orderadmin" className="admin-link">
                     Danh sách đơn hàng
                   </Link>
                 </ListItemButton>

@@ -15,7 +15,7 @@ export default function Cart() {
     <div className="cart">
       <TableContainer component={Paper}>
         <Table
-          sx={{ maxWidth: "90%", margin: 5, border: 1 }}
+          sx={{ maxWidth: "85%", margin: 10, border: 2 }}
           aria-label="spanning table"
         >
           <TableHead>
@@ -91,7 +91,7 @@ export default function Cart() {
           </TableBody>
         </Table>
         <Table
-          sx={{ maxWidth: "30%", margin: 5, border: 1 }}
+          sx={{ maxWidth: "30%", margin: 10, border: 2 }}
           aria-label="spanning table"
         >
           <TableBody>
