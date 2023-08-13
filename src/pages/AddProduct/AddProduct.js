@@ -1,16 +1,42 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Admin from "../Admin/Admin";
+
 import {
   Box,
   Button,
-  FormControl,
-  FormLabel,
-  Input,
   InputBase,
-  TextField,
+  OutlinedInput,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  TextareaAutosize,
   Typography,
 } from "@mui/material";
-import Admin from "../Admin/Admin";
+import { styled } from "@mui/material/styles";
+import { tableCellClasses } from "@mui/material/TableCell";
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  "&:last-child td, &:last-child th": {
+    border: 0,
+  },
+}));
 
 export default function AddProduct() {
   return (
@@ -41,31 +67,96 @@ export default function AddProduct() {
               </Link>
             </Typography>
           </Box>
-          <Box>
-            <FormControl sx={{ border: 2, padding: 3, borderRadius: 5 }}>
-              <FormLabel sx={{ color: "black" }}>
-                Tên sản phẩm: <Input sx={{ width: 400 }}></Input>
-              </FormLabel>
-              <FormLabel sx={{ color: "black" }}>
-                Hình ảnh: <InputBase type="password"></InputBase>
-              </FormLabel>
-              <FormLabel sx={{ color: "black" }}>
-                Số lượng: <InputBase type="number" defaultValue={1}></InputBase>
-              </FormLabel>
-              <FormLabel sx={{ color: "black" }}>
-                Giá bán: <Input></Input>
-              </FormLabel>
-              <FormLabel sx={{ color: "black" }}>
-                Giá khuyến mãi: <Input></Input>
-              </FormLabel>
-              <FormLabel sx={{ color: "black" }}>
-                Mô tả: <Input></Input>
-              </FormLabel>
-              <FormLabel>
-                <Button variant="contained">Thêm</Button>
-              </FormLabel>
-            </FormControl>
-          </Box>
+          <TableContainer
+            sx={{ minWidth: 800, border: 1, borderRadius: 3 }}
+            aria-label="customized table"
+          >
+            <Table>
+              <TableBody>
+                <StyledTableRow>
+                  <StyledTableCell component="th" scope="row">
+                    Tên sản phẩm:
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    <OutlinedInput
+                      type="text"
+                      sx={{ width: "100%" }}
+                    ></OutlinedInput>
+                  </StyledTableCell>
+                </StyledTableRow>
+              </TableBody>
+              <TableBody>
+                <StyledTableRow>
+                  <StyledTableCell component="th" scope="row">
+                    Giá gốc:
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    <OutlinedInput
+                      type="text"
+                      sx={{ width: "100%" }}
+                    ></OutlinedInput>
+                  </StyledTableCell>
+                </StyledTableRow>
+              </TableBody>
+              <TableBody>
+                <StyledTableRow>
+                  <StyledTableCell component="th" scope="row">
+                    Giá bán:
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    <OutlinedInput
+                      type="text"
+                      sx={{ width: "100%" }}
+                    ></OutlinedInput>
+                  </StyledTableCell>
+                </StyledTableRow>
+              </TableBody>
+              <TableBody>
+                <StyledTableRow>
+                  <StyledTableCell component="th" scope="row">
+                    Số lượng:
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    <OutlinedInput
+                      type="number"
+                      sx={{ width: "100%" }}
+                    ></OutlinedInput>
+                  </StyledTableCell>
+                </StyledTableRow>
+              </TableBody>
+              <TableBody>
+                <StyledTableRow>
+                  <StyledTableCell component="th" scope="row">
+                    Mô tả:
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    <TextareaAutosize
+                      type="text"
+                      style={{ width: "100%", height: 100, fontSize: 17 }}
+                    ></TextareaAutosize>
+                  </StyledTableCell>
+                </StyledTableRow>
+              </TableBody>
+              <TableBody>
+                <StyledTableRow>
+                  <StyledTableCell component="th" scope="row">
+                    Hình ảnh:
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    <InputBase type="file" sx={{ width: "100%" }}></InputBase>
+                  </StyledTableCell>
+                </StyledTableRow>
+              </TableBody>
+              <TableBody>
+                <StyledTableRow>
+                  <StyledTableCell component="th" scope="row"></StyledTableCell>
+                  <StyledTableCell>
+                    <Button variant="contained">Thêm</Button>
+                  </StyledTableCell>
+                </StyledTableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Box>
       </Box>
     </div>
