@@ -3,11 +3,18 @@
   flex-wrap: wrap;
 }
 .main .card {
-  margin: 10px 10px 30px 30px;
+  margin: 10px 10px 30px 20px;
+  border-radius: 20px;
 }
 .main-link {
   text-decoration: none;
 }
 .main .card .text {
   text-decoration: line-through;
+}
+
+.main .card img {
+  height: 200px;
+  width: 300px;
+  object-fit: contain;
 }

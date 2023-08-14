@@ -18,6 +18,7 @@ import InputBase from "@mui/material/InputBase";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
 import { Link, NavLink } from "react-router-dom";
 import "./Header.css";
+import { Icon } from "@mui/material";
 const pages = [
   <Link to="/" className="header-link">
     Trang chủ
@@ -66,7 +67,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
@@ -124,10 +124,15 @@ export default function Header() {
                 <SearchIcon />
               </SearchIconWrapper>
               <StyledInputBase
-                placeholder="Nhập tên laptop, điện thoại...cần tìm"
+                placeholder="Tìm kiếm"
                 inputProps={{ "aria-label": "search" }}
               />
             </Search>
+            <Box>
+              <Button variant="contained" style={{ background: "gray" }}>
+                Tìm kiếm
+              </Button>
+            </Box>
             <Box
               sx={{
                 flexGrow: 1,
