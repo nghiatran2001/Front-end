@@ -18,14 +18,15 @@ import InputBase from "@mui/material/InputBase";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
 import { Link, NavLink } from "react-router-dom";
 import "./Header.css";
-import { Icon } from "@mui/material";
+import { Badge } from "antd";
 const pages = [
   <Link to="/" className="header-link">
     Trang chủ
   </Link>,
-  <Link to="/follow" className="header-link">
-    Theo dõi đơn hàng
+  <Link to="/type" className="header-link">
+    Loại sản phẩm
   </Link>,
+
   <Link to="/admin" className="header-link">
     Quản lý
   </Link>,
@@ -33,6 +34,9 @@ const pages = [
 const settings = [
   <Link to="/infouser" className="header-link">
     Thông tin cá nhân
+  </Link>,
+  <Link to="/follow" className="header-link">
+    Theo dõi đơn hàng
   </Link>,
   <Link to="/login" className="header-link">
     Đăng nhập
@@ -117,7 +121,7 @@ export default function Header() {
                 textDecoration: "none",
               }}
             >
-              KAI
+              NGHIA
             </Typography>
             <Search>
               <SearchIconWrapper>
@@ -191,7 +195,7 @@ export default function Header() {
                 textDecoration: "none",
               }}
             >
-              KAI
+              NGHIA
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page) => (
@@ -215,14 +219,16 @@ export default function Header() {
               <Tooltip title="Open settings">
                 <NavLink to="/cart">
                   <IconButton>
-                    <ShoppingCart></ShoppingCart>
+                    <Badge count={4} size="small">
+                      <ShoppingCart></ShoppingCart>
+                    </Badge>
                   </IconButton>
                 </NavLink>
               </Tooltip>
             </Box>
             <Box sx={{ flexGrow: 0, paddingRight: 5 }}>
               <Tooltip title="Open settings">
-                <h4>Hello! Nghĩa Trần</h4>
+                <h4>Hello! Nghĩa</h4>
               </Tooltip>
             </Box>
             <Box sx={{ flexGrow: 0 }}>

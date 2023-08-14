@@ -18,6 +18,7 @@ import Follow from "./pages/Follow/Follow";
 import OrderAdmin from "./pages/OrderAdmin/OrderAdmin";
 import AddCategory from "./pages/AddCategory/AddCategory";
 import AddProduct from "./pages/AddProduct/AddProduct";
+import Type from "./pages/Type/Type";
 const LayoutPage = () => {
   return (
     <>
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
       {
         path: "/follow",
         element: <Follow />,
+      },
+      {
+        path: "/type",
+        element: <Type />,
       },
     ],
   },

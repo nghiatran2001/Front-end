@@ -55,10 +55,10 @@ export default function Sidebar() {
   return (
     <div
       style={{
-        background: "gray",
+        background: "white",
         maxWidth: 240,
         padding: "10px",
-        marginTop: "50px",
+        marginTop: "20px",
         borderRadius: 20,
       }}
     >

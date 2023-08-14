@@ -1,23 +1,23 @@
-.productdetail {
+.text {
+  text-decoration: line-through;
+}
+.product_detail {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  width: 100%;
+  justify-content: center;
 }
-.productdetail .productdetail-left {
-  width: 45%;
-  margin: 20px 50px 50px 50px;
-}
-.productdetail .productdetail-left img {
-  height: 400px;
+
+.img_product {
+  height: 300px;
   width: 100%;
-  border-radius: 10%;
+  border-radius: 20%;
   object-fit: contain;
+  margin-bottom: 20px;
 }
-.productdetail .productdetail-right {
-  width: 45%;
-  margin: 0 50px 50px 50px;
-}
-.productdetail .productdetail-right .text {
-  text-decoration: line-through;
+
+.img_small {
+  height: 60px;
+  width: 80px;
+  object-fit: contain;
+  margin-bottom: 20px;
 }

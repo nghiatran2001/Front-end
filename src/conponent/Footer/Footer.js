@@ -7,22 +7,22 @@ const Footer = () => {
     <>
       <footer className="footer_width">
         <div className="footer_content">
-          <div className="footer_intro">
+          <div style={{ padding: 5 }} className="footer_intro">
             <h4>GIỚI THIỆU VỀ CHÚNG TÔI</h4>
             <h4>CHÍNH SÁCH BẢO MẬT</h4>
             <h4>KIỂM TRA HÓA ĐƠN ĐIỆN TỬ</h4>
           </div>
-          <div className="footer_hiring">
+          <div style={{ padding: 5 }} className="footer_hiring">
             <h4>TIN TUYỂN DỤNG</h4>
             <h4>TIN KHUYẾN MÃI</h4>
             <h4>CHÍNH SÁCH TRẢ GÓP</h4>
           </div>
-          <div className="footer_support">
+          <div style={{ padding: 5 }} className="footer_support">
             <h4>TƯ VẤN MUA HÀNG</h4>
             <h4>HỖ TRỢ KỸ THUẬT</h4>
             <h4>GÓP Ý, KHIẾU NẠI</h4>
           </div>
-          <div className="footer_contact">
+          <div style={{ padding: 5 }} className="footer_contact">
             <h4>KẾT NỐI VỚI CHÚNG TÔI</h4>
             <Facebook></Facebook>
             <Instagram></Instagram>

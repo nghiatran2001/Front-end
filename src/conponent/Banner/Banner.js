@@ -23,7 +23,6 @@ export default function Banner() {
         style={{
           paddingLeft: 25,
           paddingRight: 25,
-          background: "#c3c3c3",
           borderRadius: 20,
         }}
       >

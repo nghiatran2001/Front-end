@@ -1,6 +1,5 @@
 import React from "react";
 import Banner from "../conponent/Banner/Banner";
-import Sidebar from "../conponent/Sidebar/Sidebar";
 import Main from "../conponent/Main/Main";
 import { Col, Row } from "antd";
 
@@ -25,11 +24,8 @@ export default function Home() {
           <Banner />
         </Col>
       </Row>
-      <Row style={{ marginTop: "50px", height: "100%" }}>
-        <Col span={6} offset={2}>
-          <Sidebar />
-        </Col>
-        <Col span={14}>
+      <Row style={{ marginTop: "50px" }}>
+        <Col span={20} offset={2}>
           <Main />
         </Col>
       </Row>
