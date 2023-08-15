@@ -8,20 +8,20 @@ export default function Login() {
   return (
     <div>
       <div className="login">
-        <h1>ĐĂNG NHẬP</h1>
         <Form className="form">
+          <h1>ĐĂNG NHẬP VÀO TRANG WEB</h1>
           <InputLabel className="label">Email</InputLabel>
           <Input
             required
             type="email"
-            placeholder="Email"
+            placeholder="abc@gmail.com"
             className="input"
           ></Input>
           <InputLabel className="label">Mật Khẩu</InputLabel>
           <Input
             required
             type="password"
-            placeholder="Mật khẩu"
+            placeholder="********"
             className="input"
           ></Input>
           <Button className="button">Đăng nhập</Button>

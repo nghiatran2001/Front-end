@@ -21,3 +21,12 @@
   object-fit: contain;
   margin-bottom: 20px;
 }
+
+.quantity {
+  border: 1px solid black;
+  width: 130px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 5px;
+}

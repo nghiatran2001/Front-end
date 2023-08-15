@@ -9,11 +9,12 @@ export default function Register() {
   return (
     <div>
       <div className="register">
-        <h1>ĐĂNG KÝ</h1>
         <Form className="form">
+          <h1>XIN CHÀO ĐĂNG KÝ TẠI ĐÂY!</h1>
           <InputLabel className="label">Họ Tên</InputLabel>
           <Input
             required
+            placeholder="Nghia Tran"
             type="text"
             id="username"
             name="username"
@@ -23,6 +24,7 @@ export default function Register() {
           <InputLabel className="label">Email</InputLabel>
           <Input
             required
+            placeholder="abc@gmail.com"
             type="email"
             id="email"
             name="email"
@@ -32,6 +34,7 @@ export default function Register() {
           <InputLabel className="label">Mật Khẩu</InputLabel>
           <Input
             required
+            placeholder="********"
             type="password"
             id="password"
             name="password"
@@ -41,6 +44,7 @@ export default function Register() {
           <InputLabel className="label">Nhập lại mật Khẩu</InputLabel>
           <Input
             required
+            placeholder="********"
             type="password"
             className="input"
             id="confirmPassword"
@@ -50,6 +54,7 @@ export default function Register() {
           <InputLabel className="label">Số Điện Thoại</InputLabel>
           <Input
             required
+            placeholder="093 xxx xxxx"
             type="phone"
             id="phone"
             name="phone"

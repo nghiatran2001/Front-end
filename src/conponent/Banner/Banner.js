@@ -34,7 +34,7 @@ export default function Banner() {
                 alt="banner"
                 preview={false}
                 width="100%"
-                height="400px"
+                height="500px"
               />
             );
           })}

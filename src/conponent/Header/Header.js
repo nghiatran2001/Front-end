@@ -24,7 +24,7 @@ const pages = [
     Trang chủ
   </Link>,
   <Link to="/type" className="header-link">
-    Loại sản phẩm
+    Danh mục
   </Link>,
 
   <Link to="/admin" className="header-link">
@@ -123,20 +123,7 @@ export default function Header() {
             >
               NGHIA
             </Typography>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Tìm kiếm"
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Search>
-            <Box>
-              <Button variant="contained" style={{ background: "gray" }}>
-                Tìm kiếm
-              </Button>
-            </Box>
+
             <Box
               sx={{
                 flexGrow: 1,
@@ -178,12 +165,13 @@ export default function Header() {
                 ))}
               </Menu>
             </Box>
+
             <Laptop sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
             <Typography
               variant="h5"
               noWrap
               component="a"
-              href=""
+              href="/"
               sx={{
                 mr: 2,
                 display: { xs: "flex", md: "none" },
@@ -215,7 +203,25 @@ export default function Header() {
               ))}
             </Box>
 
-            <Box sx={{ flexGrow: 0, paddingRight: 5 }}>
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Tìm kiếm"
+                inputProps={{ "aria-label": "search" }}
+              />
+            </Search>
+            <Box>
+              <Button
+                variant="contained"
+                style={{ background: "white", color: "black" }}
+              >
+                Tìm kiếm
+              </Button>
+            </Box>
+
+            <Box sx={{ flexGrow: 0, paddingRight: 5, paddingLeft: 5 }}>
               <Tooltip title="Open settings">
                 <NavLink to="/cart">
                   <IconButton>
