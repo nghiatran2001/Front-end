@@ -22,12 +22,12 @@
 .register .form .label {
   font-size: 20px;
   font-weight: bold;
+  color: black;
 }
 .register .form .input {
   padding: 10px;
   border: none;
   background-color: #e5e5e5;
-  border-bottom: 1px solid gray;
   border-radius: 10px;
 }
 .register .form .button {
@@ -37,6 +37,7 @@
   border-radius: 10px;
   cursor: pointer;
   color: white;
+  font-size: large;
 }
 .register .form span {
   font-size: 17px;

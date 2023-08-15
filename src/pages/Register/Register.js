@@ -1,11 +1,12 @@
-import React from "react";
-
+import React, { useState } from "react";
 import "./Register.css";
-import { Button, Input, InputLabel } from "@mui/material";
-
+import { Button, InputLabel } from "@mui/material";
 import { Form, Link } from "react-router-dom";
+import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
+import { Input } from "antd";
 
 export default function Register() {
+  const [isShowPassword, setIsShowPassword] = useState(false);
   return (
     <div>
       <div className="register">
@@ -32,25 +33,47 @@ export default function Register() {
           ></Input>
 
           <InputLabel className="label">Mật Khẩu</InputLabel>
-          <Input
-            required
-            placeholder="********"
-            type="password"
-            id="password"
-            name="password"
-            className="input"
-          ></Input>
-
+          <div style={{ position: "relative" }}>
+            <span
+              style={{
+                zIndex: 10,
+                position: "absolute",
+                top: "8px",
+                right: "8px",
+              }}
+            >
+              {isShowPassword ? <EyeFilled /> : <EyeInvisibleFilled />}
+            </span>
+            <Input
+              required
+              placeholder="********"
+              type="password"
+              id="password"
+              name="password"
+              className="input"
+            ></Input>
+          </div>
           <InputLabel className="label">Nhập lại mật Khẩu</InputLabel>
-          <Input
-            required
-            placeholder="********"
-            type="password"
-            className="input"
-            id="confirmPassword"
-            name="confirmPassword"
-          ></Input>
-
+          <div style={{ position: "relative" }}>
+            <span
+              style={{
+                zIndex: 10,
+                position: "absolute",
+                top: "8px",
+                right: "8px",
+              }}
+            >
+              {isShowPassword ? <EyeFilled /> : <EyeInvisibleFilled />}
+            </span>
+            <Input
+              required
+              placeholder="********"
+              type="password"
+              className="input"
+              id="confirmPassword"
+              name="confirmPassword"
+            ></Input>
+          </div>
           <InputLabel className="label">Số Điện Thoại</InputLabel>
           <Input
             required

@@ -2,9 +2,9 @@ import logo1 from "../../images/banner-1.jpg";
 import logo2 from "../../images/banner-2.jpg";
 import logo3 from "../../images/banner-3.jpg";
 import logo4 from "../../images/banner-4.png";
-import Slider from "react-slick";
 import React from "react";
 import { Image } from "antd";
+import BannerStyle from "./style";
 
 export default function Banner() {
   const settings = {
@@ -26,7 +26,7 @@ export default function Banner() {
           borderRadius: 20,
         }}
       >
-        <Slider {...settings}>
+        <BannerStyle {...settings}>
           {arrImg.map((image) => {
             return (
               <Image
@@ -34,22 +34,11 @@ export default function Banner() {
                 alt="banner"
                 preview={false}
                 width="100%"
-                height="500px"
+                height="350px"
               />
             );
           })}
-        </Slider>
-        {/* <Box
-          sx={{
-            fontSize: 30,
-            marginTop: 3,
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <CaretLeftOutlined />
-          <CaretRightOutlined />
-        </Box> */}
+        </BannerStyle>
       </div>
     </>
   );

@@ -1,10 +1,11 @@
-import React from "react";
-import { Button, Input, InputLabel } from "@mui/material";
+import React, { useState } from "react";
+import { Button, InputLabel } from "@mui/material";
 import "./Login.css";
-
 import { Form, Link } from "react-router-dom";
-
+import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
+import { Input } from "antd";
 export default function Login() {
+  const [isShowPassword, setIsShowPassword] = useState(false);
   return (
     <div>
       <div className="login">
@@ -18,12 +19,25 @@ export default function Login() {
             className="input"
           ></Input>
           <InputLabel className="label">Mật Khẩu</InputLabel>
-          <Input
-            required
-            type="password"
-            placeholder="********"
-            className="input"
-          ></Input>
+
+          <div style={{ position: "relative" }}>
+            <span
+              style={{
+                zIndex: 10,
+                position: "absolute",
+                top: "8px",
+                right: "8px",
+              }}
+            >
+              {isShowPassword ? <EyeFilled /> : <EyeInvisibleFilled />}
+            </span>
+            <Input
+              required
+              type={isShowPassword ? "text" : "password"}
+              placeholder="********"
+              className="input"
+            ></Input>
+          </div>
           <Button className="button">Đăng nhập</Button>
           <span>
             Bạn chưa có tài khoản? <Link to="/register">Đăng ký</Link>
