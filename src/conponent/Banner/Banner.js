@@ -14,15 +14,13 @@ export default function Banner() {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 1000,
+    autoplaySpeed: 3000,
   };
   const arrImg = [logo1, logo2, logo3, logo4];
   return (
     <>
       <div
         style={{
-          paddingLeft: 25,
-          paddingRight: 25,
           borderRadius: 20,
         }}
       >

@@ -28,7 +28,7 @@ export default function Admin() {
             width: "100%",
             maxWidth: 250,
             bgcolor: "#999999",
-            height: "100vh",
+            height: "1000px",
           }}
         >
           <Box
@@ -68,11 +68,6 @@ export default function Admin() {
               <List component="div" disablePadding>
                 <ListItemButton sx={{ pl: 4 }}>
                   <Link to="/product" className="admin-link">
-                    Thêm sản phẩm
-                  </Link>
-                </ListItemButton>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <Link to="/product" className="admin-link">
                     Danh sách sản phẩm
                   </Link>
                 </ListItemButton>
@@ -86,11 +81,6 @@ export default function Admin() {
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <Link to="/categories" className="admin-link">
-                    Thêm loại sản phẩm
-                  </Link>
-                </ListItemButton>
                 <ListItemButton sx={{ pl: 4 }}>
                   <Link to="/categories" className="admin-link">
                     Danh sách loại sản phẩm

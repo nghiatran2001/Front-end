@@ -18,11 +18,9 @@ export default function Type() {
   const onChange = () => {};
   return (
     <div>
+      <Sidebar />
       <Row style={{ marginTop: "50px" }}>
-        <Col span={4} offset={2}>
-          <Sidebar />
-        </Col>
-        <Col span={16}>
+        <Col span={20} offset={2}>
           <Box className="main">
             <Card className="card" sx={{ width: 200 }}>
               <CardActionArea>

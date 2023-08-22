@@ -19,29 +19,7 @@ import ShoppingCart from "@mui/icons-material/ShoppingCart";
 import { Link, NavLink } from "react-router-dom";
 import "./Header.css";
 import { Badge } from "antd";
-const pages = [
-  <Link to="/" className="header-link">
-    Trang chủ
-  </Link>,
-  <Link to="/type" className="header-link">
-    Danh mục
-  </Link>,
 
-  <Link to="/admin" className="header-link">
-    Quản lý
-  </Link>,
-];
-const settings = [
-  <Link to="/infouser" className="header-link">
-    Thông tin cá nhân
-  </Link>,
-  <Link to="/follow" className="header-link">
-    Theo dõi đơn hàng
-  </Link>,
-  <Link to="/login" className="header-link">
-    Đăng nhập
-  </Link>,
-];
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -75,9 +53,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("sm")]: {
-      width: "12ch",
+      width: "20ch",
       "&:focus": {
-        width: "20ch",
+        width: "30ch",
       },
     },
   },
@@ -158,14 +136,18 @@ export default function Header() {
                   display: { xs: "block", md: "none" },
                 }}
               >
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
-                  </MenuItem>
-                ))}
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Link to="/" className="header-link">
+                    Trang chủ
+                  </Link>
+                </MenuItem>
+                <MenuItem onClick={handleCloseUserMenu}>
+                  <Link to="/type" className="header-link">
+                    Danh mục sản phẩm
+                  </Link>
+                </MenuItem>{" "}
               </Menu>
             </Box>
-
             <Laptop sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
             <Typography
               variant="h5"
@@ -185,10 +167,10 @@ export default function Header() {
             >
               NGHIA
             </Typography>
+
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              {pages.map((page) => (
+              <Link to="/" className="header-link">
                 <Button
-                  key={page}
                   onClick={handleCloseNavMenu}
                   sx={{
                     my: 2,
@@ -198,9 +180,23 @@ export default function Header() {
                     paddingRight: 4,
                   }}
                 >
-                  {page}
+                  Trang chủ
                 </Button>
-              ))}
+              </Link>
+              <Link to="/type" className="header-link">
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{
+                    my: 2,
+                    color: "white",
+                    display: "block",
+                    paddingLeft: 4,
+                    paddingRight: 4,
+                  }}
+                >
+                  Danh mục sản phẩm
+                </Button>
+              </Link>
             </Box>
 
             <Search>
@@ -208,24 +204,16 @@ export default function Header() {
                 <SearchIcon />
               </SearchIconWrapper>
               <StyledInputBase
-                placeholder="Tìm kiếm"
+                placeholder="Nhập tên sản phẩm..."
                 inputProps={{ "aria-label": "search" }}
               />
             </Search>
-            <Box>
-              <Button
-                variant="contained"
-                style={{ background: "white", color: "black" }}
-              >
-                Tìm kiếm
-              </Button>
-            </Box>
 
             <Box sx={{ flexGrow: 0, paddingRight: 5, paddingLeft: 5 }}>
               <Tooltip title="Open settings">
                 <NavLink to="/cart">
                   <IconButton>
-                    <Badge count={4} size="small">
+                    <Badge count={2} size="small">
                       <ShoppingCart></ShoppingCart>
                     </Badge>
                   </IconButton>
@@ -260,11 +248,26 @@ export default function Header() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Link to="/infouser" className="header-link">
+                  Thông tin cá nhân
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Link to="/follow" className="header-link">
+                  Đơn hàng của tôi
+                </Link>
+              </MenuItem>{" "}
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Link to="/admin" className="header-link">
+                  Quản lý
+                </Link>
+              </MenuItem>{" "}
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Link to="/login" className="header-link">
+                  Đăng nhập
+                </Link>
+              </MenuItem>
             </Menu>
           </Toolbar>
         </Container>

@@ -20,7 +20,7 @@ export default function Home() {
     // </div>
     <div>
       <Row>
-        <Col span={20} offset={2}>
+        <Col span={24}>
           <Banner />
         </Col>
       </Row>
