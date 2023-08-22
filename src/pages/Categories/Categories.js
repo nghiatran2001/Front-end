@@ -5,7 +5,7 @@ import {
   TextareaAutosize,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Admin from "../Admin/Admin";
 import { Modal, notification } from "antd";
 import { styled } from "@mui/material/styles";
@@ -16,7 +16,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { category as categoryAPI } from "../../API";
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -39,9 +39,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function Categories() {
   const [category, setCategory] = useState([]);
-  const [api, contextHolder] = notification.useNotification();
-  const [nameCategory, setNameCategory] = useState("");
-  const [description, setDescription] = useState("");
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   //modal
@@ -49,74 +47,8 @@ export default function Categories() {
     setIsModalOpen(true);
   };
 
-  const handleOk = () => {
-    handleAddCategory();
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-    window.location.reload(true);
-  };
-
-  useEffect(() => {
-    (async () => {
-      await getCategoryList();
-    })();
-  }, []);
-  const getCategoryList = async () => {
-    try {
-      const result = await categoryAPI.getCategoryList();
-      setCategory(result.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleAddCategory = async () => {
-    try {
-      const result = await categoryAPI.addCategory({
-        nameCategory,
-        description,
-      });
-
-      if (result.status === 200) {
-        api.open({
-          type: "success",
-          message: "Thêm thể loại thành công.",
-        });
-      }
-    } catch (error) {
-      api.open({
-        type: "error",
-        message: "Tên thể loại đã tồn tại.",
-      });
-    }
-  };
-
-  const handleDeleteCategory = async (nameCategory) => {
-    try {
-      const result = await categoryAPI.deleteCategory({
-        nameCategory,
-      });
-      if (result.status === 200) {
-        await getCategoryList();
-        api.open({
-          type: "success",
-          message: "Xóa thể loại thành công.",
-        });
-      }
-    } catch (error) {
-      api.open({
-        type: "error",
-        message: "Xóa thể loại thất bại.",
-      });
-      console.log(error);
-    }
-  };
-
   return (
     <div>
-      {contextHolder}
       <Box
         sx={{
           display: "flex",
@@ -141,12 +73,7 @@ export default function Categories() {
               <Button variant="contained" onClick={showModal}>
                 Thêm loại sản phẩm
               </Button>
-              <Modal
-                title="Thêm thể loại sản phẩm"
-                open={isModalOpen}
-                onOk={handleOk}
-                onCancel={handleCancel}
-              >
+              <Modal title="Thêm thể loại sản phẩm" open={isModalOpen}>
                 <TableContainer>
                   <Table>
                     <TableBody>
@@ -201,13 +128,7 @@ export default function Categories() {
                         <Button sx={{ marginRight: 2 }} variant="contained">
                           Sửa
                         </Button>
-                        <Button
-                          onClick={() =>
-                            handleDeleteCategory(category.nameCategory)
-                          }
-                          sx={{ marginRight: 2 }}
-                          variant="contained"
-                        >
+                        <Button sx={{ marginRight: 2 }} variant="contained">
                           Xóa
                         </Button>
                       </StyledTableCell>

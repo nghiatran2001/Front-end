@@ -1,23 +1,41 @@
 import React, { useState } from "react";
 import { Button, InputLabel } from "@mui/material";
 import "./Login.css";
-import { Form, Link } from "react-router-dom";
+import { Form, Link, useNavigate } from "react-router-dom";
 import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
 import { Input } from "antd";
+import { loginUser } from "../../redux/apiRequest";
+import { useDispatch } from "react-redux";
 export default function Login() {
   const [isShowPassword, setIsShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const newUser = {
+      email: email,
+      password: password,
+    };
+    loginUser(newUser, dispatch, navigate);
+  };
   return (
     <div>
       <div className="login">
-        <Form className="form">
-          <h1>ĐĂNG NHẬP VÀO TRANG WEB</h1>
+        <Form className="form" onSubmit={handleLogin}>
+          <h1>ĐĂNG NHẬP</h1>
           <InputLabel className="label">Email</InputLabel>
           <Input
             required
             type="email"
             placeholder="abc@gmail.com"
             className="input"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           ></Input>
+
           <InputLabel className="label">Mật Khẩu</InputLabel>
 
           <div style={{ position: "relative" }}>
@@ -36,6 +54,8 @@ export default function Login() {
               type={isShowPassword ? "text" : "password"}
               placeholder="********"
               className="input"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             ></Input>
           </div>
           <Button className="button">Đăng nhập</Button>

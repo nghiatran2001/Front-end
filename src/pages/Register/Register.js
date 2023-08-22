@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Register.css";
+
 import { Button, InputLabel } from "@mui/material";
 import { Form, Link } from "react-router-dom";
 import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
@@ -7,31 +8,37 @@ import { Input } from "antd";
 
 export default function Register() {
   const [isShowPassword, setIsShowPassword] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [phone, setPhone] = useState("");
+
   return (
-    <div>
+    <>
       <div className="register">
         <Form className="form">
-          <h1>XIN CHÀO ĐĂNG KÝ TẠI ĐÂY!</h1>
+          <h1>ĐĂNG KÝ</h1>
           <InputLabel className="label">Họ Tên</InputLabel>
           <Input
             required
-            placeholder="Nghia Tran"
+            placeholder="Your Name"
             type="text"
-            id="username"
-            name="username"
             className="input"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           ></Input>
-
+          {/* <p style={{ color: "red" }}>{validation.name}</p> */}
           <InputLabel className="label">Email</InputLabel>
           <Input
             required
             placeholder="abc@gmail.com"
             type="email"
-            id="email"
-            name="email"
             className="input"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           ></Input>
-
+          {/* <p>{validation.email}</p> */}
           <InputLabel className="label">Mật Khẩu</InputLabel>
           <div style={{ position: "relative" }}>
             <span
@@ -48,10 +55,11 @@ export default function Register() {
               required
               placeholder="********"
               type="password"
-              id="password"
-              name="password"
               className="input"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             ></Input>
+            {/* <p>{validation.password}</p> */}
           </div>
           <InputLabel className="label">Nhập lại mật Khẩu</InputLabel>
           <div style={{ position: "relative" }}>
@@ -70,26 +78,27 @@ export default function Register() {
               placeholder="********"
               type="password"
               className="input"
-              id="confirmPassword"
-              name="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             ></Input>
+            {/* <p>{validation.confirmPassword}</p> */}
           </div>
           <InputLabel className="label">Số Điện Thoại</InputLabel>
           <Input
             required
             placeholder="093 xxx xxxx"
             type="phone"
-            id="phone"
-            name="phone"
             className="input"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
           ></Input>
-
+          {/* <p>{validation.phone}</p> */}
           <Button className="button">Đăng ký</Button>
           <span>
             Bạn đã có tài khoản? <Link to="/login">Đăng nhập</Link>
           </span>
         </Form>
       </div>
-    </div>
+    </>
   );
 }
