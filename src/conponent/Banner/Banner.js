@@ -25,9 +25,10 @@ export default function Banner() {
         }}
       >
         <BannerStyle {...settings}>
-          {arrImg.map((image) => {
+          {arrImg.map((image, index) => {
             return (
               <Image
+                key={index}
                 src={image}
                 alt="banner"
                 preview={false}

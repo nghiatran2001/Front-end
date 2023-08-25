@@ -46,7 +46,7 @@ export default function Product() {
             width: "100%",
             maxWidth: 250,
             bgcolor: "#999999",
-            height: "100vh",
+            height: "1200px",
           }}
         >
           <Admin></Admin>

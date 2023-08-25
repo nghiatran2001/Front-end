@@ -28,7 +28,7 @@ export default function Admin() {
             width: "100%",
             maxWidth: 250,
             bgcolor: "#999999",
-            height: "1000px",
+            height: "1200px",
           }}
         >
           <Box
@@ -38,11 +38,18 @@ export default function Admin() {
               paddingTop: 3,
             }}
           >
-            <StarBorder></StarBorder>
-            <Link to="/" style={{ textDecoration: "none", color: "black" }}>
-              {" "}
-              Dashboard
-            </Link>
+            <Box sx={{ marginBottom: "50px", marginTop: "50px", fontSize: 40 }}>
+              <StarBorder></StarBorder>
+              <Link
+                to="/"
+                style={{
+                  textDecoration: "none",
+                  color: "black",
+                }}
+              >
+                Dashboard
+              </Link>
+            </Box>
           </Box>
           <List component="nav" aria-labelledby="nested-list-subheader">
             <ListItemButton onClick={handleClick}>
@@ -120,7 +127,6 @@ export default function Admin() {
             </Collapse>
           </List>
         </Box>
-        <Box></Box>
       </Box>
     </div>
   );

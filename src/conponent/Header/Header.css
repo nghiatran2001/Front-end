@@ -2,3 +2,12 @@
   text-decoration: none;
   color: inherit;
 }
+.nameApp {
+  margin-right: 2px;
+  display: flex;
+  font-family: monospace;
+  font-weight: 700px;
+  letter-spacing: 0.3rem;
+  color: inherit;
+  text-decoration: none;
+}

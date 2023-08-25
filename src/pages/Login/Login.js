@@ -15,18 +15,18 @@ export default function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    const newUser = {
+    const user = {
       email: email,
       password: password,
     };
-    loginUser(newUser, dispatch, navigate);
+    loginUser(user, dispatch, navigate);
   };
   return (
     <div>
       <div className="login">
-        <Form className="form" onSubmit={handleLogin}>
+        <Form className="form">
           <h1>ĐĂNG NHẬP</h1>
-          <InputLabel className="label">Email</InputLabel>
+          <InputLabel className="label">Email(*)</InputLabel>
           <Input
             required
             type="email"
@@ -35,9 +35,7 @@ export default function Login() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           ></Input>
-
-          <InputLabel className="label">Mật Khẩu</InputLabel>
-
+          <InputLabel className="label">Mật Khẩu(*)</InputLabel>
           <div style={{ position: "relative" }}>
             <span
               style={{
@@ -58,7 +56,9 @@ export default function Login() {
               onChange={(e) => setPassword(e.target.value)}
             ></Input>
           </div>
-          <Button className="button">Đăng nhập</Button>
+          <Button className="button" onClick={handleLogin}>
+            Đăng nhập
+          </Button>
           <span>
             Bạn chưa có tài khoản? <Link to="/register">Đăng ký</Link>
           </span>

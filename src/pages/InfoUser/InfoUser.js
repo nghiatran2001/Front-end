@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./InfoUser.css";
 import { Button, Form, Input, Modal } from "antd";
-
+import { useSelector } from "react-redux";
 export default function InfoUser() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
@@ -13,6 +13,8 @@ export default function InfoUser() {
     setIsModalOpen(false);
     window.location.reload(true);
   };
+
+  const user = useSelector((state) => state.auth.login?.currentUser);
   return (
     <div>
       <div className="infoUser">
@@ -30,13 +32,29 @@ export default function InfoUser() {
           }}
         >
           <Form.Item label="Họ Tên">
-            <Input placeholder="Họ Tên" id="fullName" name="fullName" />
+            <Input
+              placeholder="Họ Tên"
+              id="fullName"
+              name="fullName"
+              value={user?.name}
+            />
           </Form.Item>
           <Form.Item label="Email">
-            <Input placeholder="Email" id="email" name="email" disabled />
+            <Input
+              placeholder="Email"
+              id="email"
+              name="email"
+              disabled
+              value={user?.email}
+            />
           </Form.Item>
           <Form.Item label="SĐT">
-            <Input placeholder="SĐT" id="phone" name="phone" />
+            <Input
+              placeholder="SĐT"
+              id="phone"
+              name="phone"
+              value={user?.phone}
+            />
           </Form.Item>
           <div className="button">
             <Form.Item>

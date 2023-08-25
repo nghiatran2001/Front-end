@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import Admin from "../Admin/Admin";
 import { styled } from "@mui/material/styles";
@@ -9,7 +9,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-
+import { deleteUser, getAllUser } from "../../redux/apiRequest";
+import { useDispatch, useSelector } from "react-redux";
+import { loginSuccess } from "../../redux/authSlice";
+import { createAxios } from "../../createInstance";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -19,18 +22,31 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontSize: 14,
   },
 }));
-
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,
   },
 }));
 
 export default function User() {
+  const user = useSelector((state) => state.auth.login?.currentUser);
+  const userList = useSelector((state) => state.user.users?.getAllUser);
+  const dispatch = useDispatch();
+
+  let axiosJWT = createAxios(user, dispatch, loginSuccess);
+
+  const handleDelete = (id) => {
+    deleteUser(user?.accessToken, dispatch, id, axiosJWT);
+  };
+  useEffect(() => {
+    if (user?.accessToken) {
+      getAllUser(user?.accessToken, dispatch, axiosJWT);
+    }
+  }, []);
+
   return (
     <div>
       <Box
@@ -43,7 +59,7 @@ export default function User() {
             width: "100%",
             maxWidth: 250,
             bgcolor: "#999999",
-            height: "100vh",
+            height: "1200px",
           }}
         >
           <Admin></Admin>
@@ -60,45 +76,43 @@ export default function User() {
                   <StyledTableCell>Họ Tên</StyledTableCell>
                   <StyledTableCell>Email</StyledTableCell>
                   <StyledTableCell>Số Điện Thoại</StyledTableCell>
+                  <StyledTableCell>Phân Quyền</StyledTableCell>
                   <StyledTableCell>Thao tác</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    1
-                  </StyledTableCell>
-                  <StyledTableCell>Huu Nghia</StyledTableCell>
-                  <StyledTableCell>huunghia@gnail.com</StyledTableCell>
-                  <StyledTableCell>092323232</StyledTableCell>
-                  <StyledTableCell>
-                    <Button sx={{ marginRight: 2 }} variant="contained">
-                      Sửa
-                    </Button>
-                    <Button sx={{ marginRight: 2 }} variant="contained">
-                      Xóa
-                    </Button>
-                  </StyledTableCell>
-                </StyledTableRow>
-              </TableBody>
-
-              <TableBody>
-                <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    2
-                  </StyledTableCell>
-                  <StyledTableCell>Thinh</StyledTableCell>
-                  <StyledTableCell>thinh@gnail.com</StyledTableCell>
-                  <StyledTableCell>0548742421</StyledTableCell>
-                  <StyledTableCell>
-                    <Button sx={{ marginRight: 2 }} variant="contained">
-                      Sửa
-                    </Button>
-                    <Button sx={{ marginRight: 2 }} variant="contained">
-                      Xóa
-                    </Button>
-                  </StyledTableCell>
-                </StyledTableRow>
+                {userList?.map((user, index) => {
+                  return (
+                    <StyledTableRow key={index}>
+                      <StyledTableCell component="th" scope="row">
+                        {index + 1}
+                      </StyledTableCell>
+                      <StyledTableCell>{user?.name}</StyledTableCell>
+                      <StyledTableCell>{user?.email}</StyledTableCell>
+                      <StyledTableCell>{user?.phone}</StyledTableCell>
+                      <StyledTableCell>
+                        {user?.role ? `Admin` : `User`}
+                      </StyledTableCell>
+                      <StyledTableCell>
+                        <Button sx={{ marginRight: 2 }} variant="contained">
+                          Sửa
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            handleDelete(user._id);
+                          }}
+                          sx={{ marginRight: 2 }}
+                          variant="contained"
+                        >
+                          Xóa
+                        </Button>
+                        <Button sx={{ marginRight: 2 }} variant="contained">
+                          Khóa
+                        </Button>
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </TableContainer>

@@ -19,7 +19,7 @@ export default function Type() {
   return (
     <div>
       <Sidebar />
-      <Row style={{ marginTop: "50px" }}>
+      <Row style={{ marginTop: "100px", marginBottom: "300px" }}>
         <Col span={20} offset={2}>
           <Box className="main">
             <Card className="card" sx={{ width: 200 }}>

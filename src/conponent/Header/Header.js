@@ -16,10 +16,13 @@ import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import ShoppingCart from "@mui/icons-material/ShoppingCart";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./Header.css";
 import { Badge } from "antd";
-
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "../../redux/apiRequest";
+import { createAxios } from "../../createInstance";
+import { logoutSuccess } from "../../redux/authSlice";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -63,20 +66,27 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
-
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+  const user = useSelector((state) => state.auth.login.currentUser);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const accessToken = user?.accessToken;
+  const id = user?._id;
+  let axiosJWT = createAxios(user, dispatch, logoutSuccess);
+
+  const handleLogout = () => {
+    logOut(dispatch, id, navigate, accessToken, axiosJWT);
   };
   return (
     <div>
@@ -220,11 +230,17 @@ export default function Header() {
                 </NavLink>
               </Tooltip>
             </Box>
-            <Box sx={{ flexGrow: 0, paddingRight: 5 }}>
-              <Tooltip title="Open settings">
-                <h4>Hello! Nghĩa</h4>
-              </Tooltip>
-            </Box>
+            {user ? (
+              <>
+                <Box sx={{ flexGrow: 0, paddingRight: 5 }}>
+                  <Tooltip title="Open settings">
+                    <h4>Hi, {user.name}</h4>
+                  </Tooltip>
+                </Box>
+              </>
+            ) : (
+              <></>
+            )}
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -232,43 +248,114 @@ export default function Header() {
                 </IconButton>
               </Tooltip>
             </Box>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Link to="/infouser" className="header-link">
-                  Thông tin cá nhân
-                </Link>
-              </MenuItem>
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Link to="/follow" className="header-link">
-                  Đơn hàng của tôi
-                </Link>
-              </MenuItem>{" "}
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Link to="/admin" className="header-link">
-                  Quản lý
-                </Link>
-              </MenuItem>{" "}
-              <MenuItem onClick={handleCloseUserMenu}>
-                <Link to="/login" className="header-link">
-                  Đăng nhập
-                </Link>
-              </MenuItem>
-            </Menu>
+            {user ? (
+              <>
+                {user.role ? (
+                  <>
+                    <Menu
+                      sx={{ mt: "45px" }}
+                      id="menu-appbar"
+                      anchorEl={anchorElUser}
+                      anchorOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      keepMounted
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      open={Boolean(anchorElUser)}
+                      onClose={handleCloseUserMenu}
+                    >
+                      <MenuItem onClick={handleCloseUserMenu}>
+                        <Link to="/infouser" className="header-link">
+                          Thông tin cá nhân
+                        </Link>
+                      </MenuItem>
+                      <MenuItem onClick={handleCloseUserMenu}>
+                        <Link to="/follow" className="header-link">
+                          Đơn hàng của tôi
+                        </Link>
+                      </MenuItem>{" "}
+                      <MenuItem onClick={handleCloseUserMenu}>
+                        <Link to="/admin" className="header-link">
+                          Quản lý
+                        </Link>
+                      </MenuItem>{" "}
+                      <MenuItem onClick={handleCloseUserMenu}>
+                        <div onClick={handleLogout}>Đăng xuất</div>
+                      </MenuItem>
+                    </Menu>
+                  </>
+                ) : (
+                  <>
+                    <Menu
+                      sx={{ mt: "45px" }}
+                      id="menu-appbar"
+                      anchorEl={anchorElUser}
+                      anchorOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      keepMounted
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
+                      open={Boolean(anchorElUser)}
+                      onClose={handleCloseUserMenu}
+                    >
+                      <MenuItem onClick={handleCloseUserMenu}>
+                        <Link to="/infouser" className="header-link">
+                          Thông tin cá nhân
+                        </Link>
+                      </MenuItem>
+                      <MenuItem onClick={handleCloseUserMenu}>
+                        <Link to="/follow" className="header-link">
+                          Đơn hàng của tôi
+                        </Link>
+                      </MenuItem>{" "}
+                      <MenuItem onClick={handleCloseUserMenu}>
+                        <Link className="header-link">
+                          <div onClick={handleLogout}>Đăng xuất</div>
+                        </Link>
+                      </MenuItem>
+                    </Menu>
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Link to="/login" className="header-link">
+                      Đăng nhập
+                    </Link>
+                  </MenuItem>
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Link to="/register" className="header-link">
+                      Đăng ký
+                    </Link>
+                  </MenuItem>
+                </Menu>
+              </>
+            )}
           </Toolbar>
         </Container>
       </AppBar>
