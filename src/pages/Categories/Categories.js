@@ -1,13 +1,7 @@
-import {
-  Box,
-  Button,
-  OutlinedInput,
-  TextareaAutosize,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import React, { useState } from "react";
 import Admin from "../Admin/Admin";
-import { Modal, notification } from "antd";
+import { Form, Input, Modal } from "antd";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -38,15 +32,17 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function Categories() {
-  const [category, setCategory] = useState([]);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  //modal
   const showModal = () => {
     setIsModalOpen(true);
   };
 
+  const handleOk = () => {};
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    window.location.reload(true);
+  };
   return (
     <div>
       <Box
@@ -73,37 +69,30 @@ export default function Categories() {
               <Button variant="contained" onClick={showModal}>
                 Thêm loại sản phẩm
               </Button>
-              <Modal title="Thêm thể loại sản phẩm" open={isModalOpen}>
-                <TableContainer>
-                  <Table>
-                    <TableBody>
-                      <StyledTableRow>
-                        <StyledTableCell component="th" scope="row">
-                          Tên hãng:
-                        </StyledTableCell>
-                        <StyledTableCell>
-                          <OutlinedInput
-                            type="text"
-                            sx={{ width: "100%" }}
-                          ></OutlinedInput>
-                        </StyledTableCell>
-                      </StyledTableRow>
-                    </TableBody>
-                    <TableBody>
-                      <StyledTableRow>
-                        <StyledTableCell component="th" scope="row">
-                          Mô tả:
-                        </StyledTableCell>
-                        <StyledTableCell>
-                          <TextareaAutosize
-                            type="text"
-                            style={{ width: "100%", height: 100, fontSize: 17 }}
-                          ></TextareaAutosize>
-                        </StyledTableCell>
-                      </StyledTableRow>
-                    </TableBody>
-                  </Table>
-                </TableContainer>
+              <Modal
+                title="Thêm loại sản phẩm"
+                open={isModalOpen}
+                onOk={handleOk}
+                onCancel={handleCancel}
+              >
+                <Form
+                  labelCol={{
+                    span: 8,
+                  }}
+                  wrapperCol={{
+                    span: 8,
+                  }}
+                  style={{
+                    minWidth: 600,
+                  }}
+                >
+                  <Form.Item label="Tên Hãng">
+                    <Input placeholder="Tên hãng"></Input>
+                  </Form.Item>
+                  <Form.Item label="Mô tả">
+                    <Input placeholder="Mô tả"></Input>
+                  </Form.Item>
+                </Form>
               </Modal>
             </Typography>
           </Box>
@@ -117,24 +106,20 @@ export default function Categories() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {category.map((category, index) => {
-                  return (
-                    <StyledTableRow>
-                      <StyledTableCell key={index} component="th" scope="row">
-                        {index + 1}
-                      </StyledTableCell>
-                      <StyledTableCell>{category.nameCategory}</StyledTableCell>
-                      <StyledTableCell>
-                        <Button sx={{ marginRight: 2 }} variant="contained">
-                          Sửa
-                        </Button>
-                        <Button sx={{ marginRight: 2 }} variant="contained">
-                          Xóa
-                        </Button>
-                      </StyledTableCell>
-                    </StyledTableRow>
-                  );
-                })}
+                <StyledTableRow>
+                  <StyledTableCell component="th" scope="row">
+                    1
+                  </StyledTableCell>
+                  <StyledTableCell>Dell</StyledTableCell>
+                  <StyledTableCell>
+                    <Button sx={{ marginRight: 2 }} variant="contained">
+                      Sửa
+                    </Button>
+                    <Button sx={{ marginRight: 2 }} variant="contained">
+                      Xóa
+                    </Button>
+                  </StyledTableCell>
+                </StyledTableRow>
               </TableBody>
             </Table>
           </TableContainer>

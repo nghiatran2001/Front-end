@@ -18,6 +18,9 @@ import {
   deleteUserFailed,
   deleteUserStart,
   deleteUserSuccess,
+  updateUserFailed,
+  updateUserStart,
+  updateUserSuccess,
 } from "./userSlice";
 
 export const loginUser = async (user, dispatch, navigate) => {
@@ -67,6 +70,19 @@ export const deleteUser = async (accessToken, dispatch, id, axiosJWT) => {
     dispatch(deleteUserSuccess(res.data));
   } catch (error) {
     dispatch(deleteUserFailed(error.response.data));
+  }
+};
+
+export const updateUser = async (dispatch, id, accessToken, axiosJWT) => {
+  dispatch(updateUserStart());
+  try {
+    const BACKEND_API = process.env.REACT_APP_BACKEND_API;
+    const res = await axiosJWT.put(BACKEND_API + "/user/" + id, {
+      headers: { token: `Bearer ${accessToken}` },
+    });
+    dispatch(updateUserSuccess(res.data));
+  } catch (error) {
+    dispatch(updateUserFailed(error));
   }
 };
 
