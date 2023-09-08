@@ -1,5 +1,5 @@
-import axios from "axios";
 import jwt_decode from "jwt-decode";
+import axios from "axios";
 
 const refreshToken = async () => {
   try {

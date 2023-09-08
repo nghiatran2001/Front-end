@@ -13,6 +13,7 @@ import { deleteUser, getAllUser } from "../../redux/apiRequest";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../../redux/authSlice";
 import { createAxios } from "../../createInstance";
+import axios from "axios";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,

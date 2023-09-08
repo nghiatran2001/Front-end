@@ -83,6 +83,7 @@ export default function Header() {
   const navigate = useNavigate();
   const accessToken = user?.accessToken;
   const id = user?._id;
+
   let axiosJWT = createAxios(user, dispatch, logoutSuccess);
 
   const handleLogout = () => {
