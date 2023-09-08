@@ -33,7 +33,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function User() {
   const user = useSelector((state) => state.auth.login?.currentUser);
-  const userList = useSelector((state) => state.user.users?.getAllUser);
+  const userList = useSelector((state) => state.users.users?.getAllUser);
   const dispatch = useDispatch();
 
   let axiosJWT = createAxios(user, dispatch, loginSuccess);
