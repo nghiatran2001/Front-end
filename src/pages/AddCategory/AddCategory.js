@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Admin from "../Admin/Admin";
 import {
@@ -15,6 +15,8 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { tableCellClasses } from "@mui/material/TableCell";
+
+import { category as categoryAPI } from "../../API";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,6 +39,21 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function AddCategory() {
+  const [nameCategory, setNameCategory] = useState("");
+  const [description, setDescription] = useState("");
+
+  const handleAddCategory = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await categoryAPI.addCategory({
+        nameCategory,
+
+        description,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
       <Box

@@ -42,7 +42,7 @@ export default function OrderAdmin() {
             width: "100%",
             maxWidth: 250,
             bgcolor: "#999999",
-            height: "1200px",
+            height: "100%",
           }}
         >
           <Admin></Admin>
@@ -106,6 +106,91 @@ export default function OrderAdmin() {
                     </Button>
                   </StyledTableCell>
                 </StyledTableRow>
+
+                <StyledTableRow>
+                  <StyledTableCell component="th" scope="row">
+                    Ma45465454
+                  </StyledTableCell>
+                  <StyledTableCell>Huu Nghia</StyledTableCell>
+                  <StyledTableCell>huunghia@gnail.com</StyledTableCell>
+                  <StyledTableCell>092323232</StyledTableCell>
+                  <StyledTableCell>Đang xử lý</StyledTableCell>
+                  <StyledTableCell>
+                    <p>Tên: ưqeqw</p>
+                    <p>Số lượng: 1</p>
+                    <p>Đơn giá: 424242</p>
+                    <p>Tổng tiền: 42112421</p>
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    <Button sx={{ marginRight: 2 }} variant="contained">
+                      Cập nhật
+                    </Button>
+                  </StyledTableCell>
+                </StyledTableRow>
+
+                <StyledTableRow>
+                  <StyledTableCell component="th" scope="row">
+                    Ma45465454
+                  </StyledTableCell>
+                  <StyledTableCell>Huu Nghia</StyledTableCell>
+                  <StyledTableCell>huunghia@gnail.com</StyledTableCell>
+                  <StyledTableCell>092323232</StyledTableCell>
+                  <StyledTableCell>Đang xử lý</StyledTableCell>
+                  <StyledTableCell>
+                    <p>Tên: ưqeqw</p>
+                    <p>Số lượng: 1</p>
+                    <p>Đơn giá: 424242</p>
+                    <p>Tổng tiền: 42112421</p>
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    <Button sx={{ marginRight: 2 }} variant="contained">
+                      Cập nhật
+                    </Button>
+                  </StyledTableCell>
+                </StyledTableRow>
+
+                 <StyledTableRow>
+                  <StyledTableCell component="th" scope="row">
+                    Ma45465454
+                  </StyledTableCell>
+                  <StyledTableCell>Huu Nghia</StyledTableCell>
+                  <StyledTableCell>huunghia@gnail.com</StyledTableCell>
+                  <StyledTableCell>092323232</StyledTableCell>
+                  <StyledTableCell>Đang xử lý</StyledTableCell>
+                  <StyledTableCell>
+                    <p>Tên: ưqeqw</p>
+                    <p>Số lượng: 1</p>
+                    <p>Đơn giá: 424242</p>
+                    <p>Tổng tiền: 42112421</p>
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    <Button sx={{ marginRight: 2 }} variant="contained">
+                      Cập nhật
+                    </Button>
+                  </StyledTableCell>             
+                </StyledTableRow>
+
+                <StyledTableRow>
+                  <StyledTableCell component="th" scope="row">
+                    Ma45465454
+                  </StyledTableCell>
+                  <StyledTableCell>Huu Nghia</StyledTableCell>
+                  <StyledTableCell>huunghia@gnail.com</StyledTableCell>
+                  <StyledTableCell>092323232</StyledTableCell>
+                  <StyledTableCell>Đang xử lý</StyledTableCell>
+                  <StyledTableCell>
+                    <p>Tên: ưqeqw</p>
+                    <p>Số lượng: 1</p>
+                    <p>Đơn giá: 424242</p>
+                    <p>Tổng tiền: 42112421</p>
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    <Button sx={{ marginRight: 2 }} variant="contained">
+                      Cập nhật
+                    </Button>
+                  </StyledTableCell>             
+                </StyledTableRow>
+
               </TableBody>
             </Table>
           </TableContainer>

@@ -12,7 +12,6 @@ import {
   TableCell,
   TableContainer,
   TableRow,
-  TextareaAutosize,
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
@@ -30,11 +29,10 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
+const StyledTableRow = styled(TableRow)(() => ({
   "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
+    background: "white",
   },
-  // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,
   },
@@ -42,7 +40,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function AddProduct() {
   const [listCategory, setListCategory] = useState([]);
-  const [name, setName] = useState("");
+  const [nameCategory, setNameCategory] = useState("");
   const [nameProduct, setNameProduct] = useState("");
   const [originPrice, setOriginPrice] = useState("");
   const [sellPrice, setSellPrice] = useState("");
@@ -65,7 +63,7 @@ export default function AddProduct() {
     e.preventDefault();
     try {
       const result = await productAPI.addProduct({
-        name,
+        nameCategory,
         nameProduct,
         originPrice,
         sellPrice,
@@ -73,6 +71,7 @@ export default function AddProduct() {
         quantity,
         description,
       });
+      console.log(result);
     } catch (error) {
       console.log(error);
     }
@@ -91,16 +90,6 @@ export default function AddProduct() {
       console.log(error);
     }
   };
-
-  console.log({
-    name,
-    nameProduct,
-    originPrice,
-    sellPrice,
-    image,
-    quantity,
-    description,
-  });
 
   return (
     <div>
@@ -130,109 +119,122 @@ export default function AddProduct() {
               </Link>
             </Typography>
           </Box>
+
           <TableContainer
-            sx={{ minWidth: 800, border: 1, borderRadius: 3 }}
+            sx={{
+              minWidth: 800,
+              border: 1,
+              borderRadius: 5,
+            }}
             aria-label="customized table"
           >
             <Table>
               <TableBody>
                 <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    Tên sản phẩm:
-                  </StyledTableCell>
+                  <StyledTableCell>Tên sản phẩm:</StyledTableCell>
                   <StyledTableCell>
                     <OutlinedInput
                       onChange={(e) => setNameProduct(e.target.value)}
                       type="text"
-                      sx={{ width: "100%" }}
+                      sx={{ width: "100%", height: "40px" }}
                     ></OutlinedInput>
                   </StyledTableCell>
                 </StyledTableRow>
+              </TableBody>
+
+              <TableBody>
                 <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    Hãng:
-                  </StyledTableCell>
+                  <StyledTableCell>Hãng:</StyledTableCell>
                   <StyledTableCell>
-                    <select onChange={(e) => setName(e.target.value)}>
+                    <select
+                      style={{ width: "100%", height: "40px" }}
+                      onChange={(e) => setNameCategory(e.target.value)}
+                    >
                       <option>Chọn Hãng</option>
                       {listCategory.map((category, index) => {
-                        return <option key={index}>{category.name}</option>;
+                        return (
+                          <option key={index}>{category.nameCategory}</option>
+                        );
                       })}
                     </select>
                   </StyledTableCell>
                 </StyledTableRow>
+              </TableBody>
 
+              <TableBody>
                 <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    Giá gốc:
-                  </StyledTableCell>
+                  <StyledTableCell>Giá gốc:</StyledTableCell>
                   <StyledTableCell>
                     <OutlinedInput
                       onChange={(e) => setOriginPrice(e.target.value)}
-                      type="text"
-                      sx={{ width: "100%" }}
+                      type="number"
+                      defaultValue={0}
+                      sx={{ width: "100%", height: "40px" }}
                     ></OutlinedInput>
                   </StyledTableCell>
                 </StyledTableRow>
+              </TableBody>
 
+              <TableBody>
                 <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    Giá bán:
-                  </StyledTableCell>
+                  <StyledTableCell>Giá bán:</StyledTableCell>
                   <StyledTableCell>
                     <OutlinedInput
                       onChange={(e) => setSellPrice(e.target.value)}
-                      type="text"
-                      sx={{ width: "100%" }}
+                      type="number"
+                      defaultValue={0}
+                      sx={{ width: "100%", height: "40px" }}
                     ></OutlinedInput>
                   </StyledTableCell>
                 </StyledTableRow>
+              </TableBody>
 
+              <TableBody>
                 <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    Số lượng:
-                  </StyledTableCell>
+                  <StyledTableCell>Số lượng:</StyledTableCell>
                   <StyledTableCell>
                     <OutlinedInput
                       onChange={(e) => setQuantity(e.target.value)}
                       type="number"
-                      sx={{ width: "100%" }}
+                      defaultValue={0}
+                      sx={{ width: "100%", height: "40px" }}
                     ></OutlinedInput>
                   </StyledTableCell>
                 </StyledTableRow>
+              </TableBody>
 
+              <TableBody>
                 <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    Mô tả:
-                  </StyledTableCell>
+                  <StyledTableCell>Mô tả:</StyledTableCell>
                   <StyledTableCell>
-                    <TextareaAutosize
+                    <OutlinedInput
                       onChange={(e) => setDescription(e.target.value)}
                       type="text"
-                      style={{ width: "100%", height: 100, fontSize: 17 }}
-                    ></TextareaAutosize>
+                      sx={{ width: "100%", height: "40px" }}
+                    ></OutlinedInput>
                   </StyledTableCell>
                 </StyledTableRow>
+              </TableBody>
 
+              <TableBody>
                 <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    Hình ảnh:
-                  </StyledTableCell>
+                  <StyledTableCell>Hình ảnh:</StyledTableCell>
                   <StyledTableCell>
                     <InputBase
                       onChange={handlePicture}
                       type="file"
-                      sx={{ width: "100%" }}
+                      sx={{ width: "100%", height: "40px" }}
                     ></InputBase>
                   </StyledTableCell>
                 </StyledTableRow>
               </TableBody>
+
               <TableBody>
                 <StyledTableRow>
-                  <StyledTableCell component="th" scope="row"></StyledTableCell>
+                  <StyledTableCell></StyledTableCell>
                   <StyledTableCell>
                     <Button variant="contained" onClick={handleAddProduct}>
-                      Thêm
+                      Thêm sản phẩm
                     </Button>
                   </StyledTableCell>
                 </StyledTableRow>

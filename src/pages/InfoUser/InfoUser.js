@@ -6,6 +6,35 @@ import { updateUser } from "../../redux/apiRequest";
 import { createAxios } from "../../createInstance";
 import { updateUserSuccess } from "../../redux/userSlice";
 import { user as userAPI } from "../../API";
+import {
+  OutlinedInput,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  tableCellClasses,
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(() => ({
+  "&:nth-of-type(odd)": {
+    background: "white",
+  },
+  "&:last-child td, &:last-child th": {
+    border: 0,
+  },
+}));
 
 export default function InfoUser() {
   const user = useSelector((state) => state.auth.login?.currentUser);
@@ -36,9 +65,7 @@ export default function InfoUser() {
   const showModal1 = () => {
     setIsModalOpen1(true);
   };
-  const handleOk1 = (id) => {
-    updateUser(dispatch, id, user?.accessToken, axiosJWT);
-  };
+  const handleOk1 = () => {};
 
   const handleCancel1 = () => {
     setIsModalOpen(false);
@@ -48,11 +75,35 @@ export default function InfoUser() {
   return (
     <div>
       <div className="infoUser">
-        <Form style={{ padding: 50, fontSize: 40 }}>
+        <Form style={{ padding: 20, fontSize: 30 }}>
           <h3>THÔNG TIN NGƯỜI DÙNG</h3>
-          <Form.Item label="Họ Tên">{user.name}</Form.Item>
-          <Form.Item label="Email">{user.email}</Form.Item>
-          <Form.Item label="SĐT">{user.phone}</Form.Item>
+          <TableContainer
+            sx={{
+              minWidth: 600,
+              border: 1,
+              borderRadius: 5,
+            }}
+            aria-label="customized table"
+          >
+            <Table>
+              <TableBody>
+                <StyledTableRow>
+                  <StyledTableCell>Họ tên:</StyledTableCell>
+                  <StyledTableCell>{user.name}</StyledTableCell>
+                </StyledTableRow>
+
+                <StyledTableRow>
+                  <StyledTableCell>Email:</StyledTableCell>
+                  <StyledTableCell>{user.email}</StyledTableCell>
+                </StyledTableRow>
+
+                <StyledTableRow>
+                  <StyledTableCell>Số điện thoại:</StyledTableCell>
+                  <StyledTableCell>{user.phone}</StyledTableCell>
+                </StyledTableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
           <div className="button">
             <Form.Item>
               <Button type="primary" htmlType="submit" onClick={showModal1}>

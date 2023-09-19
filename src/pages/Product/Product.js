@@ -13,7 +13,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";
 
-import { product as productAPI, category as categoryAPI } from "../../API";
+import { product as productAPI } from "../../API";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -36,17 +36,22 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function Product() {
-  const [listCategory, setListCategory] = useState([]);
-  const [layId, setLayId] = useState("");
+  const [listProduct, setListProduct] = useState([]);
+
+  const VND = new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  });
+
   useEffect(() => {
     (async () => {
-      await getCategoryList();
+      await getProductList();
     })();
   }, []);
-  const getCategoryList = async () => {
+  const getProductList = async () => {
     try {
-      const result = await categoryAPI.getCategoryList();
-      setListCategory(result.data);
+      const result = await productAPI.getProductList();
+      setListProduct(result.data);
     } catch (error) {
       console.log(error);
     }
@@ -64,7 +69,7 @@ export default function Product() {
             width: "100%",
             maxWidth: 250,
             bgcolor: "#999999",
-            height: "1200px",
+            height: "100%",
           }}
         >
           <Admin></Admin>
@@ -84,59 +89,56 @@ export default function Product() {
             <Table sx={{ minWidth: 1000 }} aria-label="customized table">
               <TableHead>
                 <TableRow>
-                  <StyledTableCell>STT</StyledTableCell>
-                  <StyledTableCell>Tên sản phẩm</StyledTableCell>
-                  <StyledTableCell>Hình ảnh</StyledTableCell>
-                  <StyledTableCell>Giá gốc</StyledTableCell>
-                  <StyledTableCell>Giá bán</StyledTableCell>
-                  <StyledTableCell>Số lượng kho</StyledTableCell>
-                  <StyledTableCell>Thao tác</StyledTableCell>
+                  <StyledTableCell align="center">STT</StyledTableCell>
+                  <StyledTableCell align="center">Tên sản phẩm</StyledTableCell>
+                  <StyledTableCell align="center">Slug</StyledTableCell>
+                  <StyledTableCell align="center">Hình ảnh</StyledTableCell>
+                  <StyledTableCell align="center">Hãng</StyledTableCell>
+                  <StyledTableCell align="center">Giá gốc</StyledTableCell>
+                  <StyledTableCell align="center">Giá bán</StyledTableCell>
+                  <StyledTableCell align="center">Số lượng kho</StyledTableCell>
+                  <StyledTableCell align="center">Thao tác</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    1
-                  </StyledTableCell>
-                  <StyledTableCell>HP Dark</StyledTableCell>
-                  <StyledTableCell>
-                    <img src={logo} alt="" height="100px"></img>
-                  </StyledTableCell>
-                  <StyledTableCell>13.000.000</StyledTableCell>
-                  <StyledTableCell>10.000.000</StyledTableCell>
-                  <StyledTableCell>5</StyledTableCell>
-                  <StyledTableCell>
-                    <Button sx={{ marginRight: 2 }} variant="contained">
-                      Sửa
-                    </Button>
-                    <Button sx={{ marginRight: 2 }} variant="contained">
-                      Xóa
-                    </Button>
-                  </StyledTableCell>
-                </StyledTableRow>
-              </TableBody>
-
-              <TableBody>
-                <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    1
-                  </StyledTableCell>
-                  <StyledTableCell>Dell Vostro</StyledTableCell>
-                  <StyledTableCell>
-                    <img src={logo} alt="" height="100px"></img>
-                  </StyledTableCell>
-                  <StyledTableCell>10.000.000</StyledTableCell>
-                  <StyledTableCell>8.000.000</StyledTableCell>
-                  <StyledTableCell>10</StyledTableCell>
-                  <StyledTableCell>
-                    <Button sx={{ marginRight: 2 }} variant="contained">
-                      Sửa
-                    </Button>
-                    <Button sx={{ marginRight: 2 }} variant="contained">
-                      Xóa
-                    </Button>
-                  </StyledTableCell>
-                </StyledTableRow>
+                {listProduct.map((product, index) => {
+                  return (
+                    <StyledTableRow key={index}>
+                      <StyledTableCell align="center">
+                        {index + 1}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {product.nameProduct}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {product.slug}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        <img src={logo} alt="" height="100px"></img>
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {product.nameCategory}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {VND.format(product.originPrice)}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {VND.format(product.sellPrice)}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {product.quantity}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        <Button sx={{ marginRight: 1 }} variant="contained">
+                          Sửa
+                        </Button>
+                        <Button sx={{ marginRight: 1 }} variant="contained">
+                          Xóa
+                        </Button>
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </TableContainer>

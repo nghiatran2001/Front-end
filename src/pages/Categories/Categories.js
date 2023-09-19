@@ -37,6 +37,44 @@ export default function Categories() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [listCategory, setListCategory] = useState([]);
 
+  const [nameCategory, setNameCategory] = useState("");
+  const [description, setDescription] = useState("");
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await categoryAPI.addCategory({
+        nameCategory,
+        description,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    window.location.reload(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    window.location.reload(true);
+  };
+
+  const handleDeleteCategory = async (nameCategory) => {
+    try {
+      const result = await categoryAPI.deleteCategory({
+        nameCategory,
+      });
+      if (result.status === 200) {
+        await getCategoryList();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     (async () => {
       await getCategoryList();
@@ -50,17 +88,6 @@ export default function Categories() {
       console.log(error);
     }
   };
-
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleOk = () => {};
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-    window.location.reload(true);
-  };
   return (
     <div>
       <Box
@@ -73,7 +100,7 @@ export default function Categories() {
             width: "100%",
             maxWidth: 250,
             bgcolor: "#999999",
-            height: "1200px",
+            height: "100%",
           }}
         >
           <Admin></Admin>
@@ -105,10 +132,16 @@ export default function Categories() {
                   }}
                 >
                   <Form.Item label="Tên Hãng">
-                    <Input placeholder="Tên hãng"></Input>
+                    <Input
+                      onChange={(e) => setNameCategory(e.target.value)}
+                      placeholder="Tên hãng"
+                    ></Input>
                   </Form.Item>
                   <Form.Item label="Mô tả">
-                    <Input placeholder="Mô tả"></Input>
+                    <Input
+                      onChange={(e) => setDescription(e.target.value)}
+                      placeholder="Mô tả"
+                    ></Input>
                   </Form.Item>
                 </Form>
               </Modal>
@@ -118,11 +151,11 @@ export default function Categories() {
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
                 <TableRow>
-                  <StyledTableCell>STT</StyledTableCell>
-                  <StyledTableCell>Hãng</StyledTableCell>
-                  <StyledTableCell>Hãng</StyledTableCell>
-                  <StyledTableCell>Hãng</StyledTableCell>
-                  <StyledTableCell>Thao tác</StyledTableCell>
+                  <StyledTableCell align="center">STT</StyledTableCell>
+                  <StyledTableCell align="center">Hãng</StyledTableCell>
+                  <StyledTableCell align="center">Slug</StyledTableCell>
+                  <StyledTableCell align="center">Mô tả</StyledTableCell>
+                  <StyledTableCell align="center">Thao tác</StyledTableCell>
                 </TableRow>
               </TableHead>
 
@@ -130,17 +163,29 @@ export default function Categories() {
                 {listCategory.map((category, index) => {
                   return (
                     <StyledTableRow key={index}>
-                      <StyledTableCell component="th" scope="row">
+                      <StyledTableCell align="center">
                         {index + 1}
                       </StyledTableCell>
-                      <StyledTableCell>{category.name}</StyledTableCell>
-                      <StyledTableCell>{category.slug}</StyledTableCell>
-                      <StyledTableCell>{category.description}</StyledTableCell>
-                      <StyledTableCell>
+                      <StyledTableCell align="center">
+                        {category.nameCategory}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {category.slug}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {category.description}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
                         <Button sx={{ marginRight: 2 }} variant="contained">
                           Sửa
                         </Button>
-                        <Button sx={{ marginRight: 2 }} variant="contained">
+                        <Button
+                          onClick={() =>
+                            handleDeleteCategory(category.nameCategory)
+                          }
+                          sx={{ marginRight: 2 }}
+                          variant="contained"
+                        >
                           Xóa
                         </Button>
                       </StyledTableCell>

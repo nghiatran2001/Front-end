@@ -28,7 +28,7 @@ export default function Admin() {
             width: "100%",
             maxWidth: 250,
             bgcolor: "#999999",
-            height: "1200px",
+            height: "200vh",
           }}
         >
           <Box

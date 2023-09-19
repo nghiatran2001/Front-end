@@ -60,7 +60,7 @@ export default function User() {
             width: "100%",
             maxWidth: 250,
             bgcolor: "#999999",
-            height: "1200px",
+            height: "100%",
           }}
         >
           <Admin></Admin>
@@ -73,28 +73,36 @@ export default function User() {
             <Table sx={{ minWidth: 1000 }} aria-label="customized table">
               <TableHead>
                 <TableRow>
-                  <StyledTableCell>STT</StyledTableCell>
-                  <StyledTableCell>Họ Tên</StyledTableCell>
-                  <StyledTableCell>Email</StyledTableCell>
-                  <StyledTableCell>Số Điện Thoại</StyledTableCell>
-                  <StyledTableCell>Phân Quyền</StyledTableCell>
-                  <StyledTableCell>Thao tác</StyledTableCell>
+                  <StyledTableCell align="center">STT</StyledTableCell>
+                  <StyledTableCell align="center">Họ Tên</StyledTableCell>
+                  <StyledTableCell align="center">Email</StyledTableCell>
+                  <StyledTableCell align="center">
+                    Số Điện Thoại
+                  </StyledTableCell>
+                  <StyledTableCell align="center">Phân Quyền</StyledTableCell>
+                  <StyledTableCell align="center">Thao tác</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {userList?.map((user, index) => {
                   return (
                     <StyledTableRow key={index}>
-                      <StyledTableCell component="th" scope="row">
+                      <StyledTableCell align="center">
                         {index + 1}
                       </StyledTableCell>
-                      <StyledTableCell>{user?.name}</StyledTableCell>
-                      <StyledTableCell>{user?.email}</StyledTableCell>
-                      <StyledTableCell>{user?.phone}</StyledTableCell>
-                      <StyledTableCell>
+                      <StyledTableCell align="center">
+                        {user?.name}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {user?.email}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        {user?.phone}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
                         {user?.role ? `Admin` : `User`}
                       </StyledTableCell>
-                      <StyledTableCell>
+                      <StyledTableCell align="center">
                         <Button sx={{ marginRight: 2 }} variant="contained">
                           Sửa
                         </Button>
