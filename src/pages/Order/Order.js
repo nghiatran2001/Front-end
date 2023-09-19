@@ -1,4 +1,11 @@
-import { Box, Button, FormControl, FormLabel, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  InputBase,
+  TextField,
+} from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Order.css";
@@ -12,7 +19,7 @@ import TableRow from "@mui/material/TableRow";
 export default function Order() {
   return (
     <div>
-      <Box>
+      <Box sx={{ background: "white" }}>
         <TableContainer sx={{ display: "flex", marginTop: 5 }}>
           <Table
             sx={{ maxWidth: "50%", margin: 5, border: 2 }}
@@ -73,6 +80,7 @@ export default function Order() {
             <FormLabel sx={{ padding: 2, color: "black" }}>
               Họ tên:
               <TextField style={{ paddingLeft: 52 }}></TextField>
+              <InputBase></InputBase>
             </FormLabel>
             <FormLabel sx={{ padding: 2, color: "black" }}>
               Số điện thoại: <TextField></TextField>

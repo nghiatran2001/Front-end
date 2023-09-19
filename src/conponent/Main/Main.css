@@ -7,6 +7,7 @@
 .main .card {
   margin: 10px 10px 30px 10px;
   border-radius: 20px;
+  border: 1px solid black;
 }
 .main-link {
   text-decoration: none;

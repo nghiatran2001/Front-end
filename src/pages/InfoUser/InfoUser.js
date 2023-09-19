@@ -5,13 +5,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../../redux/apiRequest";
 import { createAxios } from "../../createInstance";
 import { updateUserSuccess } from "../../redux/userSlice";
+import { user as userAPI } from "../../API";
+
 export default function InfoUser() {
   const user = useSelector((state) => state.auth.login?.currentUser);
   const dispatch = useDispatch();
   let axiosJWT = createAxios(user, dispatch, updateUserSuccess);
-
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+
+  const handleEditUser = async () => {
+    try {
+      const result = await userAPI.editUser(user);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {

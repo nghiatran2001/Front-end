@@ -14,11 +14,6 @@ export default function ProductDetail() {
     <div>
       <Row>
         <Col span={20} offset={2}>
-          <Row>
-            <Col span={24}>
-              <h3>Trang chủ</h3>
-            </Col>
-          </Row>
           <Row
             style={{ padding: 20, background: "white", borderRadius: "10px" }}
           >

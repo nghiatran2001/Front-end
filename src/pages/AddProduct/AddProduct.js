@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Admin from "../Admin/Admin";
 
@@ -17,6 +17,8 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { tableCellClasses } from "@mui/material/TableCell";
+
+import { product as productAPI, category as categoryAPI } from "../../API";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -39,6 +41,67 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function AddProduct() {
+  const [listCategory, setListCategory] = useState([]);
+  const [name, setName] = useState("");
+  const [nameProduct, setNameProduct] = useState("");
+  const [originPrice, setOriginPrice] = useState("");
+  const [sellPrice, setSellPrice] = useState("");
+  const [image, setImage] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [description, setDescription] = useState("");
+
+  const handlePicture = (e) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = function () {
+      setImage(reader.result);
+    };
+    reader.onerror = (error) => {
+      console.log("Error", error);
+    };
+  };
+
+  const handleAddProduct = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await productAPI.addProduct({
+        name,
+        nameProduct,
+        originPrice,
+        sellPrice,
+        image,
+        quantity,
+        description,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      await getCategoryList();
+    })();
+  }, []);
+  const getCategoryList = async () => {
+    try {
+      const result = await categoryAPI.getCategoryList();
+      setListCategory(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  console.log({
+    name,
+    nameProduct,
+    originPrice,
+    sellPrice,
+    image,
+    quantity,
+    description,
+  });
+
   return (
     <div>
       <Box
@@ -79,71 +142,88 @@ export default function AddProduct() {
                   </StyledTableCell>
                   <StyledTableCell>
                     <OutlinedInput
+                      onChange={(e) => setNameProduct(e.target.value)}
                       type="text"
                       sx={{ width: "100%" }}
                     ></OutlinedInput>
                   </StyledTableCell>
                 </StyledTableRow>
-              </TableBody>
-              <TableBody>
+                <StyledTableRow>
+                  <StyledTableCell component="th" scope="row">
+                    Hãng:
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    <select onChange={(e) => setName(e.target.value)}>
+                      <option>Chọn Hãng</option>
+                      {listCategory.map((category, index) => {
+                        return <option key={index}>{category.name}</option>;
+                      })}
+                    </select>
+                  </StyledTableCell>
+                </StyledTableRow>
+
                 <StyledTableRow>
                   <StyledTableCell component="th" scope="row">
                     Giá gốc:
                   </StyledTableCell>
                   <StyledTableCell>
                     <OutlinedInput
+                      onChange={(e) => setOriginPrice(e.target.value)}
                       type="text"
                       sx={{ width: "100%" }}
                     ></OutlinedInput>
                   </StyledTableCell>
                 </StyledTableRow>
-              </TableBody>
-              <TableBody>
+
                 <StyledTableRow>
                   <StyledTableCell component="th" scope="row">
                     Giá bán:
                   </StyledTableCell>
                   <StyledTableCell>
                     <OutlinedInput
+                      onChange={(e) => setSellPrice(e.target.value)}
                       type="text"
                       sx={{ width: "100%" }}
                     ></OutlinedInput>
                   </StyledTableCell>
                 </StyledTableRow>
-              </TableBody>
-              <TableBody>
+
                 <StyledTableRow>
                   <StyledTableCell component="th" scope="row">
                     Số lượng:
                   </StyledTableCell>
                   <StyledTableCell>
                     <OutlinedInput
+                      onChange={(e) => setQuantity(e.target.value)}
                       type="number"
                       sx={{ width: "100%" }}
                     ></OutlinedInput>
                   </StyledTableCell>
                 </StyledTableRow>
-              </TableBody>
-              <TableBody>
+
                 <StyledTableRow>
                   <StyledTableCell component="th" scope="row">
                     Mô tả:
                   </StyledTableCell>
                   <StyledTableCell>
                     <TextareaAutosize
+                      onChange={(e) => setDescription(e.target.value)}
                       type="text"
                       style={{ width: "100%", height: 100, fontSize: 17 }}
                     ></TextareaAutosize>
                   </StyledTableCell>
                 </StyledTableRow>
-              </TableBody>
-              <TableBody>
+
                 <StyledTableRow>
                   <StyledTableCell component="th" scope="row">
                     Hình ảnh:
                   </StyledTableCell>
                   <StyledTableCell>
-                    <InputBase type="file" sx={{ width: "100%" }}></InputBase>
+                    <InputBase
+                      onChange={handlePicture}
+                      type="file"
+                      sx={{ width: "100%" }}
+                    ></InputBase>
                   </StyledTableCell>
                 </StyledTableRow>
               </TableBody>
@@ -151,7 +231,9 @@ export default function AddProduct() {
                 <StyledTableRow>
                   <StyledTableCell component="th" scope="row"></StyledTableCell>
                   <StyledTableCell>
-                    <Button variant="contained">Thêm</Button>
+                    <Button variant="contained" onClick={handleAddProduct}>
+                      Thêm
+                    </Button>
                   </StyledTableCell>
                 </StyledTableRow>
               </TableBody>

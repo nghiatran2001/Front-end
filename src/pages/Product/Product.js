@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Admin from "../Admin/Admin";
 import logo from "../../images/dell-vostro-3400.png";
 
@@ -12,6 +12,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";
+
+import { product as productAPI, category as categoryAPI } from "../../API";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -34,6 +36,22 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function Product() {
+  const [listCategory, setListCategory] = useState([]);
+  const [layId, setLayId] = useState("");
+  useEffect(() => {
+    (async () => {
+      await getCategoryList();
+    })();
+  }, []);
+  const getCategoryList = async () => {
+    try {
+      const result = await categoryAPI.getCategoryList();
+      setListCategory(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <Box
@@ -71,7 +89,7 @@ export default function Product() {
                   <StyledTableCell>Hình ảnh</StyledTableCell>
                   <StyledTableCell>Giá gốc</StyledTableCell>
                   <StyledTableCell>Giá bán</StyledTableCell>
-                  <StyledTableCell>Số lượng kho</StyledTableCell>{" "}
+                  <StyledTableCell>Số lượng kho</StyledTableCell>
                   <StyledTableCell>Thao tác</StyledTableCell>
                 </TableRow>
               </TableHead>
