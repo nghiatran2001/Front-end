@@ -14,6 +14,7 @@ import {
   ProductDetail,
   Register,
   User,
+  EditProduct,
 } from "../pages";
 import { DefaultLayout, AdminLayout } from "../layouts";
 import Admin from "../pages/Admin/Admin";
@@ -105,6 +106,11 @@ const publicRoutes = [
   {
     path: "/addcategory",
     element: AddCategory,
+    AdminLayout,
+  },
+  {
+    path: "/editproduct",
+    element: EditProduct,
     AdminLayout,
   },
 ];

@@ -19,6 +19,7 @@ import OrderAdmin from "./pages/OrderAdmin/OrderAdmin";
 import AddCategory from "./pages/AddCategory/AddCategory";
 import AddProduct from "./pages/AddProduct/AddProduct";
 import Type from "./pages/Type/Type";
+import EditProduct from "./pages/EditProduct/EditProduct";
 const LayoutPage = () => {
   return (
     <>
@@ -110,6 +111,10 @@ const router = createBrowserRouter([
   {
     path: "/addcategory",
     element: <AddCategory />,
+  },
+  {
+    path: "/editproduct",
+    element: <EditProduct />,
   },
 ]);
 

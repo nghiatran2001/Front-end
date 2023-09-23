@@ -1,7 +1,6 @@
 import { Box, Button, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Admin from "../Admin/Admin";
-import logo from "../../images/dell-vostro-3400.png";
 
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -42,6 +41,19 @@ export default function Product() {
     style: "currency",
     currency: "VND",
   });
+
+  const handleDeleteProduct = async (id) => {
+    try {
+      const result = await productAPI.deleteProduct({
+        id,
+      });
+      if (result.status === 200) {
+        await getProductList();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     (async () => {
@@ -114,7 +126,7 @@ export default function Product() {
                         {product.slug}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        <img src={logo} alt="" height="100px"></img>
+                        <img src={product.image} alt="" height="100px"></img>
                       </StyledTableCell>
                       <StyledTableCell align="center">
                         {product.nameCategory}
@@ -129,10 +141,16 @@ export default function Product() {
                         {product.quantity}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        <Button sx={{ marginRight: 1 }} variant="contained">
-                          Sửa
-                        </Button>
-                        <Button sx={{ marginRight: 1 }} variant="contained">
+                        <Link to={`/editproduct?idProduct=${product._id}`}>
+                          <Button sx={{ marginRight: 1 }} variant="contained">
+                            Sửa
+                          </Button>
+                        </Link>
+                        <Button
+                          onClick={() => handleDeleteProduct(product._id)}
+                          sx={{ marginRight: 1 }}
+                          variant="contained"
+                        >
                           Xóa
                         </Button>
                       </StyledTableCell>

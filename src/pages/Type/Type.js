@@ -1,5 +1,5 @@
 import { Col, Pagination, Row } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../../conponent/Sidebar/Sidebar";
 import {
   Box,
@@ -12,183 +12,76 @@ import {
 } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import logo from "../../images/dell-vostro-3400.png";
-import logo1 from "../../images/acer.png";
+
+import { product as productAPI } from "../../API";
 
 export default function Type() {
   const onChange = () => {};
+
+  const [listProduct, setListProduct] = useState([]);
+  console.log(listProduct);
+  const VND = new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  });
+
+  useEffect(() => {
+    (async () => {
+      await getProductList();
+    })();
+  }, []);
+  const getProductList = async () => {
+    try {
+      const result = await productAPI.getProductList();
+      setListProduct(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
       <Sidebar />
       <Row style={{ marginTop: "100px", marginBottom: "300px" }}>
         <Col span={20} offset={2}>
           <Box className="main">
-            <Card className="card" sx={{ width: 200 }}>
-              <CardActionArea>
-                <img className="img" src={logo} alt="" height="200px" />
-                <CardContent>
-                  <Typography gutterBottom variant="h5">
-                    Dell Vostro
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    className="text"
+            {listProduct.map((product, index) => {
+              return (
+                <Card key={index} className="card" sx={{ width: 200 }}>
+                  <CardActionArea>
+                    <img
+                      className="img"
+                      src={product.image}
+                      alt=""
+                      height="200px"
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5">
+                        {product.nameProduct}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        className="text"
+                      >
+                        {VND.format(product.originPrice)}
+                      </Typography>
+                      <Typography gutterBottom variant="h6" color="red">
+                        {VND.format(product.sellPrice)}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                  <CardActions
+                    sx={{ display: "flex", justifyContent: "center" }}
                   >
-                    10.000.000 đ
-                  </Typography>
-                  <Typography gutterBottom variant="h6" color="red">
-                    9.000.000 đ
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions sx={{ display: "flex", justifyContent: "center" }}>
-                <NavLink to="/productdetail" className="main-link">
-                  <Button variant="contained" size="small">
-                    Xem chi tiết
-                  </Button>
-                </NavLink>
-              </CardActions>
-            </Card>
-
-            <Card className="card" sx={{ width: 200 }}>
-              <CardActionArea>
-                <img className="img" src={logo1} alt="" height="200px" />
-                <CardContent>
-                  <Typography gutterBottom variant="h5">
-                    Dell Vostro
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    className="text"
-                  >
-                    10.000.000 đ
-                  </Typography>
-                  <Typography gutterBottom variant="h6" color="red">
-                    9.000.000 đ
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions sx={{ display: "flex", justifyContent: "center" }}>
-                <NavLink to="/productdetail" className="main-link">
-                  <Button variant="contained" size="small">
-                    Xem chi tiết
-                  </Button>
-                </NavLink>
-              </CardActions>
-            </Card>
-
-            <Card className="card" sx={{ width: 200 }}>
-              <CardActionArea>
-                <img className="img" src={logo1} alt="" height="200px" />
-                <CardContent>
-                  <Typography gutterBottom variant="h5">
-                    Dell Vostro
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    className="text"
-                  >
-                    10.000.000 đ
-                  </Typography>
-                  <Typography gutterBottom variant="h6" color="red">
-                    9.000.000 đ
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions sx={{ display: "flex", justifyContent: "center" }}>
-                <NavLink to="/productdetail" className="main-link">
-                  <Button variant="contained" size="small">
-                    Xem chi tiết
-                  </Button>
-                </NavLink>
-              </CardActions>
-            </Card>
-
-            <Card className="card" sx={{ width: 200 }}>
-              <CardActionArea>
-                <img className="img" src={logo1} alt="" height="200px" />
-                <CardContent>
-                  <Typography gutterBottom variant="h5">
-                    Dell Vostro
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    className="text"
-                  >
-                    10.000.000 đ
-                  </Typography>
-                  <Typography gutterBottom variant="h6" color="red">
-                    9.000.000 đ
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions sx={{ display: "flex", justifyContent: "center" }}>
-                <NavLink to="/productdetail" className="main-link">
-                  <Button variant="contained" size="small">
-                    Xem chi tiết
-                  </Button>
-                </NavLink>
-              </CardActions>
-            </Card>
-
-            <Card className="card" sx={{ width: 200 }}>
-              <CardActionArea>
-                <img className="img" src={logo1} alt="" height="200px" />
-                <CardContent>
-                  <Typography gutterBottom variant="h5">
-                    Dell Vostro
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    className="text"
-                  >
-                    10.000.000 đ
-                  </Typography>
-                  <Typography gutterBottom variant="h6" color="red">
-                    9.000.000 đ
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions sx={{ display: "flex", justifyContent: "center" }}>
-                <NavLink to="/productdetail" className="main-link">
-                  <Button variant="contained" size="small">
-                    Xem chi tiết
-                  </Button>
-                </NavLink>
-              </CardActions>
-            </Card>
-
-            <Card className="card" sx={{ width: 200 }}>
-              <CardActionArea>
-                <img className="img" src={logo} alt="" height="200px" />
-                <CardContent>
-                  <Typography gutterBottom variant="h5">
-                    Dell Vostro
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    className="text"
-                  >
-                    10.000.000 đ
-                  </Typography>
-                  <Typography gutterBottom variant="h6" color="red">
-                    9.000.000 đ
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions sx={{ display: "flex", justifyContent: "center" }}>
-                <NavLink to="/productdetail" className="main-link">
-                  <Button variant="contained" size="small">
-                    Xem chi tiết
-                  </Button>
-                </NavLink>
-              </CardActions>
-            </Card>
+                    <NavLink to="/productdetail" className="main-link">
+                      <Button variant="contained" size="small">
+                        Xem chi tiết
+                      </Button>
+                    </NavLink>
+                  </CardActions>
+                </Card>
+              );
+            })}
           </Box>
         </Col>
       </Row>

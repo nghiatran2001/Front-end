@@ -62,10 +62,10 @@ export default function Categories() {
     window.location.reload(true);
   };
 
-  const handleDeleteCategory = async (nameCategory) => {
+  const handleDeleteCategory = async (id) => {
     try {
       const result = await categoryAPI.deleteCategory({
-        nameCategory,
+        id,
       });
       if (result.status === 200) {
         await getCategoryList();
@@ -180,9 +180,7 @@ export default function Categories() {
                           Sửa
                         </Button>
                         <Button
-                          onClick={() =>
-                            handleDeleteCategory(category.nameCategory)
-                          }
+                          onClick={() => handleDeleteCategory(category._id)}
                           sx={{ marginRight: 2 }}
                           variant="contained"
                         >

@@ -10,9 +10,17 @@ const product = {
     const url = BACKEND_API + "/product/getall";
     return await axios.get(url);
   },
-  deleteProduct: async ({ _id }) => {
-    const url = BACKEND_API + `/product/${_id}`;
+  getIdProduct: async ({ id }) => {
+    const url = BACKEND_API + `/product/${id}`;
+    return await axios.get(url);
+  },
+  deleteProduct: async ({ id }) => {
+    const url = BACKEND_API + `/product/${id}`;
     return await axios.delete(url);
+  },
+  editProduct: async ({ ...product }) => {
+    const url = BACKEND_API + `/product/${product._id}`;
+    return await axios.put(url, product);
   },
 };
 

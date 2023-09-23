@@ -81,7 +81,7 @@ export default function Admin() {
               </List>
             </Collapse>
           </List>
-          <List component="nav" aria-labelledby="nested-list-subheader">
+          {/* <List component="nav" aria-labelledby="nested-list-subheader">
             <ListItemButton onClick={handleClick}>
               <ListItemText primary="Quản lý loại sản phẩm" />
               {open ? <ExpandLess /> : <ExpandMore />}
@@ -95,7 +95,7 @@ export default function Admin() {
                 </ListItemButton>
               </List>
             </Collapse>
-          </List>
+          </List> */}
           <List component="nav" aria-labelledby="nested-list-subheader">
             <ListItemButton onClick={handleClick}>
               <ListItemText primary="Quản lý đơn hàng" />
