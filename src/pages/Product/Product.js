@@ -126,7 +126,12 @@ export default function Product() {
                         {product.slug}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        <img src={product.image} alt="" height="100px"></img>
+                        <img
+                          src={product.image}
+                          alt=""
+                          height="100px"
+                          width="100px"
+                        ></img>
                       </StyledTableCell>
                       <StyledTableCell align="center">
                         {product.nameCategory}

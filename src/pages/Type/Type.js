@@ -1,6 +1,9 @@
 import { Col, Pagination, Row } from "antd";
 import React, { useEffect, useState } from "react";
-import Sidebar from "../../conponent/Sidebar/Sidebar";
+
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import "./Type.css";
 import {
   Box,
   Button,
@@ -11,15 +14,21 @@ import {
   Typography,
 } from "@mui/material";
 import { NavLink } from "react-router-dom";
-import logo from "../../images/dell-vostro-3400.png";
 
 import { product as productAPI } from "../../API";
 
 export default function Type() {
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+  console.log(value);
+  //phan trang
   const onChange = () => {};
 
   const [listProduct, setListProduct] = useState([]);
-  console.log(listProduct);
+
   const VND = new Intl.NumberFormat("vi-VN", {
     style: "currency",
     currency: "VND",
@@ -40,20 +49,34 @@ export default function Type() {
   };
   return (
     <div>
-      <Sidebar />
-      <Row style={{ marginTop: "100px", marginBottom: "300px" }}>
+      <Box
+        sx={{
+          width: "100%",
+          bgcolor: "background.paper",
+          marginBottom: 2,
+          marginTop: 1,
+        }}
+      >
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          centered
+          textColor="primary"
+          indicatorColor="secondary"
+        >
+          {listProduct.map((product, index) => {
+            return <Tab key={index} label={product.nameCategory} />;
+          })}
+        </Tabs>
+      </Box>
+      <Row style={{ marginTop: "50px", marginBottom: "100px" }}>
         <Col span={20} offset={2}>
           <Box className="main">
             {listProduct.map((product, index) => {
               return (
-                <Card key={index} className="card" sx={{ width: 200 }}>
+                <Card key={index} className="card">
+                  <img className="img" src={product.image} alt="" />
                   <CardActionArea>
-                    <img
-                      className="img"
-                      src={product.image}
-                      alt=""
-                      height="200px"
-                    />
                     <CardContent>
                       <Typography gutterBottom variant="h5">
                         {product.nameProduct}

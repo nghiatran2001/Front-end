@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Admin from "../Admin/Admin";
+import { notification } from "antd";
 
 import {
   Box,
@@ -39,6 +40,8 @@ const StyledTableRow = styled(TableRow)(() => ({
 }));
 
 export default function AddProduct() {
+  const [api, contextHolder] = notification.useNotification();
+
   const [listCategory, setListCategory] = useState([]);
   const [nameCategory, setNameCategory] = useState("");
   const [nameProduct, setNameProduct] = useState("");
@@ -61,6 +64,7 @@ export default function AddProduct() {
 
   const handleAddProduct = async (e) => {
     e.preventDefault();
+
     try {
       const result = await productAPI.addProduct({
         nameCategory,
@@ -71,21 +75,15 @@ export default function AddProduct() {
         quantity,
         description,
       });
-      console.log(result);
+      if (result.status === 200) {
+        api.success({
+          message: `thanh cong`,
+        });
+      }
     } catch (error) {
       console.log(error);
     }
   };
-
-  console.log({
-    nameCategory,
-    nameProduct,
-    originPrice,
-    sellPrice,
-    image,
-    quantity,
-    description,
-  });
 
   useEffect(() => {
     (async () => {
@@ -103,6 +101,7 @@ export default function AddProduct() {
 
   return (
     <div>
+      {contextHolder}
       <Box
         sx={{
           display: "flex",
