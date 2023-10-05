@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import imgProduct from "../../images/dell-vostro-3400.png";
 import imgProductSmall from "../../images/hp.jpg";
 import { Button, CardContent, Typography } from "@mui/material";
@@ -7,9 +7,41 @@ import Box from "@mui/material/Box";
 import "./ProductDetail.css";
 import { Col, InputNumber, Row } from "antd";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
+
+import { product as productAPI, cart as cartAPI } from "../../API";
 export default function ProductDetail() {
   const onChange = () => {};
 
+  const keyValue = window.location.search;
+  const urlParams = new URLSearchParams(keyValue);
+  const idProduct = urlParams.get("idProduct");
+  const [product, setProduct] = useState([]);
+
+  const handleAddCart = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await cartAPI.addCart({
+        idProduct,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      await getIdProduct();
+    })();
+  }, []);
+  const getIdProduct = async () => {
+    try {
+      const result = await productAPI.getIdProduct({ id: idProduct });
+      setProduct(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log(product);
   return (
     <div>
       <Row>
@@ -83,7 +115,7 @@ export default function ProductDetail() {
             <Col span={13} style={{ paddingLeft: 20 }}>
               <CardContent sx={{ marginBottom: 5 }}>
                 <Typography gutterBottom variant="h3">
-                  Dell Vostro
+                  {product.nameProduct}
                 </Typography>
                 <Box>
                   <Box>
@@ -93,24 +125,18 @@ export default function ProductDetail() {
                       className="text"
                       sx={{ fontSize: 17 }}
                     >
-                      Giá gốc: <span>10.000.000 đ</span>
+                      Giá gốc: <span>{product.originPrice}</span>
                     </Typography>
                     <Typography gutterBottom color="red" sx={{ fontSize: 20 }}>
-                      Giá khuyến mãi: <span>8.000.000 đ</span>
+                      Giá bán: <span>{product.sellPrice}</span>
                     </Typography>
                   </Box>
-                  <Box
+                  {/* <Box
                     sx={{
                       marginBottom: 3,
                       marginTop: 5,
                     }}
                   >
-                    <Typography
-                      gutterBottom
-                      sx={{ fontSize: 15, marginBottom: "20px" }}
-                    >
-                      Số lượng kho: 10
-                    </Typography>
                     <div className="quantity">
                       <button
                         style={{ border: "none", background: "transparent" }}
@@ -130,11 +156,12 @@ export default function ProductDetail() {
                         <PlusOutlined style={{ fontSize: "20px" }} />
                       </button>
                     </div>
-                  </Box>
+                  </Box> */}
                   <Button
                     sx={{ fontSize: 15 }}
                     variant="contained"
                     startIcon={<ShoppingCartRounded />}
+                    onClick={handleAddCart}
                   >
                     Thêm giỏ hàng
                   </Button>

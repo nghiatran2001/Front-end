@@ -47,6 +47,7 @@ export default function Type() {
       console.log(error);
     }
   };
+
   return (
     <div>
       <Box
@@ -96,7 +97,10 @@ export default function Type() {
                   <CardActions
                     sx={{ display: "flex", justifyContent: "center" }}
                   >
-                    <NavLink to="/productdetail" className="main-link">
+                    <NavLink
+                      to={`/productdetail?idProduct=${product._id}`}
+                      className="main-link"
+                    >
                       <Button variant="contained" size="small">
                         Xem chi tiết
                       </Button>
