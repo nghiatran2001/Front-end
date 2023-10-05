@@ -11,14 +11,7 @@
   height: 300px;
   width: 100%;
   border-radius: 20%;
-  object-fit: contain;
-  margin-bottom: 20px;
-}
-
-.img_small {
-  height: 60px;
-  width: 80px;
-  object-fit: contain;
+  object-fit: contain !important;
   margin-bottom: 20px;
 }
 

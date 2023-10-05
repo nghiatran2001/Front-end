@@ -109,6 +109,7 @@ export default function Product() {
                   <StyledTableCell align="center">Giá gốc</StyledTableCell>
                   <StyledTableCell align="center">Giá bán</StyledTableCell>
                   <StyledTableCell align="center">Số lượng kho</StyledTableCell>
+                  <StyledTableCell align="center">Tình trạng</StyledTableCell>
                   <StyledTableCell align="center">Thao tác</StyledTableCell>
                 </TableRow>
               </TableHead>
@@ -146,14 +147,17 @@ export default function Product() {
                         {product.quantity}
                       </StyledTableCell>
                       <StyledTableCell align="center">
+                        {product.disable ? "Ngừng hoạt động" : "Hoạt động"}
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
                         <Link to={`/editproduct?idProduct=${product._id}`}>
-                          <Button sx={{ marginRight: 1 }} variant="contained">
+                          <Button sx={{ margin: 1 }} variant="contained">
                             Sửa
                           </Button>
                         </Link>
                         <Button
                           onClick={() => handleDeleteProduct(product._id)}
-                          sx={{ marginRight: 1 }}
+                          sx={{ margin: 1 }}
                           variant="contained"
                         >
                           Xóa

@@ -103,19 +103,19 @@ export default function User() {
                         {user?.role ? `Admin` : `User`}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        <Button sx={{ marginRight: 2 }} variant="contained">
+                        <Button sx={{ margin: 1 }} variant="contained">
                           Sửa
                         </Button>
                         <Button
                           onClick={() => {
                             handleDelete(user._id);
                           }}
-                          sx={{ marginRight: 2 }}
+                          sx={{ margin: 1 }}
                           variant="contained"
                         >
                           Xóa
                         </Button>
-                        <Button sx={{ marginRight: 2 }} variant="contained">
+                        <Button sx={{ margin: 1 }} variant="contained">
                           Khóa
                         </Button>
                       </StyledTableCell>

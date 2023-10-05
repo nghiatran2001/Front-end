@@ -74,10 +74,7 @@ export default function OrderAdmin() {
                   <StyledTableCell>092323232</StyledTableCell>
                   <StyledTableCell>Đang xử lý</StyledTableCell>
                   <StyledTableCell>
-                    <p>Tên: ưqeqw</p>
-                    <p>Số lượng: 1</p>
-                    <p>Đơn giá: 424242</p>
-                    <p>Tổng tiền: 42112421</p>
+                    <Button variant="contained">Xem chi tiết</Button>
                   </StyledTableCell>
                   <StyledTableCell>
                     <Button sx={{ marginRight: 2 }} variant="contained">
@@ -95,10 +92,7 @@ export default function OrderAdmin() {
                   <StyledTableCell>092323232</StyledTableCell>
                   <StyledTableCell>Đang xử lý</StyledTableCell>
                   <StyledTableCell>
-                    <p>Tên: ưqeqw</p>
-                    <p>Số lượng: 1</p>
-                    <p>Đơn giá: 424242</p>
-                    <p>Tổng tiền: 42112421</p>
+                    <Button variant="contained">Xem chi tiết</Button>
                   </StyledTableCell>
                   <StyledTableCell>
                     <Button sx={{ marginRight: 2 }} variant="contained">
@@ -116,10 +110,7 @@ export default function OrderAdmin() {
                   <StyledTableCell>092323232</StyledTableCell>
                   <StyledTableCell>Đang xử lý</StyledTableCell>
                   <StyledTableCell>
-                    <p>Tên: ưqeqw</p>
-                    <p>Số lượng: 1</p>
-                    <p>Đơn giá: 424242</p>
-                    <p>Tổng tiền: 42112421</p>
+                    <Button variant="contained">Xem chi tiết</Button>
                   </StyledTableCell>
                   <StyledTableCell>
                     <Button sx={{ marginRight: 2 }} variant="contained">
@@ -137,37 +128,13 @@ export default function OrderAdmin() {
                   <StyledTableCell>092323232</StyledTableCell>
                   <StyledTableCell>Đang xử lý</StyledTableCell>
                   <StyledTableCell>
-                    <p>Tên: ưqeqw</p>
-                    <p>Số lượng: 1</p>
-                    <p>Đơn giá: 424242</p>
-                    <p>Tổng tiền: 42112421</p>
+                    <Button variant="contained">Xem chi tiết</Button>
                   </StyledTableCell>
                   <StyledTableCell>
                     <Button sx={{ marginRight: 2 }} variant="contained">
                       Cập nhật
                     </Button>
                   </StyledTableCell>
-                </StyledTableRow>
-
-                 <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    Ma45465454
-                  </StyledTableCell>
-                  <StyledTableCell>Huu Nghia</StyledTableCell>
-                  <StyledTableCell>huunghia@gnail.com</StyledTableCell>
-                  <StyledTableCell>092323232</StyledTableCell>
-                  <StyledTableCell>Đang xử lý</StyledTableCell>
-                  <StyledTableCell>
-                    <p>Tên: ưqeqw</p>
-                    <p>Số lượng: 1</p>
-                    <p>Đơn giá: 424242</p>
-                    <p>Tổng tiền: 42112421</p>
-                  </StyledTableCell>
-                  <StyledTableCell>
-                    <Button sx={{ marginRight: 2 }} variant="contained">
-                      Cập nhật
-                    </Button>
-                  </StyledTableCell>             
                 </StyledTableRow>
 
                 <StyledTableRow>
@@ -179,18 +146,32 @@ export default function OrderAdmin() {
                   <StyledTableCell>092323232</StyledTableCell>
                   <StyledTableCell>Đang xử lý</StyledTableCell>
                   <StyledTableCell>
-                    <p>Tên: ưqeqw</p>
-                    <p>Số lượng: 1</p>
-                    <p>Đơn giá: 424242</p>
-                    <p>Tổng tiền: 42112421</p>
+                    <Button variant="contained">Xem chi tiết</Button>
                   </StyledTableCell>
                   <StyledTableCell>
                     <Button sx={{ marginRight: 2 }} variant="contained">
                       Cập nhật
                     </Button>
-                  </StyledTableCell>             
+                  </StyledTableCell>
                 </StyledTableRow>
 
+                <StyledTableRow>
+                  <StyledTableCell component="th" scope="row">
+                    Ma45465454
+                  </StyledTableCell>
+                  <StyledTableCell>Huu Nghia</StyledTableCell>
+                  <StyledTableCell>huunghia@gnail.com</StyledTableCell>
+                  <StyledTableCell>092323232</StyledTableCell>
+                  <StyledTableCell>Đang xử lý</StyledTableCell>
+                  <StyledTableCell>
+                    <Button variant="contained">Xem chi tiết</Button>
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    <Button sx={{ marginRight: 2 }} variant="contained">
+                      Cập nhật
+                    </Button>
+                  </StyledTableCell>
+                </StyledTableRow>
               </TableBody>
             </Table>
           </TableContainer>

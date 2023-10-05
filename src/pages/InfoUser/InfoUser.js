@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 import "./InfoUser.css";
 import { Button, Form, Input, Modal } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { updateUser } from "../../redux/apiRequest";
-import { createAxios } from "../../createInstance";
-import { updateUserSuccess } from "../../redux/userSlice";
+import { useSelector } from "react-redux";
 import { user as userAPI } from "../../API";
 import {
-  OutlinedInput,
   Table,
   TableBody,
   TableCell,
@@ -38,8 +34,7 @@ const StyledTableRow = styled(TableRow)(() => ({
 
 export default function InfoUser() {
   const user = useSelector((state) => state.auth.login?.currentUser);
-  const dispatch = useDispatch();
-  let axiosJWT = createAxios(user, dispatch, updateUserSuccess);
+
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
 
@@ -58,16 +53,6 @@ export default function InfoUser() {
   const handleOk = () => {};
 
   const handleCancel = () => {
-    setIsModalOpen(false);
-    window.location.reload(true);
-  };
-  const [isModalOpen1, setIsModalOpen1] = useState(false);
-  const showModal1 = () => {
-    setIsModalOpen1(true);
-  };
-  const handleOk1 = () => {};
-
-  const handleCancel1 = () => {
     setIsModalOpen(false);
     window.location.reload(true);
   };
@@ -106,15 +91,15 @@ export default function InfoUser() {
           </TableContainer>
           <div className="button">
             <Form.Item>
-              <Button type="primary" htmlType="submit" onClick={showModal1}>
+              <Button type="primary" htmlType="submit" onClick={showModal}>
                 Cập nhật
               </Button>
             </Form.Item>
             <Modal
               title="Thay đổi thông tin"
-              open={isModalOpen1}
-              onOk={handleOk1(user._id)}
-              onCancel={handleCancel1}
+              open={isModalOpen}
+              onOk={handleOk(user._id)}
+              onCancel={handleCancel}
             >
               <Form
                 labelCol={{
@@ -134,52 +119,13 @@ export default function InfoUser() {
                     onChange={(e) => setName(e.target.value)}
                   ></Input>
                 </Form.Item>
-                <Form.Item label="Email">
-                  <Input
-                    placeholder="Email"
-                    disabled
-                    value={user?.email}
-                  ></Input>
-                </Form.Item>
+
                 <Form.Item
                   label="Số điện thoại"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                 >
                   <Input placeholder="Số điện thoại"></Input>
-                </Form.Item>
-              </Form>
-            </Modal>
-            <Form.Item>
-              <Button type="primary" htmlType="submit" onClick={showModal}>
-                Đổi Mật Khẩu
-              </Button>
-            </Form.Item>
-            <Modal
-              title="Thay đổi mật khẩu"
-              open={isModalOpen}
-              onOk={handleOk}
-              onCancel={handleCancel}
-            >
-              <Form
-                labelCol={{
-                  span: 8,
-                }}
-                wrapperCol={{
-                  span: 8,
-                }}
-                style={{
-                  minWidth: 600,
-                }}
-              >
-                <Form.Item label="Mật khẩu hiện tại">
-                  <Input placeholder="Mật khẩu hiện tại" />
-                </Form.Item>
-                <Form.Item label="Mật khẩu mới">
-                  <Input placeholder="Mật khẩu mới" />
-                </Form.Item>
-                <Form.Item label="Xác nhận mật khẩu mới">
-                  <Input placeholder="Xác nhận mật khẩu mới" />
                 </Form.Item>
               </Form>
             </Modal>

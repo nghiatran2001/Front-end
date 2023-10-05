@@ -17,7 +17,12 @@
 }
 
 .main .card .img {
-  height: 150px;
-  width: 200px;
-  object-fit: contain;
+  height: 200px !important;
+  width: 180px !important;
+  object-fit: contain !important;
+}
+
+.title {
+  color: red;
+  font-size: 20px;
 }

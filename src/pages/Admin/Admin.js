@@ -28,7 +28,7 @@ export default function Admin() {
             width: "100%",
             maxWidth: 250,
             bgcolor: "#999999",
-            height: "200vh",
+            height: "1000px",
           }}
         >
           <Box
@@ -81,7 +81,7 @@ export default function Admin() {
               </List>
             </Collapse>
           </List>
-          {/* <List component="nav" aria-labelledby="nested-list-subheader">
+          <List component="nav" aria-labelledby="nested-list-subheader">
             <ListItemButton onClick={handleClick}>
               <ListItemText primary="Quản lý loại sản phẩm" />
               {open ? <ExpandLess /> : <ExpandMore />}
@@ -95,7 +95,7 @@ export default function Admin() {
                 </ListItemButton>
               </List>
             </Collapse>
-          </List> */}
+          </List>
           <List component="nav" aria-labelledby="nested-list-subheader">
             <ListItemButton onClick={handleClick}>
               <ListItemText primary="Quản lý đơn hàng" />
@@ -119,7 +119,7 @@ export default function Admin() {
             <Collapse in={open} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 <ListItemButton sx={{ pl: 4 }}>
-                  <Link to="/user" className="admin-link">
+                  <Link to="/filter" className="admin-link">
                     Thống kê
                   </Link>
                 </ListItemButton>

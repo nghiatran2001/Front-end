@@ -44,6 +44,7 @@ export default function EditProduct() {
   const idProduct = urlParams.get("idProduct");
 
   const [product, setProduct] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
   const [nameCategory, setNameCategory] = useState("");
   const [nameProduct, setNameProduct] = useState("");
   const [originPrice, setOriginPrice] = useState("");
@@ -83,6 +84,20 @@ export default function EditProduct() {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    (async () => {
+      await getCategoryList();
+    })();
+  }, []);
+  const getCategoryList = async () => {
+    try {
+      const result = await categoryAPI.getCategoryList();
+      setCategoryList(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
       <Box
@@ -103,7 +118,7 @@ export default function EditProduct() {
         <Box sx={{ marginTop: 5, marginLeft: 5 }}>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography variant="h5" sx={{ marginBottom: 5 }}>
-              Thêm sản phẩm
+              Sửa sản phẩm
             </Typography>
             <Typography variant="h5" sx={{ marginBottom: 5 }}>
               <Link to="/product">
@@ -154,16 +169,9 @@ export default function EditProduct() {
                         }))
                       }
                     >
-                      <option>Chọn Hãng</option>
-                      <option>DELL</option>
-                      <option>HP</option>
-                      <option>ASUS</option>
-                      <option>ACER</option>
-                      <option>APPLE</option>
-                      <option>MSI</option>
-                      <option>LENOVO</option>
-                      <option>GIGABYTE</option>
-                      <option>LG</option>
+                      {categoryList?.map((category, index) => {
+                        return <option>{category.nameCategory}</option>;
+                      })}
                     </select>
                   </StyledTableCell>
                 </StyledTableRow>
@@ -222,7 +230,13 @@ export default function EditProduct() {
                         }))
                       }
                       type="number"
-                      defaultValue={0}
+                      slotProps={{
+                        input: {
+                          min: 0,
+                          max: 100,
+                          step: 1,
+                        },
+                      }}
                       sx={{ width: "100%", height: "40px" }}
                     ></OutlinedInput>
                   </StyledTableCell>

@@ -5,3 +5,9 @@
 .form {
   border: 1 solid black;
 }
+.order-bg {
+  background-color: #f0f0f0;
+}
+.order-pay {
+  padding: 20px 10px 50px 100px;
+}

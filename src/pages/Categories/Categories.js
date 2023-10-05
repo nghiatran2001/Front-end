@@ -176,12 +176,12 @@ export default function Categories() {
                         {category.description}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        <Button sx={{ marginRight: 2 }} variant="contained">
+                        <Button sx={{ margin: 1 }} variant="contained">
                           Sửa
                         </Button>
                         <Button
                           onClick={() => handleDeleteCategory(category._id)}
-                          sx={{ marginRight: 2 }}
+                          sx={{ margin: 1 }}
                           variant="contained"
                         >
                           Xóa

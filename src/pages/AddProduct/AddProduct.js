@@ -15,6 +15,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import TextArea from "antd/es/input/TextArea";
 import { styled } from "@mui/material/styles";
 import { tableCellClasses } from "@mui/material/TableCell";
 
@@ -160,15 +161,11 @@ export default function AddProduct() {
                       onChange={(e) => setNameCategory(e.target.value)}
                     >
                       <option>Chọn Hãng</option>
-                      <option>DELL</option>
-                      <option>HP</option>
-                      <option>ASUS</option>
-                      <option>ACER</option>
-                      <option>APPLE</option>
-                      <option>MSI</option>
-                      <option>LENOVO</option>
-                      <option>GIGABYTE</option>
-                      <option>LG</option>
+                      {listCategory?.map((category, index) => {
+                        return (
+                          <option key={index}>{category.nameCategory}</option>
+                        );
+                      })}
                     </select>
                   </StyledTableCell>
                 </StyledTableRow>
@@ -210,6 +207,13 @@ export default function AddProduct() {
                       onChange={(e) => setQuantity(e.target.value)}
                       type="number"
                       defaultValue={0}
+                      slotProps={{
+                        input: {
+                          min: 0,
+                          max: 100,
+                          step: 1,
+                        },
+                      }}
                       sx={{ width: "100%", height: "40px" }}
                     ></OutlinedInput>
                   </StyledTableCell>
@@ -220,11 +224,11 @@ export default function AddProduct() {
                 <StyledTableRow>
                   <StyledTableCell>Mô tả:</StyledTableCell>
                   <StyledTableCell>
-                    <OutlinedInput
+                    <TextArea
                       onChange={(e) => setDescription(e.target.value)}
                       type="text"
                       sx={{ width: "100%", height: "40px" }}
-                    ></OutlinedInput>
+                    ></TextArea>
                   </StyledTableCell>
                 </StyledTableRow>
               </TableBody>

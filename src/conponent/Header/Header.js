@@ -224,7 +224,7 @@ export default function Header() {
               <Tooltip title="Open settings">
                 <NavLink to="/cart">
                   <IconButton>
-                    <Badge count={2} size="small">
+                    <Badge>
                       <ShoppingCart></ShoppingCart>
                     </Badge>
                   </IconButton>
@@ -276,7 +276,7 @@ export default function Header() {
                       </MenuItem>
                       <MenuItem onClick={handleCloseUserMenu}>
                         <Link to="/follow" className="header-link">
-                          Đơn hàng của tôi
+                          Theo dõi đơn hàng
                         </Link>
                       </MenuItem>{" "}
                       <MenuItem onClick={handleCloseUserMenu}>
@@ -314,7 +314,7 @@ export default function Header() {
                       </MenuItem>
                       <MenuItem onClick={handleCloseUserMenu}>
                         <Link to="/follow" className="header-link">
-                          Đơn hàng của tôi
+                          Theo dõi đơn hàng
                         </Link>
                       </MenuItem>{" "}
                       <MenuItem onClick={handleCloseUserMenu}>

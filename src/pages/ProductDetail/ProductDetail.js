@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
-import imgProduct from "../../images/dell-vostro-3400.png";
-import imgProductSmall from "../../images/hp.jpg";
 import { Button, CardContent, Typography } from "@mui/material";
 import ShoppingCartRounded from "@mui/icons-material/ShoppingCart";
 import Box from "@mui/material/Box";
 import "./ProductDetail.css";
-import { Col, InputNumber, Row } from "antd";
-import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import { Col, Row } from "antd";
 
 import { product as productAPI, cart as cartAPI } from "../../API";
 export default function ProductDetail() {
-  const onChange = () => {};
-
   const keyValue = window.location.search;
   const urlParams = new URLSearchParams(keyValue);
   const idProduct = urlParams.get("idProduct");
@@ -41,6 +36,11 @@ export default function ProductDetail() {
       console.log(error);
     }
   };
+
+  const VND = new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  });
   console.log(product);
   return (
     <div>
@@ -56,48 +56,13 @@ export default function ProductDetail() {
               <div className="product_detail">
                 <img
                   className="img_product"
-                  src={imgProduct}
+                  src={product.image}
                   alt="img-product"
                 ></img>
               </div>
-              <Row
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Col style={{ flexBasis: "unset" }} span={6}>
-                  <img
-                    className="img_small"
-                    src={imgProduct}
-                    alt="img-product-small"
-                  />
-                </Col>
-                <Col style={{ flexBasis: "unset" }} span={6}>
-                  <img
-                    className="img_small"
-                    src={imgProductSmall}
-                    alt="img-product-small"
-                  />
-                </Col>
-                <Col style={{ flexBasis: "unset" }} span={6}>
-                  <img
-                    className="img_small"
-                    src={imgProductSmall}
-                    alt="img-product-small"
-                  />
-                </Col>
-                <Col style={{ flexBasis: "unset" }} span={6}>
-                  <img
-                    className="img_small"
-                    src={imgProductSmall}
-                    alt="img-product-small"
-                  />
-                </Col>
-              </Row>
-              <Box
+
+              {/* <Box
                 sx={{
-                  backgroundColor: "#c3c3c3",
                   borderRadius: "10px",
                   padding: 2,
                 }}
@@ -110,7 +75,7 @@ export default function ProductDetail() {
                 <Typography gutterBottom>RAM:</Typography>
                 <Typography gutterBottom>SSD:</Typography>
                 <Typography gutterBottom>CARD ĐỒ HỌA:</Typography>
-              </Box>
+              </Box> */}
             </Col>
             <Col span={13} style={{ paddingLeft: 20 }}>
               <CardContent sx={{ marginBottom: 5 }}>
@@ -118,45 +83,33 @@ export default function ProductDetail() {
                   {product.nameProduct}
                 </Typography>
                 <Box>
-                  <Box>
+                  <Box sx={{ paddingLeft: 3 }}>
                     <Typography
                       gutterBottom
-                      color="text.secondary"
                       className="text"
-                      sx={{ fontSize: 17 }}
+                      color="text.secondary"
                     >
-                      Giá gốc: <span>{product.originPrice}</span>
+                      Giá gốc: <span>{VND.format(product.originPrice)}</span>
                     </Typography>
-                    <Typography gutterBottom color="red" sx={{ fontSize: 20 }}>
-                      Giá bán: <span>{product.sellPrice}</span>
+                    <Typography gutterBottom color="red">
+                      Giá bán: <span>{VND.format(product.sellPrice)}</span>
                     </Typography>
                   </Box>
-                  {/* <Box
-                    sx={{
-                      marginBottom: 3,
-                      marginTop: 5,
-                    }}
-                  >
-                    <div className="quantity">
-                      <button
-                        style={{ border: "none", background: "transparent" }}
-                      >
-                        <MinusOutlined style={{ fontSize: "20px" }} />
-                      </button>
-                      <InputNumber
-                        min={1}
-                        max={5}
-                        defaultValue={1}
-                        size="small"
-                        onChange={onChange}
-                      />
-                      <button
-                        style={{ border: "none", background: "transparent" }}
-                      >
-                        <PlusOutlined style={{ fontSize: "20px" }} />
-                      </button>
-                    </div>
-                  </Box> */}
+                </Box>
+                <Typography gutterBottom variant="h4">
+                  Mô tả sản phẩm
+                </Typography>
+                <Typography sx={{ paddingLeft: 3 }} gutterBottom>
+                  {product.description}
+                </Typography>
+              </CardContent>
+              <Box
+                sx={{
+                  borderRadius: "10px",
+                  padding: 2,
+                }}
+              >
+                {product.quantity > 0 ? (
                   <Button
                     sx={{ fontSize: 15 }}
                     variant="contained"
@@ -165,24 +118,11 @@ export default function ProductDetail() {
                   >
                     Thêm giỏ hàng
                   </Button>
-                </Box>
-              </CardContent>
-              <Box
-                sx={{
-                  backgroundColor: "#c3c3c3",
-                  borderRadius: "10px",
-                  padding: 2,
-                }}
-              >
-                <Typography gutterBottom variant="h4">
-                  Mô tả sản phẩm
-                </Typography>
-                <Typography gutterBottom>
-                  The point of using Lorem Ipsum. It is a long established fact
-                  that a reader will be distracted by the readable content of a
-                  page when looking at its layout. The point of using Lorem
-                  Ipsum.
-                </Typography>
+                ) : (
+                  <Button sx={{ fontSize: 15 }} variant="contained">
+                    Hết hàng
+                  </Button>
+                )}
               </Box>
             </Col>
           </Row>

@@ -20,6 +20,7 @@ import AddCategory from "./pages/AddCategory/AddCategory";
 import AddProduct from "./pages/AddProduct/AddProduct";
 import Type from "./pages/Type/Type";
 import EditProduct from "./pages/EditProduct/EditProduct";
+import Filter from "./pages/Filter/Filter";
 const LayoutPage = () => {
   return (
     <>
@@ -115,6 +116,10 @@ const router = createBrowserRouter([
   {
     path: "/editproduct",
     element: <EditProduct />,
+  },
+  {
+    path: "/filter",
+    element: <Filter />,
   },
 ]);
 
