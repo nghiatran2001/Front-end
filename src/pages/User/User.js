@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import Admin from "../Admin/Admin";
 import { styled } from "@mui/material/styles";
@@ -14,6 +14,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../../redux/authSlice";
 import { createAxios } from "../../createInstance";
 import axios from "axios";
+
+import { user as userAPI } from "../../API";
+import { Form, Input, Modal } from "antd";
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -36,11 +40,48 @@ export default function User() {
   const user = useSelector((state) => state.auth.login?.currentUser);
   const userList = useSelector((state) => state.users.users?.getAllUser);
   const dispatch = useDispatch();
-
   let axiosJWT = createAxios(user, dispatch, loginSuccess);
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [userId, setUserId] = useState("");
+  const [getId, setGetId] = useState("");
+  let handleSetName = (e) => {
+    setName(e.target.value);
+  };
+  const handleEditUser = async () => {
+    try {
+      const result = await userAPI.editUserAll({ getId, name });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  const handleDelete = (id) => {
-    deleteUser(user?.accessToken, dispatch, id, axiosJWT);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = (id) => {
+    setIsModalOpen(true);
+    setGetId(id);
+  };
+  const handleOk = () => {
+    handleEditUser();
+    window.location.reload(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    window.location.reload(true);
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const result = await userAPI.deleteUser({
+        id,
+      });
+      if (result.status === 200) {
+        await getAllUser(user?.accessToken, dispatch, axiosJWT);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   useEffect(() => {
     if (user?.accessToken) {
@@ -103,9 +144,52 @@ export default function User() {
                         {user?.role ? `Admin` : `User`}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        <Button sx={{ margin: 1 }} variant="contained">
+                        <Button
+                          sx={{ margin: 1 }}
+                          variant="contained"
+                          onClick={(e) => showModal(user._id)}
+                        >
                           Sửa
                         </Button>
+                        <Modal
+                          title="Thay đổi thông tin"
+                          open={isModalOpen}
+                          onOk={handleOk}
+                          onCancel={handleCancel}
+                        >
+                          <Form
+                            labelCol={{
+                              span: 8,
+                            }}
+                            wrapperCol={{
+                              span: 8,
+                            }}
+                            style={{
+                              minWidth: 600,
+                            }}
+                          >
+                            <Form.Item label="Họ tên">
+                              <Input
+                                placeholder="Họ tên"
+                                value={user.name}
+                                onChange={(e) => handleSetName(e)}
+                              ></Input>
+                            </Form.Item>
+
+                            <Form.Item label="Số điện thoại">
+                              <Input
+                                placeholder="Số điện thoại"
+                                value={user.phone}
+                                onChange={(e) => {
+                                  setUserId((pre) => ({
+                                    ...pre,
+                                    phone: e.target.value,
+                                  }));
+                                }}
+                              ></Input>
+                            </Form.Item>
+                          </Form>
+                        </Modal>
                         <Button
                           onClick={() => {
                             handleDelete(user._id);

@@ -45,19 +45,12 @@ export default function EditProduct() {
 
   const [product, setProduct] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
-  const [nameCategory, setNameCategory] = useState("");
-  const [nameProduct, setNameProduct] = useState("");
-  const [originPrice, setOriginPrice] = useState("");
-  const [sellPrice, setSellPrice] = useState("");
-  const [image, setImage] = useState("");
-  const [quantity, setQuantity] = useState("");
-  const [description, setDescription] = useState("");
 
   const handlePicture = (e) => {
     let reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
     reader.onload = function () {
-      setImage(reader.result);
+      product.image = reader.result;
     };
     reader.onerror = (error) => {
       console.log("Error", error);
@@ -245,6 +238,27 @@ export default function EditProduct() {
 
               <TableBody>
                 <StyledTableRow>
+                  <StyledTableCell>Trạng thái:</StyledTableCell>
+                  <StyledTableCell>
+                    <select
+                      style={{ width: "100%", height: "40px" }}
+                      value={product.disable || ""}
+                      onChange={(e) =>
+                        setProduct((pre) => ({
+                          ...pre,
+                          disable: e.target.value,
+                        }))
+                      }
+                    >
+                      <option>Hoạt động</option>
+                      <option>Ngừng hoạt động</option>
+                    </select>
+                  </StyledTableCell>
+                </StyledTableRow>
+              </TableBody>
+
+              <TableBody>
+                <StyledTableRow>
                   <StyledTableCell>Mô tả:</StyledTableCell>
                   <StyledTableCell>
                     <OutlinedInput
@@ -267,12 +281,7 @@ export default function EditProduct() {
                   <StyledTableCell>Hình ảnh:</StyledTableCell>
                   <StyledTableCell>
                     <InputBase
-                      onChange={(e) =>
-                        setProduct((pre) => ({
-                          ...pre,
-                          image: e.target.value,
-                        }))
-                      }
+                      onChange={handlePicture}
                       type="file"
                       sx={{ width: "100%", height: "40px" }}
                     ></InputBase>

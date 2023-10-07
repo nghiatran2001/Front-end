@@ -81,10 +81,11 @@ export default function Type() {
             sx={{
               marginRight: 5,
               marginTop: 5,
+              border: 1,
+              borderRadius: 5,
             }}
-          >
-            All
-          </Tab>
+            label="Tất cả"
+          ></Tab>
           {listCategory.map((category, index) => {
             return (
               <Tab
@@ -105,7 +106,7 @@ export default function Type() {
         <Col span={20} offset={2}>
           <Box className="main">
             {listProduct.map((product, index) => {
-              return product.disable ? (
+              return product.disable === "Ngừng hoạt động" ? (
                 ""
               ) : (
                 <Card key={index} className="card">

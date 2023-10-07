@@ -73,11 +73,11 @@ export const deleteUser = async (accessToken, dispatch, id, axiosJWT) => {
   }
 };
 
-export const updateUser = async (dispatch, id, accessToken, axiosJWT) => {
+export const updateUser = async (dispatch, id, accessToken) => {
   dispatch(updateUserStart());
   try {
     const BACKEND_API = process.env.REACT_APP_BACKEND_API;
-    const res = await axiosJWT.put(BACKEND_API + "/user/" + id, {
+    const res = await axios.put(BACKEND_API + "/user/" + id, {
       headers: { token: `Bearer ${accessToken}` },
     });
     dispatch(updateUserSuccess(res.data));

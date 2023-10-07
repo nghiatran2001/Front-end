@@ -54,6 +54,7 @@ export default function AddProduct() {
 
   const handlePicture = (e) => {
     let reader = new FileReader();
+    console.log(e);
     reader.readAsDataURL(e.target.files[0]);
     reader.onload = function () {
       setImage(reader.result);

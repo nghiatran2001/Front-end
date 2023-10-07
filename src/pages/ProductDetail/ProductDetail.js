@@ -28,6 +28,7 @@ export default function ProductDetail() {
       await getIdProduct();
     })();
   }, []);
+
   const getIdProduct = async () => {
     try {
       const result = await productAPI.getIdProduct({ id: idProduct });

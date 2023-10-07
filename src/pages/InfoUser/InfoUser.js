@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./InfoUser.css";
 import { Button, Form, Input, Modal } from "antd";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { user as userAPI } from "../../API";
 import {
   Table,
@@ -12,6 +12,7 @@ import {
   tableCellClasses,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { updateUser } from "../../redux/apiRequest";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,10 +38,11 @@ export default function InfoUser() {
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [userId, setUserId] = useState("");
 
   const handleEditUser = async () => {
     try {
-      const result = await userAPI.editUser(user);
+      const result = await userAPI.editUser(userId);
     } catch (error) {
       console.log(error);
     }
@@ -50,12 +52,31 @@ export default function InfoUser() {
   const showModal = () => {
     setIsModalOpen(true);
   };
-  const handleOk = () => {};
+  const handleOk = () => {
+    handleEditUser();
+    window.location.reload(true);
+  };
 
   const handleCancel = () => {
     setIsModalOpen(false);
     window.location.reload(true);
   };
+
+  useEffect(() => {
+    (async () => {
+      await getIdUser();
+    })();
+  }, []);
+
+  const getIdUser = async () => {
+    try {
+      const result = await userAPI.getIdUser({ id: user._id });
+      setUserId(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log(userId);
 
   return (
     <div>
@@ -74,17 +95,17 @@ export default function InfoUser() {
               <TableBody>
                 <StyledTableRow>
                   <StyledTableCell>Họ tên:</StyledTableCell>
-                  <StyledTableCell>{user.name}</StyledTableCell>
+                  <StyledTableCell>{userId.name}</StyledTableCell>
                 </StyledTableRow>
 
                 <StyledTableRow>
                   <StyledTableCell>Email:</StyledTableCell>
-                  <StyledTableCell>{user.email}</StyledTableCell>
+                  <StyledTableCell>{userId.email}</StyledTableCell>
                 </StyledTableRow>
 
                 <StyledTableRow>
                   <StyledTableCell>Số điện thoại:</StyledTableCell>
-                  <StyledTableCell>{user.phone}</StyledTableCell>
+                  <StyledTableCell>{userId.phone}</StyledTableCell>
                 </StyledTableRow>
               </TableBody>
             </Table>
@@ -98,7 +119,7 @@ export default function InfoUser() {
             <Modal
               title="Thay đổi thông tin"
               open={isModalOpen}
-              onOk={handleOk(user._id)}
+              onOk={handleOk}
               onCancel={handleCancel}
             >
               <Form
@@ -115,17 +136,21 @@ export default function InfoUser() {
                 <Form.Item label="Họ tên">
                   <Input
                     placeholder="Họ tên"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={userId.name}
+                    onChange={(e) => {
+                      setUserId((pre) => ({ ...pre, name: e.target.value }));
+                    }}
                   ></Input>
                 </Form.Item>
 
-                <Form.Item
-                  label="Số điện thoại"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                >
-                  <Input placeholder="Số điện thoại"></Input>
+                <Form.Item label="Số điện thoại">
+                  <Input
+                    placeholder="Số điện thoại"
+                    value={userId.phone}
+                    onChange={(e) => {
+                      setUserId((pre) => ({ ...pre, phone: e.target.value }));
+                    }}
+                  ></Input>
                 </Form.Item>
               </Form>
             </Modal>

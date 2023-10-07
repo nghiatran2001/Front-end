@@ -33,10 +33,10 @@ export default function Main() {
       <Typography className="title">Sản phẩm mới</Typography>
       <Box className="main">
         {listProduct?.map((product, index) => {
-          return product.disable ? (
+          return product.disable === "Ngừng hoạt động" ? (
             ""
           ) : (
-            <Card className="card" sx={{ width: 200 }}>
+            <Card key={index} className="card" sx={{ width: 200 }}>
               <CardActionArea>
                 <img className="img" src={product.image} alt="" />
                 <CardContent>

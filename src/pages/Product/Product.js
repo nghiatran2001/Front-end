@@ -147,7 +147,7 @@ export default function Product() {
                         {product.quantity}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        {product.disable ? "Ngừng hoạt động" : "Hoạt động"}
+                        {product.disable}
                       </StyledTableCell>
                       <StyledTableCell align="center">
                         <Link to={`/editproduct?idProduct=${product._id}`}>
