@@ -16,6 +16,8 @@ import {
   User,
   EditProduct,
   Filter,
+  EditUser,
+  AddTech,
 } from "../pages";
 import { DefaultLayout, AdminLayout } from "../layouts";
 import Admin from "../pages/Admin/Admin";
@@ -117,6 +119,16 @@ const publicRoutes = [
   {
     path: "/filter",
     element: Filter,
+    AdminLayout,
+  },
+  {
+    path: "/edituser",
+    element: EditUser,
+    AdminLayout,
+  },
+  {
+    path: "/addtech",
+    element: AddTech,
     AdminLayout,
   },
 ];

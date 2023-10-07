@@ -149,18 +149,26 @@ export default function Product() {
                       <StyledTableCell align="center">
                         {product.disable}
                       </StyledTableCell>
-                      <StyledTableCell align="center">
+                      <StyledTableCell align="left">
                         <Link to={`/editproduct?idProduct=${product._id}`}>
-                          <Button sx={{ margin: 1 }} variant="contained">
+                          <Button sx={{ margin: "1px" }} variant="contained">
                             Sửa
                           </Button>
                         </Link>
                         <Button
                           onClick={() => handleDeleteProduct(product._id)}
-                          sx={{ margin: 1 }}
+                          sx={{ margin: "1px" }}
                           variant="contained"
                         >
                           Xóa
+                        </Button>
+                        <Link to={`/addtech?idProduct=${product._id}`}>
+                          <Button sx={{ margin: "1px" }} variant="contained">
+                            Thêm thông số
+                          </Button>
+                        </Link>
+                        <Button sx={{ margin: "1px" }} variant="contained">
+                          Xem chi tiết
                         </Button>
                       </StyledTableCell>
                     </StyledTableRow>

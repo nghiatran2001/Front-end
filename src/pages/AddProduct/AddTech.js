@@ -40,7 +40,7 @@ const StyledTableRow = styled(TableRow)(() => ({
   },
 }));
 
-export default function AddProduct() {
+export default function AddTech() {
   const [api, contextHolder] = notification.useNotification();
 
   const [listCategory, setListCategory] = useState([]);
@@ -122,7 +122,7 @@ export default function AddProduct() {
         <Box sx={{ marginTop: 5, marginLeft: 5 }}>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography variant="h5" sx={{ marginBottom: 5 }}>
-              Thêm sản phẩm
+              Thêm thông số kỹ thuật
             </Typography>
             <Typography variant="h5" sx={{ marginBottom: 5 }}>
               <Link to="/product">
@@ -142,7 +142,7 @@ export default function AddProduct() {
             <Table>
               <TableBody>
                 <StyledTableRow>
-                  <StyledTableCell>Tên sản phẩm:</StyledTableCell>
+                  <StyledTableCell>CHIP xử lý:</StyledTableCell>
                   <StyledTableCell>
                     <OutlinedInput
                       onChange={(e) => setNameProduct(e.target.value)}
@@ -155,18 +155,19 @@ export default function AddProduct() {
 
               <TableBody>
                 <StyledTableRow>
-                  <StyledTableCell>Hãng:</StyledTableCell>
+                  <StyledTableCell>Dung lượng RAM:</StyledTableCell>
                   <StyledTableCell>
                     <select
                       style={{ width: "100%", height: "40px" }}
                       onChange={(e) => setNameCategory(e.target.value)}
                     >
-                      <option>Chọn Hãng</option>
-                      {listCategory?.map((category, index) => {
-                        return (
-                          <option key={index}>{category.nameCategory}</option>
-                        );
-                      })}
+                      <option>Chọn RAM</option>
+                      <option>8 GB</option>
+                      <option>2 x 8 GB</option>
+                      <option>16 GB</option>
+                      <option>2 x 16 GB</option>
+                      <option>32 GB</option>
+                      <option>2 x 32 GB</option>
                     </select>
                   </StyledTableCell>
                 </StyledTableRow>
@@ -174,12 +175,29 @@ export default function AddProduct() {
 
               <TableBody>
                 <StyledTableRow>
-                  <StyledTableCell>Giá gốc:</StyledTableCell>
+                  <StyledTableCell>Ổ cứng:</StyledTableCell>
+                  <StyledTableCell>
+                    <select
+                      style={{ width: "100%", height: "40px" }}
+                      onChange={(e) => setNameCategory(e.target.value)}
+                    >
+                      <option>Chọn ổ cứng</option>
+                      <option>256 GB</option>
+                      <option>512 GB</option>
+                      <option>1 TB</option>
+                      <option>2 TB</option>
+                    </select>
+                  </StyledTableCell>
+                </StyledTableRow>
+              </TableBody>
+
+              <TableBody>
+                <StyledTableRow>
+                  <StyledTableCell>Màn hình (inchs):</StyledTableCell>
                   <StyledTableCell>
                     <OutlinedInput
-                      onChange={(e) => setOriginPrice(e.target.value)}
+                      onChange={(e) => setNameProduct(e.target.value)}
                       type="number"
-                      defaultValue={10000000}
                       sx={{ width: "100%", height: "40px" }}
                     ></OutlinedInput>
                   </StyledTableCell>
@@ -188,61 +206,16 @@ export default function AddProduct() {
 
               <TableBody>
                 <StyledTableRow>
-                  <StyledTableCell>Giá bán:</StyledTableCell>
+                  <StyledTableCell>Hệ điều hành:</StyledTableCell>
                   <StyledTableCell>
-                    <OutlinedInput
-                      onChange={(e) => setSellPrice(e.target.value)}
-                      type="number"
-                      defaultValue={10000000}
-                      sx={{ width: "100%", height: "40px" }}
-                    ></OutlinedInput>
-                  </StyledTableCell>
-                </StyledTableRow>
-              </TableBody>
-
-              <TableBody>
-                <StyledTableRow>
-                  <StyledTableCell>Số lượng:</StyledTableCell>
-                  <StyledTableCell>
-                    <OutlinedInput
-                      onChange={(e) => setQuantity(e.target.value)}
-                      type="number"
-                      defaultValue={1}
-                      slotProps={{
-                        input: {
-                          min: 0,
-                          max: 100,
-                          step: 1,
-                        },
-                      }}
-                      sx={{ width: "100%", height: "40px" }}
-                    ></OutlinedInput>
-                  </StyledTableCell>
-                </StyledTableRow>
-              </TableBody>
-
-              <TableBody>
-                <StyledTableRow>
-                  <StyledTableCell>Mô tả:</StyledTableCell>
-                  <StyledTableCell>
-                    <TextArea
-                      onChange={(e) => setDescription(e.target.value)}
-                      type="text"
-                      sx={{ width: "100%", height: "40px" }}
-                    ></TextArea>
-                  </StyledTableCell>
-                </StyledTableRow>
-              </TableBody>
-
-              <TableBody>
-                <StyledTableRow>
-                  <StyledTableCell>Hình ảnh:</StyledTableCell>
-                  <StyledTableCell>
-                    <InputBase
-                      onChange={handlePicture}
-                      type="file"
-                      sx={{ width: "100%", height: "40px" }}
-                    ></InputBase>
+                    <select
+                      style={{ width: "100%", height: "40px" }}
+                      onChange={(e) => setNameCategory(e.target.value)}
+                    >
+                      <option>Chọn hệ điều hành</option>
+                      <option>MacOS</option>
+                      <option>Window</option>
+                    </select>
                   </StyledTableCell>
                 </StyledTableRow>
               </TableBody>
@@ -252,7 +225,7 @@ export default function AddProduct() {
                   <StyledTableCell></StyledTableCell>
                   <StyledTableCell>
                     <Button variant="contained" onClick={handleAddProduct}>
-                      Thêm sản phẩm
+                      Thêm
                     </Button>
                   </StyledTableCell>
                 </StyledTableRow>

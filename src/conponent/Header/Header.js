@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -23,6 +23,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../redux/apiRequest";
 import { createAxios } from "../../createInstance";
 import { logoutSuccess } from "../../redux/authSlice";
+
+import { user as userAPI } from "../../API";
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -64,6 +67,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 export default function Header() {
+  const [userId, setUserId] = useState("");
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const handleOpenNavMenu = (event) => {
@@ -78,7 +83,8 @@ export default function Header() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  const user = useSelector((state) => state.auth.login.currentUser);
+
+  const user = useSelector((state) => state.auth.login?.currentUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const accessToken = user?.accessToken;
@@ -89,6 +95,22 @@ export default function Header() {
   const handleLogout = () => {
     logOut(dispatch, id, navigate, accessToken, axiosJWT);
   };
+
+  useEffect(() => {
+    (async () => {
+      await getIdUser();
+    })();
+  }, []);
+
+  const getIdUser = async () => {
+    try {
+      const result = await userAPI.getIdUser({ id: user._id });
+      setUserId(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <AppBar position="static" className="header">
@@ -235,7 +257,7 @@ export default function Header() {
               <>
                 <Box sx={{ flexGrow: 0, paddingRight: 5 }}>
                   <Tooltip title="Open settings">
-                    <h4>Hi, {user.name}</h4>
+                    <h4>Hi, {userId.name}</h4>
                   </Tooltip>
                 </Box>
               </>

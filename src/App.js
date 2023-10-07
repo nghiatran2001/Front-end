@@ -21,6 +21,9 @@ import AddProduct from "./pages/AddProduct/AddProduct";
 import Type from "./pages/Type/Type";
 import EditProduct from "./pages/EditProduct/EditProduct";
 import Filter from "./pages/Filter/Filter";
+import EditUser from "./pages/User/EditUser";
+import AddTech from "./pages/AddProduct/AddTech";
+
 const LayoutPage = () => {
   return (
     <>
@@ -120,6 +123,14 @@ const router = createBrowserRouter([
   {
     path: "/filter",
     element: <Filter />,
+  },
+  {
+    path: "/edituser",
+    element: <EditUser />,
+  },
+  {
+    path: "/addtech",
+    element: <AddTech />,
   },
 ]);
 

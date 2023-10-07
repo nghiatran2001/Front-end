@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./InfoUser.css";
 import { Button, Form, Input, Modal } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { user as userAPI } from "../../API";
+import { useSelector } from "react-redux";
 import {
   Table,
   TableBody,
@@ -12,7 +11,8 @@ import {
   tableCellClasses,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { updateUser } from "../../redux/apiRequest";
+
+import { user as userAPI } from "../../API";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -36,8 +36,6 @@ const StyledTableRow = styled(TableRow)(() => ({
 export default function InfoUser() {
   const user = useSelector((state) => state.auth.login?.currentUser);
 
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
   const [userId, setUserId] = useState("");
 
   const handleEditUser = async () => {
@@ -76,7 +74,6 @@ export default function InfoUser() {
       console.log(error);
     }
   };
-  console.log(userId);
 
   return (
     <div>
