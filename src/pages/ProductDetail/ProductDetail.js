@@ -62,7 +62,7 @@ export default function ProductDetail() {
                 ></img>
               </div>
 
-              {/* <Box
+              <Box
                 sx={{
                   borderRadius: "10px",
                   padding: 2,
@@ -76,7 +76,7 @@ export default function ProductDetail() {
                 <Typography gutterBottom>RAM:</Typography>
                 <Typography gutterBottom>SSD:</Typography>
                 <Typography gutterBottom>CARD ĐỒ HỌA:</Typography>
-              </Box> */}
+              </Box>
             </Col>
             <Col span={13} style={{ paddingLeft: 20 }}>
               <CardContent sx={{ marginBottom: 5 }}>
@@ -85,6 +85,9 @@ export default function ProductDetail() {
                 </Typography>
                 <Box>
                   <Box sx={{ paddingLeft: 3 }}>
+                    <Typography gutterBottom>
+                      Kho: <span>{product.quantity}</span>
+                    </Typography>
                     <Typography
                       gutterBottom
                       className="text"

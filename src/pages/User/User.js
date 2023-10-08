@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import Admin from "../Admin/Admin";
 import { styled } from "@mui/material/styles";
@@ -14,10 +14,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../../redux/authSlice";
 import { createAxios } from "../../createInstance";
 import axios from "axios";
+import { Popconfirm, notification } from "antd";
 
 import { user as userAPI } from "../../API";
 import { Link } from "react-router-dom";
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -38,9 +38,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function User() {
   const user = useSelector((state) => state.auth.login?.currentUser);
-  const userList = useSelector((state) => state.users.users?.getAllUser);
+
   const dispatch = useDispatch();
   let axiosJWT = createAxios(user, dispatch, loginSuccess);
+
+  const [api, contextHolder] = notification.useNotification();
+
+  const [userList, setUserList] = useState([]);
 
   const handleDelete = async (id) => {
     try {
@@ -48,20 +52,77 @@ export default function User() {
         id,
       });
       if (result.status === 200) {
-        await getAllUser(user?.accessToken, dispatch, axiosJWT);
+        await getUserList();
+        api.open({
+          type: "success",
+          message: "Xóa thành công.",
+        });
       }
     } catch (error) {
       console.log(error);
     }
   };
-  useEffect(() => {
-    if (user?.accessToken) {
-      getAllUser(user?.accessToken, dispatch, axiosJWT);
+  const cancel = (e) => {};
+
+  const handleBlock = async (id) => {
+    try {
+      const result = await userAPI.blockUser({
+        id,
+      });
+      if (result.status === 200) {
+        await getUserList();
+        api.open({
+          type: "success",
+          message: "Khóa tài khoản thành công.",
+        });
+      }
+    } catch (error) {
+      api.open({
+        type: "error",
+        message: "Khóa tài khoản thất bại.",
+      });
+      console.log(error);
     }
+  };
+
+  const handleOpen = async (id) => {
+    try {
+      const result = await userAPI.openUser({
+        id,
+      });
+      if (result.status === 200) {
+        await getUserList();
+        api.open({
+          type: "success",
+          message: "Mở tài khoản thành công.",
+        });
+      }
+    } catch (error) {
+      api.open({
+        type: "error",
+        message: "Mở tài khoản thất bại.",
+      });
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      await getUserList();
+    })();
   }, []);
 
+  const getUserList = async () => {
+    try {
+      const result = await userAPI.getUserList({ token: user?.accessToken });
+      setUserList(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
+      {contextHolder}
       <Box
         sx={{
           display: "flex",
@@ -120,15 +181,41 @@ export default function User() {
                             Sửa
                           </Button>
                         </Link>
-                        <Button
-                          onClick={() => {
+                        <Popconfirm
+                          title="Xóa"
+                          description="Bạn chắc chắn muốn xóa?"
+                          onConfirm={() => {
                             handleDelete(user._id);
                           }}
-                          sx={{ margin: 1 }}
-                          variant="contained"
+                          onCancel={cancel}
+                          okText="Có"
+                          cancelText="Không"
                         >
-                          Xóa
-                        </Button>
+                          <Button sx={{ margin: 1 }} variant="contained">
+                            Xóa
+                          </Button>
+                        </Popconfirm>
+                        {user?.disable ? (
+                          <Button
+                            onClick={() => {
+                              handleOpen(user._id);
+                            }}
+                            sx={{ margin: 1 }}
+                            variant="contained"
+                          >
+                            Mở khóa
+                          </Button>
+                        ) : (
+                          <Button
+                            onClick={() => {
+                              handleBlock(user._id);
+                            }}
+                            sx={{ margin: 1 }}
+                            variant="contained"
+                          >
+                            Khóa
+                          </Button>
+                        )}
                       </StyledTableCell>
                     </StyledTableRow>
                   );

@@ -5,19 +5,6 @@ import { Col, Row } from "antd";
 
 export default function Home() {
   return (
-    // <div
-    //   style={{
-    //     background: "gray",
-    //     width: "90%",
-    //     display: "flex",
-    //     flexDirection: "column",
-    //   }}
-    // >
-    //   <Banner />
-    //   <Sidebar />
-    //   <Main />
-
-    // </div>
     <div>
       <Row>
         <Col span={24}>

@@ -16,8 +16,10 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { tableCellClasses } from "@mui/material/TableCell";
+import { notification } from "antd";
 
 import { product as productAPI, category as categoryAPI } from "../../API";
+import TextArea from "antd/es/input/TextArea";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -39,6 +41,7 @@ const StyledTableRow = styled(TableRow)(() => ({
 }));
 
 export default function EditProduct() {
+  const [api, contextHolder] = notification.useNotification();
   const keyValue = window.location.search;
   const urlParams = new URLSearchParams(keyValue);
   const idProduct = urlParams.get("idProduct");
@@ -59,7 +62,24 @@ export default function EditProduct() {
 
   const handleEditProduct = async () => {
     try {
-      const result = await productAPI.editProduct(product);
+      if (
+        product.nameProduct === "" ||
+        product.originPrice === "" ||
+        product.sellPrice === "" ||
+        product.quantity === "" ||
+        product.description === ""
+      ) {
+        api.open({
+          type: "error",
+          message: "Vui lòng nhập đủ thông tin.",
+        });
+      } else {
+        const result = await productAPI.editProduct(product);
+        api.open({
+          type: "success",
+          message: "Sửa sản phẩm thành công.",
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -93,6 +113,7 @@ export default function EditProduct() {
   };
   return (
     <div>
+      {contextHolder}
       <Box
         sx={{
           display: "flex",
@@ -261,7 +282,7 @@ export default function EditProduct() {
                 <StyledTableRow>
                   <StyledTableCell>Mô tả:</StyledTableCell>
                   <StyledTableCell>
-                    <OutlinedInput
+                    <TextArea
                       value={product.description || ""}
                       onChange={(e) =>
                         setProduct((pre) => ({
@@ -271,7 +292,7 @@ export default function EditProduct() {
                       }
                       type="text"
                       sx={{ width: "100%", height: "40px" }}
-                    ></OutlinedInput>
+                    ></TextArea>
                   </StyledTableCell>
                 </StyledTableRow>
               </TableBody>

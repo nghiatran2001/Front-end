@@ -16,13 +16,13 @@ import Payment from "./pages/Payment/Payment";
 import Categories from "./pages/Categories/Categories";
 import Follow from "./pages/Follow/Follow";
 import OrderAdmin from "./pages/OrderAdmin/OrderAdmin";
-import AddCategory from "./pages/AddCategory/AddCategory";
 import AddProduct from "./pages/AddProduct/AddProduct";
 import Type from "./pages/Type/Type";
 import EditProduct from "./pages/EditProduct/EditProduct";
 import Filter from "./pages/Filter/Filter";
 import EditUser from "./pages/User/EditUser";
 import AddTech from "./pages/AddProduct/AddTech";
+import AddCategory from "./pages/Categories/AddCategory";
 
 const LayoutPage = () => {
   return (
@@ -113,10 +113,6 @@ const router = createBrowserRouter([
     element: <AddProduct />,
   },
   {
-    path: "/addcategory",
-    element: <AddCategory />,
-  },
-  {
     path: "/editproduct",
     element: <EditProduct />,
   },
@@ -131,6 +127,10 @@ const router = createBrowserRouter([
   {
     path: "/addtech",
     element: <AddTech />,
+  },
+  {
+    path: "/addcategory",
+    element: <AddCategory />,
   },
 ]);
 

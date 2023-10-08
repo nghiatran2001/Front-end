@@ -10,9 +10,17 @@ const category = {
     const url = BACKEND_API + "/category/getall";
     return await axios.get(url);
   },
-  deleteCategory: async ({ _id }) => {
-    const url = BACKEND_API + `/category/${_id}`;
+  deleteCategory: async ({ id }) => {
+    const url = BACKEND_API + `/category/${id}`;
     return await axios.delete(url);
+  },
+  getIdCategory: async ({ id }) => {
+    const url = BACKEND_API + `/category/${id}`;
+    return await axios.get(url);
+  },
+  editCategory: async ({ ...category }) => {
+    const url = BACKEND_API + `/category/${category._id}`;
+    return await axios.put(url, category);
   },
 };
 

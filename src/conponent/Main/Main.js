@@ -69,6 +69,46 @@ export default function Main() {
           );
         })}
       </Box>
+
+      <Typography className="title">Sản phẩm ngừng bán</Typography>
+      <Box className="main">
+        {listProduct?.map((product, index) => {
+          return product.disable === "Hoạt động" ? (
+            ""
+          ) : (
+            <Card key={index} className="card" sx={{ width: 200 }}>
+              <CardActionArea>
+                <img className="img" src={product.image} alt="" />
+                <CardContent>
+                  <Typography gutterBottom variant="h5">
+                    {product.nameProduct}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    className="text"
+                  >
+                    {VND.format(product.originPrice)}
+                  </Typography>
+                  <Typography gutterBottom variant="h6" color="red">
+                    {VND.format(product.sellPrice)}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+              <CardActions sx={{ display: "flex", justifyContent: "center" }}>
+                <NavLink
+                  to={`/productdetail?idProduct=${product._id}`}
+                  className="main-link"
+                >
+                  <Button variant="contained" size="small">
+                    Xem chi tiết
+                  </Button>
+                </NavLink>
+              </CardActions>
+            </Card>
+          );
+        })}
+      </Box>
     </div>
   );
 }

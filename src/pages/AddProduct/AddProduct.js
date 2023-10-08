@@ -66,23 +66,42 @@ export default function AddProduct() {
 
   const handleAddProduct = async (e) => {
     e.preventDefault();
-
     try {
-      const result = await productAPI.addProduct({
-        nameCategory,
-        nameProduct,
-        originPrice,
-        sellPrice,
-        image,
-        quantity,
-        description,
-      });
-      if (result.status === 200) {
-        api.success({
-          message: `thanh cong`,
+      if (
+        nameProduct === "" ||
+        nameCategory === "" ||
+        originPrice === "" ||
+        sellPrice === "" ||
+        quantity === "" ||
+        description === "" ||
+        image === ""
+      ) {
+        api.open({
+          type: "error",
+          message: "Vui lòng nhập đủ thông tin.",
         });
+      } else {
+        const result = await productAPI.addProduct({
+          nameCategory,
+          nameProduct,
+          originPrice,
+          sellPrice,
+          image,
+          quantity,
+          description,
+        });
+        if (result.status === 200) {
+          api.open({
+            type: "success",
+            message: "Thêm sản phẩm thành công.",
+          });
+        }
       }
     } catch (error) {
+      api.open({
+        type: "error",
+        message: "Thêm thất bại.",
+      });
       console.log(error);
     }
   };
@@ -179,7 +198,6 @@ export default function AddProduct() {
                     <OutlinedInput
                       onChange={(e) => setOriginPrice(e.target.value)}
                       type="number"
-                      defaultValue={10000000}
                       sx={{ width: "100%", height: "40px" }}
                     ></OutlinedInput>
                   </StyledTableCell>
@@ -193,7 +211,6 @@ export default function AddProduct() {
                     <OutlinedInput
                       onChange={(e) => setSellPrice(e.target.value)}
                       type="number"
-                      defaultValue={10000000}
                       sx={{ width: "100%", height: "40px" }}
                     ></OutlinedInput>
                   </StyledTableCell>
@@ -207,7 +224,6 @@ export default function AddProduct() {
                     <OutlinedInput
                       onChange={(e) => setQuantity(e.target.value)}
                       type="number"
-                      defaultValue={1}
                       slotProps={{
                         input: {
                           min: 0,

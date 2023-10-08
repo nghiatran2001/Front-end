@@ -1,5 +1,4 @@
 import {
-  AddCategory,
   AddProduct,
   Cart,
   Categories,
@@ -18,6 +17,7 @@ import {
   Filter,
   EditUser,
   AddTech,
+  AddCategory,
 } from "../pages";
 import { DefaultLayout, AdminLayout } from "../layouts";
 import Admin from "../pages/Admin/Admin";
@@ -107,11 +107,6 @@ const publicRoutes = [
     AdminLayout,
   },
   {
-    path: "/addcategory",
-    element: AddCategory,
-    AdminLayout,
-  },
-  {
     path: "/editproduct",
     element: EditProduct,
     AdminLayout,
@@ -129,6 +124,11 @@ const publicRoutes = [
   {
     path: "/addtech",
     element: AddTech,
+    AdminLayout,
+  },
+  {
+    path: "/addcategory",
+    element: AddCategory,
     AdminLayout,
   },
 ];

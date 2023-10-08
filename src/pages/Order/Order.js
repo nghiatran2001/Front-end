@@ -1,12 +1,5 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  FormLabel,
-  InputBase,
-  TextField,
-} from "@mui/material";
-import React, { useState } from "react";
+import { Box, Button, FormControl, FormLabel, InputBase } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Order.css";
 import Table from "@mui/material/Table";
@@ -17,28 +10,31 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useSelector } from "react-redux";
 import TextArea from "antd/es/input/TextArea";
-import {
-  Cascader,
-  DatePicker,
-  Form,
-  Input,
-  InputNumber,
-  Radio,
-  Select,
-  Switch,
-  TreeSelect,
-} from "antd";
+
+import { user as userAPI } from "../../API";
 
 export default function Order() {
   const user = useSelector((state) => state.auth.login?.currentUser);
+  const [userId, setUserId] = useState("");
 
   const VND = new Intl.NumberFormat("vi-VN", {
     style: "currency",
     currency: "VND",
   });
-  const [componentSize, setComponentSize] = useState("default");
-  const onFormLayoutChange = ({ size }) => {
-    setComponentSize(size);
+
+  useEffect(() => {
+    (async () => {
+      await getIdUser();
+    })();
+  }, []);
+
+  const getIdUser = async () => {
+    try {
+      const result = await userAPI.getIdUser({ id: user._id });
+      setUserId(result.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div>
@@ -110,14 +106,14 @@ export default function Order() {
           >
             <h1 style={{ textAlign: "center" }}>Thông tin người nhận</h1>
             <FormLabel sx={{ padding: 2, color: "black" }}>
-              Họ tên: <span className="info">{user.name}</span>
+              Họ tên: <span className="info">{userId?.name}</span>
               <InputBase>1</InputBase>
             </FormLabel>
             <FormLabel sx={{ padding: 2, color: "black" }}>
-              Số điện thoại: <span className="info">{user.phone}</span>
+              Số điện thoại: <span className="info">{userId?.phone}</span>
             </FormLabel>
             <FormLabel sx={{ padding: 2, color: "black" }}>
-              Email: <span className="info">{user.email}</span>
+              Email: <span className="info">{userId?.email}</span>
             </FormLabel>
             <FormLabel sx={{ padding: 2, color: "black" }}>
               <span>

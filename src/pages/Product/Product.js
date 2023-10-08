@@ -13,6 +13,7 @@ import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";
 
 import { product as productAPI } from "../../API";
+import { Popconfirm, notification } from "antd";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -37,6 +38,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function Product() {
   const [listProduct, setListProduct] = useState([]);
 
+  const [api, contextHolder] = notification.useNotification();
+
   const VND = new Intl.NumberFormat("vi-VN", {
     style: "currency",
     currency: "VND",
@@ -49,11 +52,16 @@ export default function Product() {
       });
       if (result.status === 200) {
         await getProductList();
+        api.open({
+          type: "success",
+          message: "Xóa thành công.",
+        });
       }
     } catch (error) {
       console.log(error);
     }
   };
+  const cancel = (e) => {};
 
   useEffect(() => {
     (async () => {
@@ -71,6 +79,7 @@ export default function Product() {
 
   return (
     <div>
+      {contextHolder}
       <Box
         sx={{
           display: "flex",
@@ -155,13 +164,18 @@ export default function Product() {
                             Sửa
                           </Button>
                         </Link>
-                        <Button
-                          onClick={() => handleDeleteProduct(product._id)}
-                          sx={{ margin: "1px" }}
-                          variant="contained"
+                        <Popconfirm
+                          title="Xóa"
+                          description="Bạn chắc chắn muốn xóa?"
+                          onConfirm={() => handleDeleteProduct(product._id)}
+                          onCancel={cancel}
+                          okText="Có"
+                          cancelText="Không"
                         >
-                          Xóa
-                        </Button>
+                          <Button sx={{ margin: "1px" }} variant="contained">
+                            Xóa
+                          </Button>
+                        </Popconfirm>
                         <Link to={`/addtech?idProduct=${product._id}`}>
                           <Button sx={{ margin: "1px" }} variant="contained">
                             Thêm thông số

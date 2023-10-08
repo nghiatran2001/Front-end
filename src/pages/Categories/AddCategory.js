@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Admin from "../Admin/Admin";
+import { notification } from "antd";
+
 import {
   Box,
   Button,
@@ -10,9 +12,9 @@ import {
   TableCell,
   TableContainer,
   TableRow,
-  TextareaAutosize,
   Typography,
 } from "@mui/material";
+import TextArea from "antd/es/input/TextArea";
 import { styled } from "@mui/material/styles";
 import { tableCellClasses } from "@mui/material/TableCell";
 
@@ -28,34 +30,53 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
+const StyledTableRow = styled(TableRow)(() => ({
   "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
+    background: "white",
   },
-  // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,
   },
 }));
 
 export default function AddCategory() {
+  const [api, contextHolder] = notification.useNotification();
+
   const [nameCategory, setNameCategory] = useState("");
   const [description, setDescription] = useState("");
 
   const handleAddCategory = async (e) => {
     e.preventDefault();
     try {
-      const result = await categoryAPI.addCategory({
-        nameCategory,
-
-        description,
-      });
+      if (nameCategory === "" || description === "") {
+        api.open({
+          type: "error",
+          message: "Vui lòng nhập đủ thông tin.",
+        });
+      } else {
+        const result = await categoryAPI.addCategory({
+          nameCategory,
+          description,
+        });
+        if (result.status === 200) {
+          api.open({
+            type: "success",
+            message: "Thêm thành công.",
+          });
+        }
+      }
     } catch (error) {
+      api.open({
+        type: "error",
+        message: "Thêm thất bại.",
+      });
       console.log(error);
     }
   };
+
   return (
     <div>
+      {contextHolder}
       <Box
         sx={{
           display: "flex",
@@ -74,7 +95,7 @@ export default function AddCategory() {
         <Box sx={{ marginTop: 5, marginLeft: 5 }}>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography variant="h5" sx={{ marginBottom: 5 }}>
-              Thêm loại sản phẩm
+              Thêm sản phẩm
             </Typography>
             <Typography variant="h5" sx={{ marginBottom: 5 }}>
               <Link to="/categories">
@@ -84,41 +105,47 @@ export default function AddCategory() {
           </Box>
 
           <TableContainer
-            sx={{ minWidth: 800, border: 1, borderRadius: 3 }}
+            sx={{
+              minWidth: 800,
+              border: 1,
+              borderRadius: 5,
+            }}
             aria-label="customized table"
           >
             <Table>
               <TableBody>
                 <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    Tên hãng:
-                  </StyledTableCell>
+                  <StyledTableCell>Hãng:</StyledTableCell>
                   <StyledTableCell>
                     <OutlinedInput
+                      onChange={(e) => setNameCategory(e.target.value)}
                       type="text"
-                      sx={{ width: "100%" }}
+                      sx={{ width: "100%", height: "40px" }}
                     ></OutlinedInput>
                   </StyledTableCell>
                 </StyledTableRow>
               </TableBody>
+
               <TableBody>
                 <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    Mô tả:
-                  </StyledTableCell>
+                  <StyledTableCell>Mô tả:</StyledTableCell>
                   <StyledTableCell>
-                    <TextareaAutosize
+                    <TextArea
+                      onChange={(e) => setDescription(e.target.value)}
                       type="text"
-                      style={{ width: "100%", height: 100, fontSize: 17 }}
-                    ></TextareaAutosize>
+                      sx={{ width: "100%", height: "40px" }}
+                    ></TextArea>
                   </StyledTableCell>
                 </StyledTableRow>
               </TableBody>
+
               <TableBody>
                 <StyledTableRow>
-                  <StyledTableCell component="th" scope="row"></StyledTableCell>
+                  <StyledTableCell></StyledTableCell>
                   <StyledTableCell>
-                    <Button variant="contained">Thêm</Button>
+                    <Button variant="contained" onClick={handleAddCategory}>
+                      Thêm thể loại
+                    </Button>
                   </StyledTableCell>
                 </StyledTableRow>
               </TableBody>

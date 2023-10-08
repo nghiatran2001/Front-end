@@ -29,9 +29,14 @@ export const loginUser = async (user, dispatch, navigate) => {
     const BACKEND_API = process.env.REACT_APP_BACKEND_API;
     const res = await axios.post(BACKEND_API + "/auth/login", user);
     dispatch(loginSuccess(res.data));
-    navigate("/");
+    if (res.data.disable) {
+      alert("Tài khoản bạn đã bị khóa vui lòng liên hệ admin để mở!!!!");
+    } else {
+      navigate("/");
+    }
   } catch (error) {
     dispatch(loginFailed());
+    alert("Email hoặc mật khẩu không đúng");
   }
 };
 

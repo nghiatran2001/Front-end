@@ -10,8 +10,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { Popconfirm } from "antd";
+import { notification } from "antd";
 
 import { category as categoryAPI } from "../../API";
+import { Link } from "react-router-dom";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -34,33 +37,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function Categories() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [api, contextHolder] = notification.useNotification();
+
   const [listCategory, setListCategory] = useState([]);
-
-  const [nameCategory, setNameCategory] = useState("");
-  const [description, setDescription] = useState("");
-
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleOk = async (e) => {
-    e.preventDefault();
-    try {
-      const result = await categoryAPI.addCategory({
-        nameCategory,
-        description,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-    window.location.reload(true);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-    window.location.reload(true);
-  };
 
   const handleDeleteCategory = async (id) => {
     try {
@@ -69,11 +48,17 @@ export default function Categories() {
       });
       if (result.status === 200) {
         await getCategoryList();
+        api.open({
+          type: "success",
+          message: "Xóa thành công.",
+        });
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  const cancel = (e) => {};
 
   useEffect(() => {
     (async () => {
@@ -90,6 +75,7 @@ export default function Categories() {
   };
   return (
     <div>
+      {contextHolder}
       <Box
         sx={{
           display: "flex",
@@ -111,40 +97,9 @@ export default function Categories() {
               Danh sách loại sản phẩm
             </Typography>
             <Typography variant="h5" sx={{ marginBottom: 5 }}>
-              <Button variant="contained" onClick={showModal}>
-                Thêm loại sản phẩm
-              </Button>
-              <Modal
-                title="Thêm loại sản phẩm"
-                open={isModalOpen}
-                onOk={handleOk}
-                onCancel={handleCancel}
-              >
-                <Form
-                  labelCol={{
-                    span: 8,
-                  }}
-                  wrapperCol={{
-                    span: 8,
-                  }}
-                  style={{
-                    minWidth: 600,
-                  }}
-                >
-                  <Form.Item label="Tên Hãng">
-                    <Input
-                      onChange={(e) => setNameCategory(e.target.value)}
-                      placeholder="Tên hãng"
-                    ></Input>
-                  </Form.Item>
-                  <Form.Item label="Mô tả">
-                    <Input
-                      onChange={(e) => setDescription(e.target.value)}
-                      placeholder="Mô tả"
-                    ></Input>
-                  </Form.Item>
-                </Form>
-              </Modal>
+              <Link to="/addcategory">
+                <Button variant="contained">Thêm loại sản phẩm</Button>
+              </Link>
             </Typography>
           </Box>
           <TableContainer component={Paper}>
@@ -176,16 +131,18 @@ export default function Categories() {
                         {category.description}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        <Button sx={{ margin: 1 }} variant="contained">
-                          Sửa
-                        </Button>
-                        <Button
-                          onClick={() => handleDeleteCategory(category._id)}
-                          sx={{ margin: 1 }}
-                          variant="contained"
+                        <Popconfirm
+                          title="Xóa"
+                          description="Bạn chắc chắn muốn xóa?"
+                          onConfirm={() => handleDeleteCategory(category._id)}
+                          onCancel={cancel}
+                          okText="Có"
+                          cancelText="Không"
                         >
-                          Xóa
-                        </Button>
+                          <Button sx={{ margin: 1 }} variant="contained">
+                            Xóa
+                          </Button>
+                        </Popconfirm>
                       </StyledTableCell>
                     </StyledTableRow>
                   );

@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { tableCellClasses } from "@mui/material/TableCell";
+import { notification } from "antd";
 
 import { user as userAPI } from "../../API";
 
@@ -38,6 +39,7 @@ const StyledTableRow = styled(TableRow)(() => ({
 }));
 
 export default function EditUser() {
+  const [api, contextHolder] = notification.useNotification();
   const keyValue = window.location.search;
   const urlParams = new URLSearchParams(keyValue);
   const idUser = urlParams.get("idUser");
@@ -46,7 +48,18 @@ export default function EditUser() {
 
   const handleEditUser = async () => {
     try {
-      const result = await userAPI.editUser(user);
+      if (user.name === "" || user.phone === "") {
+        api.open({
+          type: "error",
+          message: "Vui lòng nhập đủ thông tin.",
+        });
+      } else {
+        const result = await userAPI.editUser(user);
+        api.open({
+          type: "success",
+          message: "Sửa người dùng thành công.",
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -68,6 +81,7 @@ export default function EditUser() {
 
   return (
     <div>
+      {contextHolder}
       <Box
         sx={{
           display: "flex",
