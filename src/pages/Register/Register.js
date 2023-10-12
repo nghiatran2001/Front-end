@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import "./Register.css";
 
 import { Button, InputLabel } from "@mui/material";
-import { Form, Link, useNavigate } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
 import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
 import { Input, notification } from "antd";
-import { useDispatch } from "react-redux";
-import { registerUser } from "../../redux/apiRequest";
 
 import { isEmpty, isEmail } from "validator";
 import { user as userAPI } from "../../API/index";
@@ -18,9 +16,6 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [api, contextHolder] = notification.useNotification();
   const [validation, setValidation] = useState("");
@@ -57,13 +52,6 @@ export default function Register() {
     if (!isValid) return;
     else {
       try {
-        // const user = {
-        //   name: name,
-        //   email: email,
-        //   password: password,
-        //   phone: phone,
-        // };
-        // registerUser(user, dispatch, navigate);
         const result = await userAPI.register({
           name,
           email,

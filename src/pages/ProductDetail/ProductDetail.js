@@ -28,6 +28,7 @@ export default function ProductDetail() {
       const result = await cartAPI.addCart({
         idProduct,
         email: userId.email,
+        quantity: 1,
       });
     } catch (error) {
       console.log(error);

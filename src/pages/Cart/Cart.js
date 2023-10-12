@@ -13,7 +13,8 @@ import { cart as cartAPI, product as productAPI } from "../../API";
 
 export default function Cart() {
   const [listCart, setListCart] = useState([]);
-  const [product, setProduct] = useState([]);
+  const [product, setProduct] = useState({});
+  const array = [];
 
   const VND = new Intl.NumberFormat("vi-VN", {
     style: "currency",
@@ -33,29 +34,27 @@ export default function Cart() {
       console.log(error);
     }
   };
-  const array = [];
+
   useEffect(() => {
     (async () => {
       await getIdProduct();
     })();
   }, [listCart]);
+
   const getIdProduct = async () => {
     try {
-      listCart?.map(async (idP) => {
+      listCart?.map(async (idCart) => {
         const result = await productAPI.getIdProduct({
-          id: idP.idProduct,
+          id: idCart.idProduct,
         });
         setProduct(result.data);
-        // array.push(result.data);
       });
     } catch (error) {
       console.log(error);
     }
   };
-  console.log(product);
-  array.push(product._id);
-  // console.log(array);
 
+  console.log(listCart);
   return (
     <div className="cart">
       <TableContainer className="cart-bg">
@@ -97,7 +96,7 @@ export default function Cart() {
             {listCart?.map((cart, index) => {
               return (
                 <TableRow key={index}>
-                  <TableCell>{cart.nameProduct}</TableCell>
+                  <TableCell>{cart._id}</TableCell>
                   <TableCell>
                     <img
                       className="image-cart"
@@ -106,10 +105,16 @@ export default function Cart() {
                       align="center"
                     ></img>
                   </TableCell>
-                  <TableCell align="center">{cart.quantity}</TableCell>
-                  <TableCell align="center">{VND.format(cart.price)}</TableCell>
+                  <TableCell align="center" className="btn">
+                    <button className="btn-cart">-</button>
+                    <span className="btn-quantity">{cart.quantity}</span>
+                    <button className="btn-cart">+</button>
+                  </TableCell>
+                  <TableCell align="center">
+                    {VND.format(cart.sellPrice)}
+                  </TableCell>
                   <TableCell align="right">
-                    {VND.format(cart.quantity * cart.price)}
+                    {VND.format(cart.quantity * cart.sellPrice)}
                   </TableCell>
                   <TableCell align="right">
                     <Button variant="contained">Xóa</Button>

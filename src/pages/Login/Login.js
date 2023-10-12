@@ -3,28 +3,55 @@ import { Button, InputLabel } from "@mui/material";
 import "./Login.css";
 import { Form, Link, useNavigate } from "react-router-dom";
 import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
-import { Input } from "antd";
+import { Input, notification } from "antd";
 import { loginUser } from "../../redux/apiRequest";
 import { useDispatch } from "react-redux";
 
+import { isEmpty, isEmail, isStrongPassword } from "validator";
+import { user as userAPI } from "../../API/index";
+
 export default function Login() {
   const [isShowPassword, setIsShowPassword] = useState(false);
+  const [api, contextHolder] = notification.useNotification();
+  const [validation, setValidation] = useState("");
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    const user = {
-      email: email,
-      password: password,
-    };
-    loginUser(user, dispatch, navigate);
+  const validateAll = () => {
+    const msg = {};
+    if (isEmpty(email)) {
+      msg.email = "*Vui lòng nhập email";
+    } else if (!isEmail(email)) {
+      msg.email = "Email không hợp lệ";
+    }
+    if (isEmpty(password)) {
+      msg.password = "*Vui lòng nhập mật khẩu";
+    }
+    setValidation(msg);
+    if (Object.keys(msg).length > 0) return false;
+    return true;
   };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const isValid = validateAll();
+    if (!isValid) return;
+    else {
+      const user = {
+        email: email,
+        password: password,
+      };
+      loginUser(user, dispatch, navigate);
+    }
+  };
+
   return (
     <div>
+      {contextHolder}
       <div className="login">
         <Form className="form">
           <h1>ĐĂNG NHẬP</h1>
@@ -37,6 +64,7 @@ export default function Login() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           ></Input>
+          <p className="validation">{validation.email}</p>
           <InputLabel className="label">Mật Khẩu(*)</InputLabel>
           <div style={{ position: "relative" }}>
             <span
@@ -57,6 +85,7 @@ export default function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             ></Input>
+            <p className="validation">{validation.password}</p>
           </div>
           <Button className="button" onClick={handleLogin}>
             Đăng nhập

@@ -84,6 +84,7 @@ export default function EditProduct() {
       console.log(error);
     }
   };
+
   useEffect(() => {
     (async () => {
       await getIdProduct();
