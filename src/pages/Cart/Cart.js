@@ -6,20 +6,26 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Button, Input } from "@mui/material";
+import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import image from "../../images/1.png";
 
-import { cart as cartAPI } from "../../API";
+import { cart as cartAPI, product as productAPI } from "../../API";
 
 export default function Cart() {
   const [listCart, setListCart] = useState([]);
+  const [product, setProduct] = useState([]);
+
+  const VND = new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  });
+
   useEffect(() => {
     (async () => {
-      await getCategoryList();
+      await getCartList();
     })();
   }, []);
-  const getCategoryList = async () => {
+  const getCartList = async () => {
     try {
       const result = await cartAPI.getCartList();
       setListCart(result.data);
@@ -27,10 +33,29 @@ export default function Cart() {
       console.log(error);
     }
   };
-  const VND = new Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-  });
+  const array = [];
+  useEffect(() => {
+    (async () => {
+      await getIdProduct();
+    })();
+  }, [listCart]);
+  const getIdProduct = async () => {
+    try {
+      listCart?.map(async (idP) => {
+        const result = await productAPI.getIdProduct({
+          id: idP.idProduct,
+        });
+        setProduct(result.data);
+        // array.push(result.data);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  console.log(product);
+  array.push(product._id);
+  // console.log(array);
+
   return (
     <div className="cart">
       <TableContainer className="cart-bg">
@@ -56,10 +81,10 @@ export default function Cart() {
               <TableCell>
                 <h3>Hình ảnh</h3>
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="center">
                 <h3>Số lượng</h3>
               </TableCell>
-              <TableCell align="right">
+              <TableCell align="center">
                 <h3>Đơn giá</h3>
               </TableCell>
               <TableCell align="right">
@@ -69,55 +94,29 @@ export default function Cart() {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <TableCell>Dell Vostro</TableCell>
-              <TableCell>
-                <img className="image-cart" src={image} alt=""></img>
-              </TableCell>
-              <TableCell align="right">
-                <Input
-                  type="number"
-                  slotProps={{
-                    input: {
-                      min: 1,
-                      max: 5,
-                      step: 1,
-                    },
-                  }}
-                  defaultValue={1}
-                />
-              </TableCell>
-              <TableCell align="right">{VND.format(10000000)}</TableCell>
-              <TableCell align="right">{VND.format(10000000)}</TableCell>
-              <TableCell align="right">
-                <Button variant="contained">Xóa</Button>
-              </TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell>Dell Vostro</TableCell>
-              <TableCell>
-                <img className="image-cart" src={image} alt=""></img>
-              </TableCell>
-              <TableCell align="right">
-                <Input
-                  type="number"
-                  slotProps={{
-                    input: {
-                      min: 1,
-                      max: 5,
-                      step: 1,
-                    },
-                  }}
-                  defaultValue={1}
-                />
-              </TableCell>
-              <TableCell align="right">{VND.format(10000000)}</TableCell>
-              <TableCell align="right">{VND.format(10000000)}</TableCell>
-              <TableCell align="right">
-                <Button variant="contained">Xóa</Button>
-              </TableCell>
-            </TableRow>
+            {listCart?.map((cart, index) => {
+              return (
+                <TableRow key={index}>
+                  <TableCell>{cart.nameProduct}</TableCell>
+                  <TableCell>
+                    <img
+                      className="image-cart"
+                      src={cart.image}
+                      alt=""
+                      align="center"
+                    ></img>
+                  </TableCell>
+                  <TableCell align="center">{cart.quantity}</TableCell>
+                  <TableCell align="center">{VND.format(cart.price)}</TableCell>
+                  <TableCell align="right">
+                    {VND.format(cart.quantity * cart.price)}
+                  </TableCell>
+                  <TableCell align="right">
+                    <Button variant="contained">Xóa</Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
           <TableBody>
             <TableRow>
@@ -127,7 +126,7 @@ export default function Cart() {
               <TableCell align="right">
                 <h3>Tổng tiền:</h3>
               </TableCell>
-              <TableCell align="right">{VND.format(20000000)}</TableCell>
+              <TableCell align="right">{VND.format()}</TableCell>
               <TableCell></TableCell>
             </TableRow>
             <TableCell></TableCell>

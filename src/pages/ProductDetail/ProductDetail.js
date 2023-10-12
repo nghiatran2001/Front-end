@@ -5,8 +5,18 @@ import Box from "@mui/material/Box";
 import "./ProductDetail.css";
 import { Col, Row } from "antd";
 
-import { product as productAPI, cart as cartAPI } from "../../API";
+import {
+  product as productAPI,
+  cart as cartAPI,
+  user as userAPI,
+} from "../../API";
+import { useSelector } from "react-redux";
+
 export default function ProductDetail() {
+  const user = useSelector((state) => state.auth.login?.currentUser);
+
+  const [userId, setUserId] = useState("");
+
   const keyValue = window.location.search;
   const urlParams = new URLSearchParams(keyValue);
   const idProduct = urlParams.get("idProduct");
@@ -17,6 +27,7 @@ export default function ProductDetail() {
     try {
       const result = await cartAPI.addCart({
         idProduct,
+        email: userId.email,
       });
     } catch (error) {
       console.log(error);
@@ -42,7 +53,22 @@ export default function ProductDetail() {
     style: "currency",
     currency: "VND",
   });
-  console.log(product);
+
+  useEffect(() => {
+    (async () => {
+      await getIdUser();
+    })();
+  }, []);
+
+  const getIdUser = async () => {
+    try {
+      const result = await userAPI.getIdUser({ id: user._id });
+      setUserId(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <Row>
