@@ -43,9 +43,9 @@ export default function Cart() {
 
   const getIdProduct = async () => {
     try {
-      listCart?.map(async (idCart) => {
+      listCart?.map(async (id) => {
         const result = await productAPI.getIdProduct({
-          id: idCart.idProduct,
+          id: id.idProduct,
         });
         setProduct(result.data);
       });

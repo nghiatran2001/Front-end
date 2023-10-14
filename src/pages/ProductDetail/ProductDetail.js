@@ -3,7 +3,7 @@ import { Button, CardContent, Typography } from "@mui/material";
 import ShoppingCartRounded from "@mui/icons-material/ShoppingCart";
 import Box from "@mui/material/Box";
 import "./ProductDetail.css";
-import { Col, Row } from "antd";
+import { Col, Row, notification } from "antd";
 
 import {
   product as productAPI,
@@ -13,6 +13,11 @@ import {
 import { useSelector } from "react-redux";
 
 export default function ProductDetail() {
+  const VND = new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  });
+  const [api, contextHolder] = notification.useNotification();
   const user = useSelector((state) => state.auth.login?.currentUser);
 
   const [userId, setUserId] = useState("");
@@ -30,8 +35,18 @@ export default function ProductDetail() {
         email: userId.email,
         quantity: 1,
       });
+      if (result.status === 200) {
+        api.open({
+          type: "success",
+          message: "Thêm giỏ hàng thành công.",
+        });
+      }
     } catch (error) {
       console.log(error);
+      api.open({
+        type: "error",
+        message: "Sản phẩm đã tồn tại trong giỏ hàng",
+      });
     }
   };
 
@@ -50,11 +65,6 @@ export default function ProductDetail() {
     }
   };
 
-  const VND = new Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-  });
-
   useEffect(() => {
     (async () => {
       await getIdUser();
@@ -72,6 +82,7 @@ export default function ProductDetail() {
 
   return (
     <div>
+      {contextHolder}s
       <Row>
         <Col span={20} offset={2}>
           <Row

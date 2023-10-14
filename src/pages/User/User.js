@@ -9,15 +9,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { getAllUser } from "../../redux/apiRequest";
-import { useDispatch, useSelector } from "react-redux";
-import { loginSuccess } from "../../redux/authSlice";
-import { createAxios } from "../../createInstance";
-import axios from "axios";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { Popconfirm, notification } from "antd";
 
 import { user as userAPI } from "../../API";
-import { Link } from "react-router-dom";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -37,12 +33,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function User() {
-  const user = useSelector((state) => state.auth.login?.currentUser);
-
-  const dispatch = useDispatch();
-  let axiosJWT = createAxios(user, dispatch, loginSuccess);
-
   const [api, contextHolder] = notification.useNotification();
+  const user = useSelector((state) => state.auth.login?.currentUser);
 
   const [userList, setUserList] = useState([]);
 
