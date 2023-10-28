@@ -107,7 +107,7 @@ export default function Categories() {
               <TableHead>
                 <TableRow>
                   <StyledTableCell align="center">STT</StyledTableCell>
-                  <StyledTableCell align="center">Hãng</StyledTableCell>
+                  <StyledTableCell align="center">Thể loại</StyledTableCell>
                   <StyledTableCell align="center">Slug</StyledTableCell>
                   <StyledTableCell align="center">Mô tả</StyledTableCell>
                   <StyledTableCell align="center">Thao tác</StyledTableCell>

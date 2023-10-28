@@ -1,4 +1,4 @@
-import { Col, Pagination, Row } from "antd";
+import { Col, Row } from "antd";
 import React, { useEffect, useState } from "react";
 
 import Tabs from "@mui/material/Tabs";
@@ -23,7 +23,6 @@ export default function Type() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  console.log(value);
 
   const VND = new Intl.NumberFormat("vi-VN", {
     style: "currency",

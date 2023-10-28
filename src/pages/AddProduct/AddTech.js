@@ -6,7 +6,6 @@ import { notification } from "antd";
 import {
   Box,
   Button,
-  InputBase,
   OutlinedInput,
   Table,
   TableBody,
@@ -15,7 +14,6 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import TextArea from "antd/es/input/TextArea";
 import { styled } from "@mui/material/styles";
 import { tableCellClasses } from "@mui/material/TableCell";
 
@@ -125,8 +123,8 @@ export default function AddTech() {
               Thêm thông số kỹ thuật
             </Typography>
             <Typography variant="h5" sx={{ marginBottom: 5 }}>
-              <Link to="/product">
-                <Button variant="contained">Danh sách sản phẩm</Button>
+              <Link to="/techdetail">
+                <Button variant="contained">Xem chi tiết</Button>
               </Link>
             </Typography>
           </Box>
@@ -182,6 +180,7 @@ export default function AddTech() {
                       onChange={(e) => setNameCategory(e.target.value)}
                     >
                       <option>Chọn ổ cứng</option>
+                      <option>128 GB</option>
                       <option>256 GB</option>
                       <option>512 GB</option>
                       <option>1 TB</option>

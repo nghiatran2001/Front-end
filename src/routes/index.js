@@ -18,6 +18,8 @@ import {
   EditUser,
   AddTech,
   AddCategory,
+  TechDetail,
+  Search,
 } from "../pages";
 import { DefaultLayout, AdminLayout } from "../layouts";
 import Admin from "../pages/Admin/Admin";
@@ -130,6 +132,16 @@ const publicRoutes = [
     path: "/addcategory",
     element: AddCategory,
     AdminLayout,
+  },
+  {
+    path: "/techdetail",
+    element: TechDetail,
+    AdminLayout,
+  },
+  {
+    path: "/search",
+    element: Search,
+    DefaultLayout,
   },
 ];
 

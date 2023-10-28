@@ -89,11 +89,19 @@ export default function Header() {
   const navigate = useNavigate();
   const accessToken = user?.accessToken;
   const id = user?._id;
-
+  const [keywords, setKeyWords] = useState("");
   let axiosJWT = createAxios(user, dispatch, logoutSuccess);
 
   const handleLogout = () => {
     logOut(dispatch, id, navigate, accessToken, axiosJWT);
+  };
+
+  const handleChangeInput = (e) => {
+    let keywords = e.target.value;
+    setKeyWords(keywords);
+    keywords.length > 0
+      ? navigate(`/search?keywords=${keywords.trim()}`)
+      : navigate(`/`);
   };
 
   useEffect(() => {
@@ -238,6 +246,7 @@ export default function Header() {
               </SearchIconWrapper>
               <StyledInputBase
                 placeholder="Nhập tên sản phẩm..."
+                onChange={handleChangeInput}
                 inputProps={{ "aria-label": "search" }}
               />
             </Search>
@@ -374,6 +383,11 @@ export default function Header() {
                   <MenuItem onClick={handleCloseUserMenu}>
                     <Link to="/register" className="header-link">
                       Đăng ký
+                    </Link>
+                  </MenuItem>
+                  <MenuItem onClick={handleCloseUserMenu}>
+                    <Link to="/follow" className="header-link">
+                      Theo dõi đơn hàng
                     </Link>
                   </MenuItem>
                 </Menu>

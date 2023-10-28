@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Admin from "../Admin/Admin";
 import { notification } from "antd";
@@ -115,7 +115,7 @@ export default function AddCategory() {
             <Table>
               <TableBody>
                 <StyledTableRow>
-                  <StyledTableCell>Hãng:</StyledTableCell>
+                  <StyledTableCell>Loại sản phẩm:</StyledTableCell>
                   <StyledTableCell>
                     <OutlinedInput
                       onChange={(e) => setNameCategory(e.target.value)}

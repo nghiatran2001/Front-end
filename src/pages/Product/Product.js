@@ -114,7 +114,7 @@ export default function Product() {
                   <StyledTableCell align="center">Tên sản phẩm</StyledTableCell>
                   <StyledTableCell align="center">Slug</StyledTableCell>
                   <StyledTableCell align="center">Hình ảnh</StyledTableCell>
-                  <StyledTableCell align="center">Hãng</StyledTableCell>
+                  <StyledTableCell align="center">Thể loại</StyledTableCell>
                   <StyledTableCell align="center">Giá gốc</StyledTableCell>
                   <StyledTableCell align="center">Giá bán</StyledTableCell>
                   <StyledTableCell align="center">Số lượng kho</StyledTableCell>
@@ -176,14 +176,11 @@ export default function Product() {
                             Xóa
                           </Button>
                         </Popconfirm>
-                        <Link to={`/addtech?idProduct=${product._id}`}>
+                        <Link to={`/techdetail?idProduct=${product._id}`}>
                           <Button sx={{ margin: "1px" }} variant="contained">
-                            Thêm thông số
+                            Chi tiết
                           </Button>
                         </Link>
-                        <Button sx={{ margin: "1px" }} variant="contained">
-                          Xem chi tiết
-                        </Button>
                       </StyledTableCell>
                     </StyledTableRow>
                   );

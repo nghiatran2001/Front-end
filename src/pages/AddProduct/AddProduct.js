@@ -174,13 +174,13 @@ export default function AddProduct() {
 
               <TableBody>
                 <StyledTableRow>
-                  <StyledTableCell>Hãng:</StyledTableCell>
+                  <StyledTableCell>Loại sản phẩm:</StyledTableCell>
                   <StyledTableCell>
                     <select
                       style={{ width: "100%", height: "40px" }}
                       onChange={(e) => setNameCategory(e.target.value)}
                     >
-                      <option>Chọn Hãng</option>
+                      <option>Chọn loại</option>
                       {listCategory?.map((category, index) => {
                         return (
                           <option key={index}>{category.nameCategory}</option>

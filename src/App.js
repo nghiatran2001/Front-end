@@ -23,6 +23,8 @@ import Filter from "./pages/Filter/Filter";
 import EditUser from "./pages/User/EditUser";
 import AddTech from "./pages/AddProduct/AddTech";
 import AddCategory from "./pages/Categories/AddCategory";
+import TechDetail from "./pages/TechDetail/TechDetail";
+import Search from "./pages/Search/Search";
 
 const LayoutPage = () => {
   return (
@@ -86,6 +88,10 @@ const router = createBrowserRouter([
         path: "/type",
         element: <Type />,
       },
+      {
+        path: "/search",
+        element: <Search />,
+      },
     ],
   },
   {
@@ -131,6 +137,10 @@ const router = createBrowserRouter([
   {
     path: "/addcategory",
     element: <AddCategory />,
+  },
+  {
+    path: "/techdetail",
+    element: <TechDetail />,
   },
 ]);
 
