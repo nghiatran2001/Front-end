@@ -1,7 +1,6 @@
 import { Box, Button, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Admin from "../Admin/Admin";
-import { Form, Input, Modal } from "antd";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -30,7 +29,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
+
   "&:last-child td, &:last-child th": {
     border: 0,
   },
@@ -94,11 +93,11 @@ export default function Categories() {
         <Box sx={{ marginTop: 5, marginLeft: 5 }}>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography variant="h5" sx={{ marginBottom: 5 }}>
-              Danh sách loại sản phẩm
+              Danh sách thể loại
             </Typography>
             <Typography variant="h5" sx={{ marginBottom: 5 }}>
               <Link to="/addcategory">
-                <Button variant="contained">Thêm loại sản phẩm</Button>
+                <Button variant="contained">Thêm thể loại</Button>
               </Link>
             </Typography>
           </Box>

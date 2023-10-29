@@ -90,6 +90,23 @@ function Search(props) {
                     <p className="price_search">{VND.format(item.sellPrice)}</p>
                   </div>
                 );
+              } else if (
+                item.nameBrand.includes(keywords) ||
+                item.nameBrand.toLowerCase().includes(keywords)
+              ) {
+                return item.disable === "Ngừng hoạt động" ? (
+                  ""
+                ) : (
+                  <div
+                    className="movieItem"
+                    key={index}
+                    onClick={() => handleDetailProduct(item)}
+                  >
+                    <img className="img_search" src={item.image} alt="" />
+                    <p className="name_search">{item.nameProduct}</p>
+                    <p className="price_search">{VND.format(item.sellPrice)}</p>
+                  </div>
+                );
               }
             })}
           </div>

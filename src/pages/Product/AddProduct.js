@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Admin from "../Admin/Admin";
+import { notification } from "antd";
 
 import {
   Box,
@@ -14,12 +15,15 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import TextArea from "antd/es/input/TextArea";
 import { styled } from "@mui/material/styles";
 import { tableCellClasses } from "@mui/material/TableCell";
-import { notification } from "antd";
 
-import { product as productAPI, category as categoryAPI } from "../../API";
-import TextArea from "antd/es/input/TextArea";
+import {
+  product as productAPI,
+  category as categoryAPI,
+  brand as brandAPI,
+} from "../../API";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -40,61 +44,72 @@ const StyledTableRow = styled(TableRow)(() => ({
   },
 }));
 
-export default function EditProduct() {
+export default function AddProduct() {
   const [api, contextHolder] = notification.useNotification();
-  const keyValue = window.location.search;
-  const urlParams = new URLSearchParams(keyValue);
-  const idProduct = urlParams.get("idProduct");
 
-  const [product, setProduct] = useState([]);
-  const [categoryList, setCategoryList] = useState([]);
+  const [listCategory, setListCategory] = useState([]);
+  const [listBrand, setListBrand] = useState([]);
+  const [nameCategory, setNameCategory] = useState("");
+  const [nameProduct, setNameProduct] = useState("");
+  const [nameBrand, setNameBrand] = useState("");
+  const [originPrice, setOriginPrice] = useState("");
+  const [sellPrice, setSellPrice] = useState("");
+  const [image, setImage] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [description, setDescription] = useState("");
 
   const handlePicture = (e) => {
     let reader = new FileReader();
+    console.log(e);
     reader.readAsDataURL(e.target.files[0]);
     reader.onload = function () {
-      product.image = reader.result;
+      setImage(reader.result);
     };
     reader.onerror = (error) => {
       console.log("Error", error);
     };
   };
 
-  const handleEditProduct = async () => {
+  const handleAddProduct = async (e) => {
+    e.preventDefault();
     try {
       if (
-        product.nameProduct === "" ||
-        product.originPrice === "" ||
-        product.sellPrice === "" ||
-        product.quantity === "" ||
-        product.description === ""
+        nameProduct === "" ||
+        nameCategory === "" ||
+        nameBrand === "" ||
+        originPrice === "" ||
+        sellPrice === "" ||
+        quantity === "" ||
+        description === "" ||
+        image === ""
       ) {
         api.open({
           type: "error",
           message: "Vui lòng nhập đủ thông tin.",
         });
       } else {
-        const result = await productAPI.editProduct(product);
-        api.open({
-          type: "success",
-          message: "Sửa sản phẩm thành công.",
+        const result = await productAPI.addProduct({
+          nameCategory,
+          nameProduct,
+          nameBrand,
+          originPrice,
+          sellPrice,
+          image,
+          quantity,
+          description,
         });
+        if (result.status === 200) {
+          api.open({
+            type: "success",
+            message: "Thêm sản phẩm thành công.",
+          });
+        }
       }
     } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    (async () => {
-      await getIdProduct();
-    })();
-  }, []);
-  const getIdProduct = async () => {
-    try {
-      const result = await productAPI.getIdProduct({ id: idProduct });
-      setProduct(result.data);
-    } catch (error) {
+      api.open({
+        type: "error",
+        message: "Thêm thất bại.",
+      });
       console.log(error);
     }
   };
@@ -107,11 +122,26 @@ export default function EditProduct() {
   const getCategoryList = async () => {
     try {
       const result = await categoryAPI.getCategoryList();
-      setCategoryList(result.data);
+      setListCategory(result.data);
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    (async () => {
+      await getBrandList();
+    })();
+  }, []);
+  const getBrandList = async () => {
+    try {
+      const result = await brandAPI.getBrandList();
+      setListBrand(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       {contextHolder}
@@ -133,7 +163,7 @@ export default function EditProduct() {
         <Box sx={{ marginTop: 5, marginLeft: 5 }}>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography variant="h5" sx={{ marginBottom: 5 }}>
-              Sửa sản phẩm
+              Thêm sản phẩm
             </Typography>
             <Typography variant="h5" sx={{ marginBottom: 5 }}>
               <Link to="/product">
@@ -153,19 +183,32 @@ export default function EditProduct() {
             <Table>
               <TableBody>
                 <StyledTableRow>
-                  <StyledTableCell>Sửa sản phẩm:</StyledTableCell>
+                  <StyledTableCell>Tên sản phẩm:</StyledTableCell>
                   <StyledTableCell>
                     <OutlinedInput
-                      value={product.nameProduct || ""}
-                      onChange={(e) =>
-                        setProduct((pre) => ({
-                          ...pre,
-                          nameProduct: e.target.value,
-                        }))
-                      }
+                      onChange={(e) => setNameProduct(e.target.value)}
                       type="text"
                       sx={{ width: "100%", height: "40px" }}
                     ></OutlinedInput>
+                  </StyledTableCell>
+                </StyledTableRow>
+              </TableBody>
+
+              <TableBody>
+                <StyledTableRow>
+                  <StyledTableCell>Thể loại:</StyledTableCell>
+                  <StyledTableCell>
+                    <select
+                      style={{ width: "100%", height: "40px" }}
+                      onChange={(e) => setNameCategory(e.target.value)}
+                    >
+                      <option>Chọn loại</option>
+                      {listCategory?.map((category, index) => {
+                        return (
+                          <option key={index}>{category.nameCategory}</option>
+                        );
+                      })}
+                    </select>
                   </StyledTableCell>
                 </StyledTableRow>
               </TableBody>
@@ -176,16 +219,11 @@ export default function EditProduct() {
                   <StyledTableCell>
                     <select
                       style={{ width: "100%", height: "40px" }}
-                      value={product.nameCategory || ""}
-                      onChange={(e) =>
-                        setProduct((pre) => ({
-                          ...pre,
-                          nameCategory: e.target.value,
-                        }))
-                      }
+                      onChange={(e) => setNameBrand(e.target.value)}
                     >
-                      {categoryList?.map((category, index) => {
-                        return <option>{category.nameCategory}</option>;
+                      <option>Chọn hãng</option>
+                      {listBrand?.map((brand, index) => {
+                        return <option key={index}>{brand.nameBrand}</option>;
                       })}
                     </select>
                   </StyledTableCell>
@@ -197,15 +235,8 @@ export default function EditProduct() {
                   <StyledTableCell>Giá gốc:</StyledTableCell>
                   <StyledTableCell>
                     <OutlinedInput
-                      value={product.originPrice || ""}
-                      onChange={(e) =>
-                        setProduct((pre) => ({
-                          ...pre,
-                          originPrice: e.target.value,
-                        }))
-                      }
+                      onChange={(e) => setOriginPrice(e.target.value)}
                       type="number"
-                      defaultValue={0}
                       sx={{ width: "100%", height: "40px" }}
                     ></OutlinedInput>
                   </StyledTableCell>
@@ -217,15 +248,8 @@ export default function EditProduct() {
                   <StyledTableCell>Giá bán:</StyledTableCell>
                   <StyledTableCell>
                     <OutlinedInput
-                      value={product.sellPrice || ""}
-                      onChange={(e) =>
-                        setProduct((pre) => ({
-                          ...pre,
-                          sellPrice: e.target.value,
-                        }))
-                      }
+                      onChange={(e) => setSellPrice(e.target.value)}
                       type="number"
-                      defaultValue={0}
                       sx={{ width: "100%", height: "40px" }}
                     ></OutlinedInput>
                   </StyledTableCell>
@@ -237,13 +261,7 @@ export default function EditProduct() {
                   <StyledTableCell>Số lượng:</StyledTableCell>
                   <StyledTableCell>
                     <OutlinedInput
-                      value={product.quantity || ""}
-                      onChange={(e) =>
-                        setProduct((pre) => ({
-                          ...pre,
-                          quantity: e.target.value,
-                        }))
-                      }
+                      onChange={(e) => setQuantity(e.target.value)}
                       type="number"
                       slotProps={{
                         input: {
@@ -260,37 +278,10 @@ export default function EditProduct() {
 
               <TableBody>
                 <StyledTableRow>
-                  <StyledTableCell>Trạng thái:</StyledTableCell>
-                  <StyledTableCell>
-                    <select
-                      style={{ width: "100%", height: "40px" }}
-                      value={product.disable || ""}
-                      onChange={(e) =>
-                        setProduct((pre) => ({
-                          ...pre,
-                          disable: e.target.value,
-                        }))
-                      }
-                    >
-                      <option>Hoạt động</option>
-                      <option>Ngừng hoạt động</option>
-                    </select>
-                  </StyledTableCell>
-                </StyledTableRow>
-              </TableBody>
-
-              <TableBody>
-                <StyledTableRow>
                   <StyledTableCell>Mô tả:</StyledTableCell>
                   <StyledTableCell>
                     <TextArea
-                      value={product.description || ""}
-                      onChange={(e) =>
-                        setProduct((pre) => ({
-                          ...pre,
-                          description: e.target.value,
-                        }))
-                      }
+                      onChange={(e) => setDescription(e.target.value)}
                       type="text"
                       sx={{ width: "100%", height: "40px" }}
                     ></TextArea>
@@ -315,11 +306,8 @@ export default function EditProduct() {
                 <StyledTableRow>
                   <StyledTableCell></StyledTableCell>
                   <StyledTableCell>
-                    <Button
-                      onClick={() => handleEditProduct()}
-                      variant="contained"
-                    >
-                      Sửa sản phẩm
+                    <Button variant="contained" onClick={handleAddProduct}>
+                      Thêm sản phẩm
                     </Button>
                   </StyledTableCell>
                 </StyledTableRow>

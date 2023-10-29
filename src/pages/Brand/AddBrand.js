@@ -18,7 +18,7 @@ import TextArea from "antd/es/input/TextArea";
 import { styled } from "@mui/material/styles";
 import { tableCellClasses } from "@mui/material/TableCell";
 
-import { category as categoryAPI } from "../../API";
+import { brand as brandAPI } from "../../API";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -39,23 +39,23 @@ const StyledTableRow = styled(TableRow)(() => ({
   },
 }));
 
-export default function AddCategory() {
+export default function AddBrand() {
   const [api, contextHolder] = notification.useNotification();
 
-  const [nameCategory, setNameCategory] = useState("");
+  const [nameBrand, setNameBrand] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleAddCategory = async (e) => {
+  const handleAddBrand = async (e) => {
     e.preventDefault();
     try {
-      if (nameCategory === "" || description === "") {
+      if (nameBrand === "" || description === "") {
         api.open({
           type: "error",
           message: "Vui lòng nhập đủ thông tin.",
         });
       } else {
-        const result = await categoryAPI.addCategory({
-          nameCategory,
+        const result = await brandAPI.addBrand({
+          nameBrand,
           description,
         });
         if (result.status === 200) {
@@ -95,11 +95,11 @@ export default function AddCategory() {
         <Box sx={{ marginTop: 5, marginLeft: 5 }}>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography variant="h5" sx={{ marginBottom: 5 }}>
-              Thêm thể loại
+              Thêm hãng
             </Typography>
             <Typography variant="h5" sx={{ marginBottom: 5 }}>
-              <Link to="/categories">
-                <Button variant="contained">Danh sách thể loại</Button>
+              <Link to="/brand">
+                <Button variant="contained">Danh sách hãng</Button>
               </Link>
             </Typography>
           </Box>
@@ -115,10 +115,10 @@ export default function AddCategory() {
             <Table>
               <TableBody>
                 <StyledTableRow>
-                  <StyledTableCell>Tên thể loại:</StyledTableCell>
+                  <StyledTableCell>Tên hãng:</StyledTableCell>
                   <StyledTableCell>
                     <OutlinedInput
-                      onChange={(e) => setNameCategory(e.target.value)}
+                      onChange={(e) => setNameBrand(e.target.value)}
                       type="text"
                       sx={{ width: "100%", height: "40px" }}
                     ></OutlinedInput>
@@ -143,7 +143,7 @@ export default function AddCategory() {
                 <StyledTableRow>
                   <StyledTableCell></StyledTableCell>
                   <StyledTableCell>
-                    <Button variant="contained" onClick={handleAddCategory}>
+                    <Button variant="contained" onClick={handleAddBrand}>
                       Thêm
                     </Button>
                   </StyledTableCell>

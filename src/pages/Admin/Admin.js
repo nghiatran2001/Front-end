@@ -83,14 +83,29 @@ export default function Admin() {
           </List>
           <List component="nav" aria-labelledby="nested-list-subheader">
             <ListItemButton onClick={handleClick}>
-              <ListItemText primary="Quản lý loại sản phẩm" />
+              <ListItemText primary="Quản lý thể loại" />
               {open ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 <ListItemButton sx={{ pl: 4 }}>
                   <Link to="/categories" className="admin-link">
-                    Danh sách loại sản phẩm
+                    Danh sách thể loại
+                  </Link>
+                </ListItemButton>
+              </List>
+            </Collapse>
+          </List>
+          <List component="nav" aria-labelledby="nested-list-subheader">
+            <ListItemButton onClick={handleClick}>
+              <ListItemText primary="Quản lý hãng sản xuất" />
+              {open ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton sx={{ pl: 4 }}>
+                  <Link to="/brand" className="admin-link">
+                    Danh sách hãng sản xuất
                   </Link>
                 </ListItemButton>
               </List>

@@ -61,7 +61,7 @@ export default function Main() {
                   className="main-link"
                 >
                   <Button variant="contained" size="small">
-                    Xem chi tiết
+                    Chi tiết
                   </Button>
                 </NavLink>
               </CardActions>

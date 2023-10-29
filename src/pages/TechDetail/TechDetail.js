@@ -9,7 +9,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Popconfirm } from "antd";
 import { Link } from "react-router-dom";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -53,9 +52,7 @@ export default function TechDetail() {
         <Box sx={{ marginTop: 5, marginLeft: 5 }}>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography variant="h5" sx={{ marginBottom: 5 }}>
-              <Link to="/product">
-                <Button variant="contained">Danh sách sản phẩm</Button>
-              </Link>
+              Chi tiết sản phẩm
             </Typography>
             <Typography variant="h5" sx={{ marginBottom: 5 }}>
               <Link to="/addtech">

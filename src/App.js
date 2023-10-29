@@ -16,15 +16,17 @@ import Payment from "./pages/Payment/Payment";
 import Categories from "./pages/Categories/Categories";
 import Follow from "./pages/Follow/Follow";
 import OrderAdmin from "./pages/OrderAdmin/OrderAdmin";
-import AddProduct from "./pages/AddProduct/AddProduct";
+import AddProduct from "./pages/Product/AddProduct";
 import Type from "./pages/Type/Type";
-import EditProduct from "./pages/EditProduct/EditProduct";
+import EditProduct from "./pages/Product/EditProduct";
 import Filter from "./pages/Filter/Filter";
 import EditUser from "./pages/User/EditUser";
-import AddTech from "./pages/AddProduct/AddTech";
+import AddTech from "./pages/TechDetail/AddTech";
 import AddCategory from "./pages/Categories/AddCategory";
 import TechDetail from "./pages/TechDetail/TechDetail";
 import Search from "./pages/Search/Search";
+import Brand from "./pages/Brand/Brand";
+import AddBrand from "./pages/Brand/AddBrand";
 
 const LayoutPage = () => {
   return (
@@ -141,6 +143,14 @@ const router = createBrowserRouter([
   {
     path: "/techdetail",
     element: <TechDetail />,
+  },
+  {
+    path: "/brand",
+    element: <Brand />,
+  },
+  {
+    path: "/addbrand",
+    element: <AddBrand />,
   },
 ]);
 

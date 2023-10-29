@@ -266,7 +266,7 @@ export default function Header() {
               <>
                 <Box sx={{ flexGrow: 0, paddingRight: 5 }}>
                   <Tooltip title="Open settings">
-                    <h4>Hi, {userId.name}</h4>
+                    <h4>Hi, {userId?.name}</h4>
                   </Tooltip>
                 </Box>
               </>

@@ -20,12 +20,13 @@ import {
   AddCategory,
   TechDetail,
   Search,
+  Brand,
+  AddBrand,
 } from "../pages";
 import { DefaultLayout, AdminLayout } from "../layouts";
 import Admin from "../pages/Admin/Admin";
 
 const PrivateRoutes = ({ children }) => {
-  // const isLogin = useSelector(getUser);
   if (true) {
     return children;
   } else {
@@ -141,6 +142,16 @@ const publicRoutes = [
   {
     path: "/search",
     element: Search,
+    DefaultLayout,
+  },
+  {
+    path: "/brand",
+    element: Brand,
+    DefaultLayout,
+  },
+  {
+    path: "/addbrand",
+    element: AddBrand,
     DefaultLayout,
   },
 ];
