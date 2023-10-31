@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import "./Type.css";
+import { Pagination } from "antd";
 import {
   Box,
   Button,
@@ -31,6 +32,10 @@ export default function Type() {
 
   const [listProduct, setListProduct] = useState([]);
   const [listCategory, setListCategory] = useState([]);
+
+  const onChange = (pageNumber) => {
+    console.log("Page: ", pageNumber);
+  };
 
   useEffect(() => {
     (async () => {
@@ -145,6 +150,12 @@ export default function Type() {
           </Box>
         </Col>
       </Row>
+      <Pagination
+        showQuickJumper
+        defaultCurrent={1}
+        total={100}
+        onChange={onChange}
+      />
     </div>
   );
 }
