@@ -37,7 +37,7 @@ function Search(props) {
   };
   return (
     <div className="searchPane">
-      {searchProduct && searchProduct.length > 0 ? (
+      {searchProduct && searchProduct?.length > 0 ? (
         <>
           <div
             className="searchContent"
@@ -55,12 +55,12 @@ function Search(props) {
               },auto)`,
             }}
           >
-            {searchProduct.map((item, index) => {
+            {searchProduct?.map((item, index) => {
               if (
-                item.nameProduct.includes(keywords) ||
-                item.nameProduct.toLowerCase().includes(keywords)
+                item?.nameProduct?.includes(keywords) ||
+                item?.nameProduct?.toLowerCase()?.includes(keywords)
               ) {
-                return item.disable === "Ngừng hoạt động" ? (
+                return item?.disable === "Ngừng hoạt động" ? (
                   ""
                 ) : (
                   <div
@@ -68,16 +68,18 @@ function Search(props) {
                     key={index}
                     onClick={() => handleDetailProduct(item)}
                   >
-                    <img className="img_search" src={item.image} alt="" />
-                    <p className="name_search">{item.nameProduct}</p>
-                    <p className="price_search">{VND.format(item.sellPrice)}</p>
+                    <img className="img_search" src={item?.image} alt="" />
+                    <p className="name_search">{item?.nameProduct}</p>
+                    <p className="price_search">
+                      {VND.format(item?.sellPrice)}
+                    </p>
                   </div>
                 );
               } else if (
-                item.nameCategory.includes(keywords) ||
-                item.nameCategory.toLowerCase().includes(keywords)
+                item?.nameCategory?.includes(keywords) ||
+                item?.nameCategory?.toLowerCase()?.includes(keywords)
               ) {
-                return item.disable === "Ngừng hoạt động" ? (
+                return item?.disable === "Ngừng hoạt động" ? (
                   ""
                 ) : (
                   <div
@@ -85,16 +87,18 @@ function Search(props) {
                     key={index}
                     onClick={() => handleDetailProduct(item)}
                   >
-                    <img className="img_search" src={item.image} alt="" />
-                    <p className="name_search">{item.nameProduct}</p>
-                    <p className="price_search">{VND.format(item.sellPrice)}</p>
+                    <img className="img_search" src={item?.image} alt="" />
+                    <p className="name_search">{item?.nameProduct}</p>
+                    <p className="price_search">
+                      {VND.format(item?.sellPrice)}
+                    </p>
                   </div>
                 );
               } else if (
-                item.nameBrand.includes(keywords) ||
-                item.nameBrand.toLowerCase().includes(keywords)
+                item?.nameBrand?.includes(keywords) ||
+                item?.nameBrand?.toLowerCase()?.includes(keywords)
               ) {
-                return item.disable === "Ngừng hoạt động" ? (
+                return item?.disable === "Ngừng hoạt động" ? (
                   ""
                 ) : (
                   <div
@@ -102,9 +106,11 @@ function Search(props) {
                     key={index}
                     onClick={() => handleDetailProduct(item)}
                   >
-                    <img className="img_search" src={item.image} alt="" />
-                    <p className="name_search">{item.nameProduct}</p>
-                    <p className="price_search">{VND.format(item.sellPrice)}</p>
+                    <img className="img_search" src={item?.image} alt="" />
+                    <p className="name_search">{item?.nameProduct}</p>
+                    <p className="price_search">
+                      {VND.format(item?.sellPrice)}
+                    </p>
                   </div>
                 );
               }

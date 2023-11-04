@@ -33,9 +33,7 @@ export default function Type() {
   const [listProduct, setListProduct] = useState([]);
   const [listCategory, setListCategory] = useState([]);
 
-  const onChange = (pageNumber) => {
-    console.log("Page: ", pageNumber);
-  };
+  const handleSetPage = (page) => {};
 
   useEffect(() => {
     (async () => {
@@ -50,7 +48,7 @@ export default function Type() {
       console.log(error);
     }
   };
-
+  console.log(listProduct);
   useEffect(() => {
     (async () => {
       await getCategorytList();
@@ -154,7 +152,7 @@ export default function Type() {
         showQuickJumper
         defaultCurrent={1}
         total={100}
-        onChange={onChange}
+        onChange={handleSetPage}
       />
     </div>
   );
