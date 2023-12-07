@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import Admin from "../Admin/Admin";
-
+import "./Product.css";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -37,6 +37,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function Product() {
   const [listProduct, setListProduct] = useState([]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const productPerPage = 4;
+  const lastIndex = currentPage * productPerPage;
+  const firstIndex = lastIndex - productPerPage;
+  const products = listProduct.slice(firstIndex, lastIndex);
+  const pageNumber = Math.ceil(listProduct.length / productPerPage);
+  const numbers = [...Array(pageNumber + 1).keys()].slice(1);
 
   const [api, contextHolder] = notification.useNotification();
 
@@ -77,6 +85,22 @@ export default function Product() {
     }
   };
 
+  const prePage = async () => {
+    if (currentPage !== 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const nextPage = async () => {
+    if (currentPage !== pageNumber) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const changePage = async (id) => {
+    setCurrentPage(id);
+  };
+
   return (
     <div>
       {contextHolder}
@@ -110,7 +134,6 @@ export default function Product() {
             <Table sx={{ minWidth: 1000 }} aria-label="customized table">
               <TableHead>
                 <TableRow>
-                  <StyledTableCell align="center">STT</StyledTableCell>
                   <StyledTableCell align="center">Tên sản phẩm</StyledTableCell>
                   <StyledTableCell align="center">Hình ảnh</StyledTableCell>
                   <StyledTableCell align="center">Hãng</StyledTableCell>
@@ -123,12 +146,9 @@ export default function Product() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {listProduct.map((product, index) => {
+                {products.map((product, index) => {
                   return (
                     <StyledTableRow key={index}>
-                      <StyledTableCell align="center">
-                        {index + 1}
-                      </StyledTableCell>
                       <StyledTableCell align="center">
                         {product.nameProduct}
                       </StyledTableCell>
@@ -188,6 +208,34 @@ export default function Product() {
               </TableBody>
             </Table>
           </TableContainer>
+          <nav>
+            <ul className="pagination">
+              <li className="page-item">
+                <a href="#" className="page-link" onClick={prePage}>
+                  Truoc
+                </a>
+              </li>
+              {numbers.map((n, i) => (
+                <li
+                  className={`page-item ${currentPage === n ? "active" : ""}`}
+                  key={i}
+                >
+                  <a
+                    href="#"
+                    className="page-link"
+                    onClick={() => changePage(n)}
+                  >
+                    {n}
+                  </a>
+                </li>
+              ))}
+              <li className="page-item">
+                <a href="#" className="page-link" onClick={nextPage}>
+                  Sau
+                </a>
+              </li>
+            </ul>
+          </nav>
         </Box>
       </Box>
     </div>

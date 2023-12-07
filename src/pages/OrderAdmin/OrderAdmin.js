@@ -52,7 +52,7 @@ export default function OrderAdmin() {
             Danh sách đơn hàng
           </Typography>
           <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 1100 }} aria-label="customized table">
+            <Table sx={{ minWidth: 1000 }} aria-label="customized table">
               <TableHead>
                 <TableRow>
                   <StyledTableCell>Mã đơn hàng</StyledTableCell>
