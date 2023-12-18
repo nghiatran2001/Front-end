@@ -9,13 +9,13 @@ import TableRow from "@mui/material/TableRow";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
-import { cart as cartAPI, product as productAPI } from "../../API";
+import { cart as cartAPI } from "../../API";
+import { useSelector } from "react-redux";
 
 export default function Cart() {
-  const [listCart, setListCart] = useState([]);
-  const [product, setProduct] = useState({});
-  const array = [];
+  const [product, setProduct] = useState([]);
 
+  const user = useSelector((state) => state.auth.login?.currentUser);
   const VND = new Intl.NumberFormat("vi-VN", {
     style: "currency",
     currency: "VND",
@@ -23,38 +23,33 @@ export default function Cart() {
 
   useEffect(() => {
     (async () => {
-      await getCartList();
+      await getProducts();
     })();
   }, []);
-  const getCartList = async () => {
+
+  const getProducts = async () => {
     try {
-      const result = await cartAPI.getCartList();
-      setListCart(result.data);
+      const result = await cartAPI.getProducts({ email: user.email });
+      setProduct(result.data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
-    (async () => {
-      await getIdProduct();
-    })();
-  }, [listCart]);
+  var total = 0;
+  product.forEach((e) => {
+    total += e.sellPrice;
+  });
 
-  const getIdProduct = async () => {
-    try {
-      listCart?.map(async (id) => {
-        const result = await productAPI.getIdProduct({
-          id: id.idProduct,
-        });
-        setProduct(result.data);
-      });
-    } catch (error) {
-      console.log(error);
-    }
+  const handleTru = (e) => {
+    e.quantity++;
+    console.log(e);
+  };
+  const handleCong = (e) => {
+    e.quantity--;
+    console.log(e);
   };
 
-  console.log(listCart);
   return (
     <div className="cart">
       <TableContainer className="cart-bg">
@@ -93,28 +88,38 @@ export default function Cart() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {listCart?.map((cart, index) => {
+            {product.map((product) => {
               return (
-                <TableRow key={index}>
-                  <TableCell>{cart._id}</TableCell>
+                <TableRow key={product.idProduct}>
+                  <TableCell>{product.nameProduct}</TableCell>
                   <TableCell>
                     <img
                       className="image-cart"
-                      src={cart.image}
+                      src={product.image}
                       alt=""
                       align="center"
                     ></img>
                   </TableCell>
                   <TableCell align="center" className="btn">
-                    <button className="btn-cart">-</button>
-                    <span className="btn-quantity">{cart.quantity}</span>
-                    <button className="btn-cart">+</button>
+                    <button
+                      className="btn-cart"
+                      onClick={(e) => handleTru(product)}
+                    >
+                      -
+                    </button>
+                    <span className="btn-quantity">{product.quantity}</span>
+                    <button
+                      className="btn-cart"
+                      onClick={(e) => handleCong(product.quan)}
+                    >
+                      +
+                    </button>
                   </TableCell>
                   <TableCell align="center">
-                    {VND.format(cart.sellPrice)}
+                    {VND.format(product.sellPrice)}
                   </TableCell>
                   <TableCell align="right">
-                    {VND.format(cart.quantity * cart.sellPrice)}
+                    {VND.format(product.quantity * product.sellPrice)}
                   </TableCell>
                   <TableCell align="right">
                     <Button variant="contained">Xóa</Button>
@@ -129,9 +134,9 @@ export default function Cart() {
               <TableCell></TableCell>
               <TableCell></TableCell>
               <TableCell align="right">
-                <h3>Tổng tiền:</h3>
+                <h3>Tổng tiền: </h3>
               </TableCell>
-              <TableCell align="right">{VND.format()}</TableCell>
+              <TableCell align="right">{VND.format(total)}</TableCell>
               <TableCell></TableCell>
             </TableRow>
             <TableCell></TableCell>

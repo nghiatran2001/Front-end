@@ -40,6 +40,14 @@ export default function Brand() {
 
   const [listBrand, setListBrand] = useState([]);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const brandPerPage = 3;
+  const lastIndex = currentPage * brandPerPage;
+  const firstIndex = lastIndex - brandPerPage;
+  const brands = listBrand.slice(firstIndex, lastIndex);
+  const pageNumber = Math.ceil(listBrand.length / brandPerPage);
+  const numbers = [...Array(pageNumber + 1).keys()].slice(1);
+
   const handleDeleteBrand = async (id) => {
     try {
       const result = await brandAPI.deleteBrand({
@@ -72,6 +80,23 @@ export default function Brand() {
       console.log(error);
     }
   };
+
+  const prePage = async () => {
+    if (currentPage !== 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const nextPage = async () => {
+    if (currentPage !== pageNumber) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const changePage = async (id) => {
+    setCurrentPage(id);
+  };
+
   return (
     <div>
       {contextHolder}
@@ -114,7 +139,7 @@ export default function Brand() {
               </TableHead>
 
               <TableBody>
-                {listBrand.map((brand, index) => {
+                {brands.map((brand, index) => {
                   return (
                     <StyledTableRow key={index}>
                       <StyledTableCell align="center">
@@ -149,6 +174,36 @@ export default function Brand() {
               </TableBody>
             </Table>
           </TableContainer>
+          <nav>
+            <ul className="pagination">
+              <li className="page-item">
+                <a href="#" className="page-link" onClick={prePage}>
+                  Truoc
+                </a>
+              </li>
+              {numbers.map((n, i) => (
+                <li
+                  className={`page-item ${
+                    currentPage === n ? "page-item red active" : ""
+                  }`}
+                  key={i}
+                >
+                  <a
+                    href="#"
+                    className="page-link"
+                    onClick={() => changePage(n)}
+                  >
+                    {n}
+                  </a>
+                </li>
+              ))}
+              <li className="page-item">
+                <a href="#" className="page-link" onClick={nextPage}>
+                  Sau
+                </a>
+              </li>
+            </ul>
+          </nav>
         </Box>
       </Box>
     </div>

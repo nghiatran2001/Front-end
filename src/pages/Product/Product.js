@@ -196,11 +196,11 @@ export default function Product() {
                             Xóa
                           </Button>
                         </Popconfirm>
-                        <Link to={`/techdetail?idProduct=${product._id}`}>
+                        {/* <Link to={`/techdetail?idProduct=${product._id}`}>
                           <Button sx={{ margin: "1px" }} variant="contained">
                             Chi tiết
                           </Button>
-                        </Link>
+                        </Link> */}
                       </StyledTableCell>
                     </StyledTableRow>
                   );
@@ -210,14 +210,16 @@ export default function Product() {
           </TableContainer>
           <nav>
             <ul className="pagination">
-              <li className="page-item">
+              <li className="page-item ">
                 <a href="#" className="page-link" onClick={prePage}>
                   Truoc
                 </a>
               </li>
               {numbers.map((n, i) => (
                 <li
-                  className={`page-item ${currentPage === n ? "active" : ""}`}
+                  className={`page-item ${
+                    currentPage === n ? "page-item red active" : ""
+                  }`}
                   key={i}
                 >
                   <a

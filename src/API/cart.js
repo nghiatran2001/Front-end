@@ -10,6 +10,10 @@ const cart = {
     const url = BACKEND_API + "/cart/getall";
     return await axios.get(url);
   },
+  getProducts: async ({ email }) => {
+    const url = BACKEND_API + `/cart/${email}`;
+    return await axios.get(url);
+  },
 };
 
 export default cart;
