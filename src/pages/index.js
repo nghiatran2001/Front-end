@@ -15,3 +15,4 @@ export { default as OrderAdmin } from "./OrderAdmin/OrderAdmin";
 export { default as Type } from "./Type/Type";
 export { default as Brand } from "./Brand/Brand";
 export { default as AddBrand } from "./Brand/AddBrand";
+export { default as UpdateOrderAdmin } from "./OrderAdmin/UpdateOrderAdmin";

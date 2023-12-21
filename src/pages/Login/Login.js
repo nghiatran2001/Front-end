@@ -2,16 +2,14 @@ import React, { useState } from "react";
 import { Button, InputLabel } from "@mui/material";
 import "./Login.css";
 import { Form, Link, useNavigate } from "react-router-dom";
-import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
 import { Input, notification } from "antd";
 import { loginUser } from "../../redux/apiRequest";
 import { useDispatch } from "react-redux";
+import { isEmpty, isEmail } from "validator";
 
-import { isEmpty, isEmail, isStrongPassword } from "validator";
 import { user as userAPI } from "../../API/index";
 
 export default function Login() {
-  const [isShowPassword, setIsShowPassword] = useState(false);
   const [api, contextHolder] = notification.useNotification();
   const [validation, setValidation] = useState("");
 
@@ -41,11 +39,29 @@ export default function Login() {
     const isValid = validateAll();
     if (!isValid) return;
     else {
+      try {
+        const result = await userAPI.login({
+          email,
+          password,
+        });
+      } catch (error) {
+        api.open({
+          type: "error",
+          message: "Email hoặc mật khẩu không đúng.",
+        });
+      }
       const user = {
         email: email,
         password: password,
       };
-      loginUser(user, dispatch, navigate);
+      if (user.disbale) {
+        api.open({
+          type: "error",
+          message: "Tài khoản bị khóa. Liên hệ Admin để mở!",
+        });
+      } else {
+        loginUser(user, dispatch, navigate);
+      }
     }
   };
 
@@ -74,12 +90,10 @@ export default function Login() {
                 top: "8px",
                 right: "8px",
               }}
-            >
-              {isShowPassword ? <EyeFilled /> : <EyeInvisibleFilled />}
-            </span>
+            ></span>
             <Input
               required
-              type={isShowPassword ? "text" : "password"}
+              type="password"
               placeholder="********"
               className="input"
               value={password}

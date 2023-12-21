@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
-import "./Cart.css";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import "./Cart.css";
+import Delete from "@mui/icons-material/DeleteForeverOutlined";
+import { Popconfirm } from "antd";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import { cart as cartAPI } from "../../API";
-import { useSelector } from "react-redux";
 
 export default function Cart() {
   const [product, setProduct] = useState([]);
@@ -20,6 +22,8 @@ export default function Cart() {
     style: "currency",
     currency: "VND",
   });
+
+  const cancel = (e) => {};
 
   useEffect(() => {
     (async () => {
@@ -40,15 +44,6 @@ export default function Cart() {
   product.forEach((e) => {
     total += e.sellPrice;
   });
-
-  const handleTru = (e) => {
-    e.quantity++;
-    console.log(e);
-  };
-  const handleCong = (e) => {
-    e.quantity--;
-    console.log(e);
-  };
 
   return (
     <div className="cart">
@@ -101,19 +96,9 @@ export default function Cart() {
                     ></img>
                   </TableCell>
                   <TableCell align="center" className="btn">
-                    <button
-                      className="btn-cart"
-                      onClick={(e) => handleTru(product)}
-                    >
-                      -
-                    </button>
+                    <button className="btn-cart">-</button>
                     <span className="btn-quantity">{product.quantity}</span>
-                    <button
-                      className="btn-cart"
-                      onClick={(e) => handleCong(product.quan)}
-                    >
-                      +
-                    </button>
+                    <button className="btn-cart">+</button>
                   </TableCell>
                   <TableCell align="center">
                     {VND.format(product.sellPrice)}
@@ -121,8 +106,19 @@ export default function Cart() {
                   <TableCell align="right">
                     {VND.format(product.quantity * product.sellPrice)}
                   </TableCell>
-                  <TableCell align="right">
-                    <Button variant="contained">Xóa</Button>
+                  <TableCell align="right" className="cart-delete">
+                    <Popconfirm
+                      onConfirm={() => {
+                        /*ham xu ly*/
+                      }}
+                      title="Xóa"
+                      description="Bạn chắc chắn muốn xóa?"
+                      onCancel={cancel}
+                      okText="Có"
+                      cancelText="Không"
+                    >
+                      <Delete></Delete>
+                    </Popconfirm>
                   </TableCell>
                 </TableRow>
               );

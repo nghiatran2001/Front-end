@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { Box, Button, CardActionArea, CardActions } from "@mui/material";
+import { Box, CardActionArea } from "@mui/material";
 import "./Main.css";
 import { NavLink } from "react-router-dom";
 
@@ -36,76 +36,65 @@ export default function Main() {
           return product.disable === "Ngừng hoạt động" ? (
             ""
           ) : (
-            <Card key={index} className="card" sx={{ width: 200 }}>
-              <CardActionArea>
-                <img className="img" src={product.image} alt="" />
-                <CardContent>
-                  <Typography gutterBottom variant="h5">
-                    {product.nameProduct}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    className="text"
-                  >
-                    {VND.format(product.originPrice)}
-                  </Typography>
-                  <Typography gutterBottom variant="h6" color="red">
-                    {VND.format(product.sellPrice)}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions sx={{ display: "flex", justifyContent: "center" }}>
-                <NavLink
-                  to={`/productdetail?idProduct=${product._id}`}
-                  className="main-link"
-                >
-                  <Button variant="contained" size="small">
-                    Chi tiết
-                  </Button>
-                </NavLink>
-              </CardActions>
-            </Card>
+            <NavLink
+              to={`/productdetail?idProduct=${product._id}`}
+              className="main-link"
+            >
+              <Card key={index} className="card" sx={{ width: 200 }}>
+                <CardActionArea>
+                  <img className="img" src={product.image} alt="" />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5">
+                      {product.nameProduct}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      className="text"
+                    >
+                      {VND.format(product.originPrice)}
+                    </Typography>
+                    <Typography gutterBottom variant="h6" color="red">
+                      {VND.format(product.sellPrice)}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </NavLink>
           );
         })}
       </Box>
-
       <Typography className="title">Sản phẩm ngừng bán</Typography>
       <Box className="main">
         {listProduct?.map((product, index) => {
           return product.disable === "Hoạt động" ? (
             ""
           ) : (
-            <Card key={index} className="card" sx={{ width: 200 }}>
-              <CardActionArea>
-                <img className="img" src={product.image} alt="" />
-                <CardContent>
-                  <Typography gutterBottom variant="h5">
-                    {product.nameProduct}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    className="text"
-                  >
-                    {VND.format(product.originPrice)}
-                  </Typography>
-                  <Typography gutterBottom variant="h6" color="red">
-                    {VND.format(product.sellPrice)}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions sx={{ display: "flex", justifyContent: "center" }}>
-                <NavLink
-                  to={`/productdetail?idProduct=${product._id}`}
-                  className="main-link"
-                >
-                  <Button variant="contained" size="small">
-                    Xem chi tiết
-                  </Button>
-                </NavLink>
-              </CardActions>
-            </Card>
+            <NavLink
+              to={`/productdetail?idProduct=${product._id}`}
+              className="main-link"
+            >
+              <Card key={index} className="card" sx={{ width: 200 }}>
+                <CardActionArea>
+                  <img className="img" src={product.image} alt="" />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5">
+                      {product.nameProduct}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      className="text"
+                    >
+                      {VND.format(product.originPrice)}
+                    </Typography>
+                    <Typography gutterBottom variant="h6" color="red">
+                      {VND.format(product.sellPrice)}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </NavLink>
           );
         })}
       </Box>

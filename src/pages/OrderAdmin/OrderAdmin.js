@@ -9,6 +9,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import Update from "@mui/icons-material/ConstructionOutlined";
+import See from "@mui/icons-material/VisibilityOutlined";
+import "./OrderAdmin.css";
+import { Link } from "react-router-dom";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -29,6 +33,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
+
 export default function OrderAdmin() {
   return (
     <div>
@@ -55,10 +60,11 @@ export default function OrderAdmin() {
             <Table sx={{ minWidth: 1000 }} aria-label="customized table">
               <TableHead>
                 <TableRow>
-                  <StyledTableCell>Mã đơn hàng</StyledTableCell>
-                  <StyledTableCell>Họ Tên</StyledTableCell>
+                  <StyledTableCell>Mã Đơn Hàng</StyledTableCell>
+                  <StyledTableCell>Người Nhận</StyledTableCell>
                   <StyledTableCell>Email</StyledTableCell>
                   <StyledTableCell>Số Điện Thoại</StyledTableCell>
+                  <StyledTableCell>Địa chỉ</StyledTableCell>
                   <StyledTableCell>Trạng thái</StyledTableCell>
                   <StyledTableCell>Chi tiết sản phẩm</StyledTableCell>
                   <StyledTableCell>Thao tác</StyledTableCell>
@@ -70,16 +76,17 @@ export default function OrderAdmin() {
                     Ma45465454
                   </StyledTableCell>
                   <StyledTableCell>Huu Nghia</StyledTableCell>
-                  <StyledTableCell>huunghia@gnail.com</StyledTableCell>
+                  <StyledTableCell>huunghia@gmail.com</StyledTableCell>
                   <StyledTableCell>092323232</StyledTableCell>
+                  <StyledTableCell>180 Cao Lỗ, Q8</StyledTableCell>
                   <StyledTableCell>Đang xử lý</StyledTableCell>
-                  <StyledTableCell>
-                    <Button variant="contained">Xem chi tiết</Button>
+                  <StyledTableCell align="center">
+                    <See className="orderadm-delete"></See>
                   </StyledTableCell>
-                  <StyledTableCell>
-                    <Button sx={{ marginRight: 2 }} variant="contained">
-                      Cập nhật
-                    </Button>
+                  <StyledTableCell align="center">
+                    <Link to="/updateorderadmin">
+                      <Update className="orderadm-delete"></Update>
+                    </Link>
                   </StyledTableCell>
                 </StyledTableRow>
 
@@ -88,16 +95,15 @@ export default function OrderAdmin() {
                     Ma45465454
                   </StyledTableCell>
                   <StyledTableCell>Huu Nghia</StyledTableCell>
-                  <StyledTableCell>huunghia@gnail.com</StyledTableCell>
+                  <StyledTableCell>huunghia@gmail.com</StyledTableCell>
                   <StyledTableCell>092323232</StyledTableCell>
+                  <StyledTableCell>180 Cao Lỗ, Q8</StyledTableCell>
                   <StyledTableCell>Đang xử lý</StyledTableCell>
-                  <StyledTableCell>
-                    <Button variant="contained">Xem chi tiết</Button>
+                  <StyledTableCell align="center">
+                    <See className="orderadm-delete"></See>
                   </StyledTableCell>
-                  <StyledTableCell>
-                    <Button sx={{ marginRight: 2 }} variant="contained">
-                      Cập nhật
-                    </Button>
+                  <StyledTableCell align="center">
+                    <Update className="orderadm-delete"></Update>
                   </StyledTableCell>
                 </StyledTableRow>
 
@@ -106,16 +112,15 @@ export default function OrderAdmin() {
                     Ma45465454
                   </StyledTableCell>
                   <StyledTableCell>Huu Nghia</StyledTableCell>
-                  <StyledTableCell>huunghia@gnail.com</StyledTableCell>
+                  <StyledTableCell>huunghia@gmail.com</StyledTableCell>
                   <StyledTableCell>092323232</StyledTableCell>
+                  <StyledTableCell>180 Cao Lỗ, Q8</StyledTableCell>
                   <StyledTableCell>Đang xử lý</StyledTableCell>
-                  <StyledTableCell>
-                    <Button variant="contained">Xem chi tiết</Button>
+                  <StyledTableCell align="center">
+                    <See className="orderadm-delete"></See>
                   </StyledTableCell>
-                  <StyledTableCell>
-                    <Button sx={{ marginRight: 2 }} variant="contained">
-                      Cập nhật
-                    </Button>
+                  <StyledTableCell align="center">
+                    <Update className="orderadm-delete"></Update>
                   </StyledTableCell>
                 </StyledTableRow>
 
@@ -124,16 +129,15 @@ export default function OrderAdmin() {
                     Ma45465454
                   </StyledTableCell>
                   <StyledTableCell>Huu Nghia</StyledTableCell>
-                  <StyledTableCell>huunghia@gnail.com</StyledTableCell>
+                  <StyledTableCell>huunghia@gmail.com</StyledTableCell>
                   <StyledTableCell>092323232</StyledTableCell>
+                  <StyledTableCell>180 Cao Lỗ, Q8</StyledTableCell>
                   <StyledTableCell>Đang xử lý</StyledTableCell>
-                  <StyledTableCell>
-                    <Button variant="contained">Xem chi tiết</Button>
+                  <StyledTableCell align="center">
+                    <See className="orderadm-delete"></See>
                   </StyledTableCell>
-                  <StyledTableCell>
-                    <Button sx={{ marginRight: 2 }} variant="contained">
-                      Cập nhật
-                    </Button>
+                  <StyledTableCell align="center">
+                    <Update className="orderadm-delete"></Update>
                   </StyledTableCell>
                 </StyledTableRow>
 
@@ -142,34 +146,15 @@ export default function OrderAdmin() {
                     Ma45465454
                   </StyledTableCell>
                   <StyledTableCell>Huu Nghia</StyledTableCell>
-                  <StyledTableCell>huunghia@gnail.com</StyledTableCell>
+                  <StyledTableCell>huunghia@gmail.com</StyledTableCell>
                   <StyledTableCell>092323232</StyledTableCell>
+                  <StyledTableCell>180 Cao Lỗ, Q8</StyledTableCell>
                   <StyledTableCell>Đang xử lý</StyledTableCell>
-                  <StyledTableCell>
-                    <Button variant="contained">Xem chi tiết</Button>
+                  <StyledTableCell align="center">
+                    <See className="orderadm-delete"></See>
                   </StyledTableCell>
-                  <StyledTableCell>
-                    <Button sx={{ marginRight: 2 }} variant="contained">
-                      Cập nhật
-                    </Button>
-                  </StyledTableCell>
-                </StyledTableRow>
-
-                <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    Ma45465454
-                  </StyledTableCell>
-                  <StyledTableCell>Huu Nghia</StyledTableCell>
-                  <StyledTableCell>huunghia@gnail.com</StyledTableCell>
-                  <StyledTableCell>092323232</StyledTableCell>
-                  <StyledTableCell>Đang xử lý</StyledTableCell>
-                  <StyledTableCell>
-                    <Button variant="contained">Xem chi tiết</Button>
-                  </StyledTableCell>
-                  <StyledTableCell>
-                    <Button sx={{ marginRight: 2 }} variant="contained">
-                      Cập nhật
-                    </Button>
+                  <StyledTableCell align="center">
+                    <Update className="orderadm-delete"></Update>
                   </StyledTableCell>
                 </StyledTableRow>
               </TableBody>

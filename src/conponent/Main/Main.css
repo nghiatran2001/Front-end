@@ -5,10 +5,16 @@
   margin-top: 20px;
 }
 .main .card {
-  margin: 10px 10px 30px 10px;
-  border-radius: 20px;
+  margin: 10px 30px 30px 10px;
+  border-radius: 30px;
   border: 1px solid black;
 }
+
+.main .card:hover {
+  cursor: pointer;
+  scale: 1.1;
+}
+
 .main-link {
   text-decoration: none;
 }
@@ -17,8 +23,6 @@
 }
 
 .main .card .img {
-  height: 200px !important;
-  width: 180px !important;
   object-fit: contain !important;
 }
 

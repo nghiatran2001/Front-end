@@ -1,10 +1,44 @@
-.card .img {
-  width: 90% !important;
-  height: 200px !important;
-  object-fit: cover !important;
-  padding: 10px;
-  border-radius: 10% !important;
+.type {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
 }
-.card {
-  width: 200px;
+.type .card {
+  margin: 10px 30px 30px 10px;
+  border-radius: 30px;
+  border: 1px solid black;
+}
+
+.type .card:hover {
+  cursor: pointer;
+  scale: 1.1;
+}
+
+.type-link {
+  text-decoration: none;
+}
+.type .card .text {
+  text-decoration: line-through;
+}
+
+.type .card .text2 {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.type .card .text1 {
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.type .card .img {
+  height: 200px !important;
+  width: 200px !important;
+  object-fit: contain !important;
+}
+
+.title {
+  color: red;
+  font-size: 20px;
 }

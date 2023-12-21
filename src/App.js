@@ -27,6 +27,7 @@ import TechDetail from "./pages/TechDetail/TechDetail";
 import Search from "./pages/Search/Search";
 import Brand from "./pages/Brand/Brand";
 import AddBrand from "./pages/Brand/AddBrand";
+import UpdateOrderAdmin from "./pages/OrderAdmin/UpdateOrderAdmin";
 
 const LayoutPage = () => {
   return (
@@ -151,6 +152,10 @@ const router = createBrowserRouter([
   {
     path: "/addbrand",
     element: <AddBrand />,
+  },
+  {
+    path: "/updateorderadmin",
+    element: <UpdateOrderAdmin />,
   },
 ]);
 

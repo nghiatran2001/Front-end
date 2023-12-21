@@ -28,8 +28,12 @@ export const loginUser = async (user, dispatch, navigate) => {
   try {
     const BACKEND_API = process.env.REACT_APP_BACKEND_API;
     const res = await axios.post(BACKEND_API + "/auth/login", user);
-    dispatch(loginSuccess(res.data));
-    navigate("/");
+    if (res.data.disable) {
+      alert("Tài khoản bị khóa. Liên hệ Admin để mở!");
+    } else {
+      dispatch(loginSuccess(res.data));
+      navigate("/");
+    }
   } catch (error) {
     dispatch(loginFailed());
   }

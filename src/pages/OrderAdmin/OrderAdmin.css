@@ -1,0 +1,7 @@
+.orderadm-delete {
+  cursor: pointer;
+  padding: 0 5px;
+}
+.orderadm-delete:hover {
+  scale: 1.5;
+}

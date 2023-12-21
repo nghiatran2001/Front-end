@@ -29,10 +29,10 @@
 .page-link:hover {
   cursor: pointer;
 }
-.product-delete {
+.category-delete {
   cursor: pointer;
   padding: 0 5px;
 }
-.product-delete:hover {
+.category-delete:hover {
   scale: 1.5;
 }

@@ -3,14 +3,12 @@ import "./Register.css";
 
 import { Button, InputLabel } from "@mui/material";
 import { Form, Link } from "react-router-dom";
-import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
 import { Input, notification } from "antd";
 
 import { isEmpty, isEmail } from "validator";
 import { user as userAPI } from "../../API/index";
 
 export default function Register() {
-  const [isShowPassword, setIsShowPassword] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -112,9 +110,7 @@ export default function Register() {
                 top: "8px",
                 right: "8px",
               }}
-            >
-              {isShowPassword ? <EyeFilled /> : <EyeInvisibleFilled />}
-            </span>
+            ></span>
             <Input
               required
               placeholder="********"
@@ -135,9 +131,7 @@ export default function Register() {
                 top: "8px",
                 right: "8px",
               }}
-            >
-              {isShowPassword ? <EyeFilled /> : <EyeInvisibleFilled />}
-            </span>
+            ></span>
             <Input
               required
               placeholder="********"

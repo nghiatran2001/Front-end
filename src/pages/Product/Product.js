@@ -11,6 +11,11 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";
+import DoubleRight from "@mui/icons-material/KeyboardDoubleArrowRightOutlined";
+import DoubleLeft from "@mui/icons-material/KeyboardDoubleArrowLeftOutlined";
+import Update from "@mui/icons-material/ConstructionOutlined";
+import Delete from "@mui/icons-material/DeleteForeverOutlined";
+import Add from "@mui/icons-material/AddOutlined";
 import { Popconfirm, notification } from "antd";
 
 import { product as productAPI } from "../../API";
@@ -39,7 +44,7 @@ export default function Product() {
   const [listProduct, setListProduct] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const productPerPage = 4;
+  const productPerPage = 3;
   const lastIndex = currentPage * productPerPage;
   const firstIndex = lastIndex - productPerPage;
   const products = listProduct.slice(firstIndex, lastIndex);
@@ -126,7 +131,9 @@ export default function Product() {
             </Typography>
             <Typography variant="h5" sx={{ marginBottom: 5 }}>
               <Link to="/addproduct">
-                <Button variant="contained">Thêm sản phẩm</Button>
+                <Button variant="contained">
+                  <Add></Add>
+                </Button>
               </Link>
             </Typography>
           </Box>
@@ -180,9 +187,7 @@ export default function Product() {
                       </StyledTableCell>
                       <StyledTableCell align="left">
                         <Link to={`/editproduct?idProduct=${product._id}`}>
-                          <Button sx={{ margin: "1px" }} variant="contained">
-                            Sửa
-                          </Button>
+                          <Update className="product-delete "></Update>
                         </Link>
                         <Popconfirm
                           title="Xóa"
@@ -192,9 +197,7 @@ export default function Product() {
                           okText="Có"
                           cancelText="Không"
                         >
-                          <Button sx={{ margin: "1px" }} variant="contained">
-                            Xóa
-                          </Button>
+                          <Delete className="product-delete "></Delete>
                         </Popconfirm>
                         {/* <Link to={`/techdetail?idProduct=${product._id}`}>
                           <Button sx={{ margin: "1px" }} variant="contained">
@@ -211,9 +214,9 @@ export default function Product() {
           <nav>
             <ul className="pagination">
               <li className="page-item ">
-                <a href="#" className="page-link" onClick={prePage}>
-                  Truoc
-                </a>
+                <Link href="#" className="page-link" onClick={prePage}>
+                  <DoubleLeft></DoubleLeft>
+                </Link>
               </li>
               {numbers.map((n, i) => (
                 <li
@@ -222,19 +225,19 @@ export default function Product() {
                   }`}
                   key={i}
                 >
-                  <a
+                  <Link
                     href="#"
                     className="page-link"
                     onClick={() => changePage(n)}
                   >
                     {n}
-                  </a>
+                  </Link>
                 </li>
               ))}
               <li className="page-item">
-                <a href="#" className="page-link" onClick={nextPage}>
-                  Sau
-                </a>
+                <Link href="#" className="page-link" onClick={nextPage}>
+                  <DoubleRight></DoubleRight>
+                </Link>
               </li>
             </ul>
           </nav>

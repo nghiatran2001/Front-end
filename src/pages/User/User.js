@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Admin from "../Admin/Admin";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -11,6 +11,13 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import "./User.css";
+import Update from "@mui/icons-material/ConstructionOutlined";
+import Delete from "@mui/icons-material/DeleteForeverOutlined";
+import Key from "@mui/icons-material/KeyOutlined";
+import Block from "@mui/icons-material/LockOutlined";
+import DoubleRight from "@mui/icons-material/KeyboardDoubleArrowRightOutlined";
+import DoubleLeft from "@mui/icons-material/KeyboardDoubleArrowLeftOutlined";
 import { Popconfirm, notification } from "antd";
 
 import { user as userAPI } from "../../API";
@@ -37,6 +44,14 @@ export default function User() {
   const user = useSelector((state) => state.auth.login?.currentUser);
 
   const [userList, setUserList] = useState([]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const userPerPage = 3;
+  const lastIndex = currentPage * userPerPage;
+  const firstIndex = lastIndex - userPerPage;
+  const users = userList.slice(firstIndex, lastIndex);
+  const pageNumber = Math.ceil(userList.length / userPerPage);
+  const numbers = [...Array(pageNumber + 1).keys()].slice(1);
 
   const handleDelete = async (id) => {
     try {
@@ -112,6 +127,23 @@ export default function User() {
       console.log(error);
     }
   };
+
+  const prePage = async () => {
+    if (currentPage !== 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const nextPage = async () => {
+    if (currentPage !== pageNumber) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const changePage = async (id) => {
+    setCurrentPage(id);
+  };
+
   return (
     <div>
       {contextHolder}
@@ -149,7 +181,7 @@ export default function User() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {userList?.map((user, index) => {
+                {users?.map((user, index) => {
                   return (
                     <StyledTableRow key={index}>
                       <StyledTableCell align="center">
@@ -169,44 +201,50 @@ export default function User() {
                       </StyledTableCell>
                       <StyledTableCell align="center">
                         <Link to={`/edituser?idUser=${user._id}`}>
-                          <Button sx={{ margin: 1 }} variant="contained">
-                            Sửa
-                          </Button>
+                          <Update className="user-delete"></Update>
                         </Link>
-                        <Popconfirm
-                          title="Xóa"
-                          description="Bạn chắc chắn muốn xóa?"
-                          onConfirm={() => {
-                            handleDelete(user._id);
-                          }}
-                          onCancel={cancel}
-                          okText="Có"
-                          cancelText="Không"
-                        >
-                          <Button sx={{ margin: 1 }} variant="contained">
-                            Xóa
-                          </Button>
-                        </Popconfirm>
+                        {user?.role ? (
+                          ""
+                        ) : (
+                          <Popconfirm
+                            onConfirm={() => {
+                              handleDelete(user._id);
+                            }}
+                            title="Xóa"
+                            description="Bạn chắc chắn muốn xóa?"
+                            onCancel={cancel}
+                            okText="Có"
+                            cancelText="Không"
+                          >
+                            <Delete className="user-delete"></Delete>
+                          </Popconfirm>
+                        )}
                         {user?.disable ? (
-                          <Button
-                            onClick={() => {
+                          <Popconfirm
+                            onConfirm={() => {
                               handleOpen(user._id);
                             }}
-                            sx={{ margin: 1 }}
-                            variant="contained"
+                            title="Khóa"
+                            description="Bạn chắc chắn muốn khóa?"
+                            onCancel={cancel}
+                            okText="Có"
+                            cancelText="Không"
                           >
-                            Mở khóa
-                          </Button>
+                            <Block className="user-delete"></Block>
+                          </Popconfirm>
                         ) : (
-                          <Button
-                            onClick={() => {
+                          <Popconfirm
+                            onConfirm={() => {
                               handleBlock(user._id);
                             }}
-                            sx={{ margin: 1 }}
-                            variant="contained"
+                            title="Mở Khóa"
+                            description="Bạn chắc chắn muốn mở khóa?"
+                            onCancel={cancel}
+                            okText="Có"
+                            cancelText="Không"
                           >
-                            Khóa
-                          </Button>
+                            <Key className="user-delete"></Key>
+                          </Popconfirm>
                         )}
                       </StyledTableCell>
                     </StyledTableRow>
@@ -215,6 +253,36 @@ export default function User() {
               </TableBody>
             </Table>
           </TableContainer>
+          <nav>
+            <ul className="pagination">
+              <li className="page-item">
+                <Link href="#" className="page-link" onClick={prePage}>
+                  <DoubleLeft></DoubleLeft>
+                </Link>
+              </li>
+              {numbers.map((n, i) => (
+                <li
+                  className={`page-item ${
+                    currentPage === n ? "page-item red active" : ""
+                  }`}
+                  key={i}
+                >
+                  <Link
+                    href="#"
+                    className="page-link"
+                    onClick={() => changePage(n)}
+                  >
+                    {n}
+                  </Link>
+                </li>
+              ))}
+              <li className="page-item">
+                <Link href="#" className="page-link" onClick={nextPage}>
+                  <DoubleRight></DoubleRight>
+                </Link>
+              </li>
+            </ul>
+          </nav>
         </Box>
       </Box>
     </div>

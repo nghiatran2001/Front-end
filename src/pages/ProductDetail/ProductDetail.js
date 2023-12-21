@@ -82,8 +82,8 @@ export default function ProductDetail() {
 
   return (
     <div>
-      {contextHolder}s
-      <Row>
+      {contextHolder}
+      <Row className="product-detail-body">
         <Col span={20} offset={2}>
           <Row
             style={{ padding: 20, background: "white", borderRadius: "10px" }}
@@ -99,26 +99,10 @@ export default function ProductDetail() {
                   alt="img-product"
                 ></img>
               </div>
-
-              <Box
-                sx={{
-                  borderRadius: "10px",
-                  padding: 2,
-                }}
-              >
-                <Typography gutterBottom variant="h4">
-                  Thông số kỹ thuật
-                </Typography>
-                <Typography gutterBottom>MÀN HÌNH:</Typography>
-                <Typography gutterBottom>CHIP:</Typography>
-                <Typography gutterBottom>RAM:</Typography>
-                <Typography gutterBottom>SSD:</Typography>
-                <Typography gutterBottom>CARD ĐỒ HỌA:</Typography>
-              </Box>
             </Col>
             <Col span={13} style={{ paddingLeft: 20 }}>
               <CardContent sx={{ marginBottom: 5 }}>
-                <Typography gutterBottom variant="h3">
+                <Typography gutterBottom variant="h4">
                   {product.nameProduct}
                 </Typography>
                 <Box>
@@ -126,6 +110,7 @@ export default function ProductDetail() {
                     <Typography gutterBottom>
                       Kho: <span>{product.quantity}</span>
                     </Typography>
+
                     <Typography
                       gutterBottom
                       className="text"
@@ -136,9 +121,12 @@ export default function ProductDetail() {
                     <Typography gutterBottom color="red">
                       Giá bán: <span>{VND.format(product.sellPrice)}</span>
                     </Typography>
+                    <Typography gutterBottom>
+                      Tình trạng: <span>{product.disable}</span>
+                    </Typography>
                   </Box>
                 </Box>
-                <Typography gutterBottom variant="h4">
+                <Typography gutterBottom variant="h5">
                   Mô tả sản phẩm
                 </Typography>
                 <Typography sx={{ paddingLeft: 3 }} gutterBottom>
@@ -151,7 +139,7 @@ export default function ProductDetail() {
                   padding: 2,
                 }}
               >
-                {product.quantity > 0 ? (
+                {product.quantity > 0 && product.disable === "Hoạt động" ? (
                   <Button
                     sx={{ fontSize: 15 }}
                     variant="contained"
@@ -161,9 +149,7 @@ export default function ProductDetail() {
                     Thêm giỏ hàng
                   </Button>
                 ) : (
-                  <Button sx={{ fontSize: 15 }} variant="contained">
-                    Hết hàng
-                  </Button>
+                  ""
                 )}
               </Box>
             </Col>

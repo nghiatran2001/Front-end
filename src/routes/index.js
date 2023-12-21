@@ -22,6 +22,7 @@ import {
   Search,
   Brand,
   AddBrand,
+  UpdateOrderAdmin,
 } from "../pages";
 import { DefaultLayout, AdminLayout } from "../layouts";
 import Admin from "../pages/Admin/Admin";
@@ -147,12 +148,17 @@ const publicRoutes = [
   {
     path: "/brand",
     element: Brand,
-    DefaultLayout,
+    AdminLayout,
   },
   {
     path: "/addbrand",
     element: AddBrand,
-    DefaultLayout,
+    AdminLayout,
+  },
+  {
+    path: "/updateorderadmin",
+    element: UpdateOrderAdmin,
+    AdminLayout,
   },
 ];
 

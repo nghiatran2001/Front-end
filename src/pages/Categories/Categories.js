@@ -11,9 +11,13 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Popconfirm } from "antd";
 import { notification } from "antd";
-
-import { category as categoryAPI } from "../../API";
+import "./Category.css";
 import { Link } from "react-router-dom";
+import DoubleRight from "@mui/icons-material/KeyboardDoubleArrowRightOutlined";
+import DoubleLeft from "@mui/icons-material/KeyboardDoubleArrowLeftOutlined";
+import Delete from "@mui/icons-material/DeleteForeverOutlined";
+import Add from "@mui/icons-material/AddOutlined";
+import { category as categoryAPI } from "../../API";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -39,6 +43,14 @@ export default function Categories() {
   const [api, contextHolder] = notification.useNotification();
 
   const [listCategory, setListCategory] = useState([]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const catePerPage = 3;
+  const lastIndex = currentPage * catePerPage;
+  const firstIndex = lastIndex - catePerPage;
+  const cates = listCategory.slice(firstIndex, lastIndex);
+  const pageNumber = Math.ceil(listCategory.length / catePerPage);
+  const numbers = [...Array(pageNumber + 1).keys()].slice(1);
 
   const handleDeleteCategory = async (id) => {
     try {
@@ -72,6 +84,23 @@ export default function Categories() {
       console.log(error);
     }
   };
+
+  const prePage = async () => {
+    if (currentPage !== 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const nextPage = async () => {
+    if (currentPage !== pageNumber) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const changePage = async (id) => {
+    setCurrentPage(id);
+  };
+
   return (
     <div>
       {contextHolder}
@@ -97,7 +126,9 @@ export default function Categories() {
             </Typography>
             <Typography variant="h5" sx={{ marginBottom: 5 }}>
               <Link to="/addcategory">
-                <Button variant="contained">Thêm thể loại</Button>
+                <Button variant="contained">
+                  <Add></Add>
+                </Button>
               </Link>
             </Typography>
           </Box>
@@ -114,7 +145,7 @@ export default function Categories() {
               </TableHead>
 
               <TableBody>
-                {listCategory.map((category, index) => {
+                {cates.map((category, index) => {
                   return (
                     <StyledTableRow key={index}>
                       <StyledTableCell align="center">
@@ -138,9 +169,7 @@ export default function Categories() {
                           okText="Có"
                           cancelText="Không"
                         >
-                          <Button sx={{ margin: 1 }} variant="contained">
-                            Xóa
-                          </Button>
+                          <Delete className="category-delete"></Delete>
                         </Popconfirm>
                       </StyledTableCell>
                     </StyledTableRow>
@@ -149,6 +178,36 @@ export default function Categories() {
               </TableBody>
             </Table>
           </TableContainer>
+          <nav>
+            <ul className="pagination">
+              <li className="page-item">
+                <Link href="#" className="page-link" onClick={prePage}>
+                  <DoubleLeft></DoubleLeft>
+                </Link>
+              </li>
+              {numbers.map((n, i) => (
+                <li
+                  className={`page-item ${
+                    currentPage === n ? "page-item red active" : ""
+                  }`}
+                  key={i}
+                >
+                  <Link
+                    href="#"
+                    className="page-link"
+                    onClick={() => changePage(n)}
+                  >
+                    {n}
+                  </Link>
+                </li>
+              ))}
+              <li className="page-item">
+                <Link href="#" className="page-link" onClick={nextPage}>
+                  <DoubleRight></DoubleRight>
+                </Link>
+              </li>
+            </ul>
+          </nav>
         </Box>
       </Box>
     </div>

@@ -1,20 +1,18 @@
-import { Col, Row } from "antd";
 import React, { useEffect, useState } from "react";
-
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import "./Type.css";
-import { Pagination } from "antd";
+import { Col, Row } from "antd";
 import {
   Box,
-  Button,
   Card,
   CardActionArea,
-  CardActions,
   CardContent,
   Typography,
 } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import DoubleRight from "@mui/icons-material/KeyboardDoubleArrowRightOutlined";
+import DoubleLeft from "@mui/icons-material/KeyboardDoubleArrowLeftOutlined";
+import { Link, NavLink } from "react-router-dom";
 
 import { product as productAPI, category as categoryAPI } from "../../API";
 
@@ -33,7 +31,13 @@ export default function Type() {
   const [listProduct, setListProduct] = useState([]);
   const [listCategory, setListCategory] = useState([]);
 
-  const handleSetPage = (page) => {};
+  const [currentPage, setCurrentPage] = useState(1);
+  const productPerPage = 4;
+  const lastIndex = currentPage * productPerPage;
+  const firstIndex = lastIndex - productPerPage;
+  const products = listProduct.slice(firstIndex, lastIndex);
+  const pageNumber = Math.ceil(listProduct.length / productPerPage);
+  const numbers = [...Array(pageNumber + 1).keys()].slice(1);
 
   useEffect(() => {
     (async () => {
@@ -62,6 +66,23 @@ export default function Type() {
       console.log(error);
     }
   };
+
+  const prePage = async () => {
+    if (currentPage !== 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const nextPage = async () => {
+    if (currentPage !== pageNumber) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const changePage = async (id) => {
+    setCurrentPage(id);
+  };
+
   return (
     <div>
       <Box
@@ -104,56 +125,78 @@ export default function Type() {
           })}
         </Tabs>
       </Box>
-      <Row style={{ marginTop: "50px", marginBottom: "100px" }}>
+      <Row style={{ marginTop: "50px", marginBottom: "50px" }}>
         <Col span={20} offset={2}>
-          <Box className="main">
-            {listProduct.map((product, index) => {
+          <Box className="type">
+            {products.map((product, index) => {
               return product.disable === "Ngừng hoạt động" ? (
                 ""
               ) : (
-                <Card key={index} className="card">
-                  <img className="img" src={product.image} alt="" />
-                  <CardActionArea>
-                    <CardContent>
-                      <Typography gutterBottom variant="h5">
-                        {product.nameProduct}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        className="text"
-                      >
-                        {VND.format(product.originPrice)}
-                      </Typography>
-                      <Typography gutterBottom variant="h6" color="red">
-                        {VND.format(product.sellPrice)}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  <CardActions
-                    sx={{ display: "flex", justifyContent: "center" }}
-                  >
-                    <NavLink
-                      to={`/productdetail?idProduct=${product._id}`}
-                      className="main-link"
-                    >
-                      <Button variant="contained" size="small">
-                        Xem chi tiết
-                      </Button>
-                    </NavLink>
-                  </CardActions>
-                </Card>
+                <NavLink
+                  to={`/productdetail?idProduct=${product._id}`}
+                  className="type-link"
+                >
+                  <Card key={index} className="card" sx={{ width: 200 }}>
+                    <CardActionArea>
+                      <img className="img" src={product.image} alt="" />
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" className="text1">
+                          {product.nameProduct}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="text.secondary"
+                          className="text"
+                        >
+                          {VND.format(product.originPrice)}
+                        </Typography>
+                        <Typography
+                          gutterBottom
+                          variant="h6"
+                          color="red"
+                          className="text2"
+                        >
+                          {VND.format(product.sellPrice)}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </NavLink>
               );
             })}
           </Box>
         </Col>
       </Row>
-      <Pagination
-        showQuickJumper
-        defaultCurrent={1}
-        total={100}
-        onChange={handleSetPage}
-      />
+      <nav>
+        <ul className="pagination">
+          <li className="page-item ">
+            <Link href="#" className="page-link" onClick={prePage}>
+              <DoubleLeft></DoubleLeft>
+            </Link>
+          </li>
+          {numbers.map((n, i) => (
+            <li
+              className={`page-item ${
+                currentPage === n ? "page-item red active" : ""
+              }`}
+              key={i}
+            >
+              <Link
+                href="#"
+                className="page-link"
+                onClick={() => changePage(n)}
+              >
+                {n}
+              </Link>
+            </li>
+          ))}
+          <li className="page-item">
+            <Link href="#" className="page-link" onClick={nextPage}>
+              <DoubleRight></DoubleRight>
+            </Link>
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 }

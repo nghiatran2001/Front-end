@@ -11,9 +11,14 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Popconfirm } from "antd";
 import { notification } from "antd";
+import "./Brand.css";
+import DoubleRight from "@mui/icons-material/KeyboardDoubleArrowRightOutlined";
+import DoubleLeft from "@mui/icons-material/KeyboardDoubleArrowLeftOutlined";
+import Delete from "@mui/icons-material/DeleteForeverOutlined";
+import Add from "@mui/icons-material/AddOutlined";
+import { Link } from "react-router-dom";
 
 import { brand as brandAPI } from "../../API";
-import { Link } from "react-router-dom";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -122,7 +127,9 @@ export default function Brand() {
             </Typography>
             <Typography variant="h5" sx={{ marginBottom: 5 }}>
               <Link to="/addbrand">
-                <Button variant="contained">Thêm hãng</Button>
+                <Button variant="contained">
+                  <Add></Add>
+                </Button>
               </Link>
             </Typography>
           </Box>
@@ -163,9 +170,7 @@ export default function Brand() {
                           okText="Có"
                           cancelText="Không"
                         >
-                          <Button sx={{ margin: 1 }} variant="contained">
-                            Xóa
-                          </Button>
+                          <Delete className="brand-delete"></Delete>
                         </Popconfirm>
                       </StyledTableCell>
                     </StyledTableRow>
@@ -177,9 +182,9 @@ export default function Brand() {
           <nav>
             <ul className="pagination">
               <li className="page-item">
-                <a href="#" className="page-link" onClick={prePage}>
-                  Truoc
-                </a>
+                <Link href="#" className="page-link" onClick={prePage}>
+                  <DoubleLeft></DoubleLeft>
+                </Link>
               </li>
               {numbers.map((n, i) => (
                 <li
@@ -188,19 +193,19 @@ export default function Brand() {
                   }`}
                   key={i}
                 >
-                  <a
+                  <Link
                     href="#"
                     className="page-link"
                     onClick={() => changePage(n)}
                   >
                     {n}
-                  </a>
+                  </Link>
                 </li>
               ))}
               <li className="page-item">
-                <a href="#" className="page-link" onClick={nextPage}>
-                  Sau
-                </a>
+                <Link href="#" className="page-link" onClick={nextPage}>
+                  <DoubleRight></DoubleRight>
+                </Link>
               </li>
             </ul>
           </nav>
