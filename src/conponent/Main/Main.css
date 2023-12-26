@@ -23,6 +23,8 @@
 }
 
 .main .card .img {
+  height: 200px !important;
+  width: 200px !important;
   object-fit: contain !important;
 }
 

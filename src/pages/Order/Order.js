@@ -1,6 +1,6 @@
 import { Box, Button, FormControl, FormLabel, InputBase } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Order.css";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,12 +10,25 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useSelector } from "react-redux";
 import TextArea from "antd/es/input/TextArea";
+import { notification } from "antd";
 
 import { user as userAPI } from "../../API";
+import { order as orderAPI } from "../../API";
+import { payment as paymentAPI } from "../../API";
 
 export default function Order() {
   const user = useSelector((state) => state.auth.login?.currentUser);
+  const [api, contextHolder] = notification.useNotification();
+  const navigate = useNavigate();
+
   const [userId, setUserId] = useState("");
+  const [order, setOrder] = useState([]);
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [content, setContent] = useState("");
 
   const VND = new Intl.NumberFormat("vi-VN", {
     style: "currency",
@@ -36,8 +49,49 @@ export default function Order() {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    (async () => {
+      await getOrders();
+    })();
+  }, []);
+
+  const getOrders = async () => {
+    try {
+      const result = await orderAPI.getEmail({ email: user.email });
+      setOrder(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleAddOrder = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await paymentAPI.addOrder({
+        order: order[0].orderArray,
+        name,
+        phone,
+        email,
+        content,
+        address,
+      });
+      if (result.status === 200) {
+        navigate("/");
+      }
+    } catch (error) {
+      api.open({
+        type: "error",
+        message: "Thất bại.",
+      });
+      console.log(error);
+    }
+  };
+
+  console.log(order);
   return (
     <div>
+      {contextHolder}
       <Box className="order-bg">
         <TableContainer sx={{ display: "flex" }}>
           <Table
@@ -66,23 +120,27 @@ export default function Order() {
                   <h3>Đơn giá</h3>
                 </TableCell>
                 <TableCell align="center">
-                  <h3>Tổng</h3>
+                  <h3>Thành tiền</h3>
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow>
-                <TableCell>Laptop Dell</TableCell>
-                <TableCell align="center">1</TableCell>
-                <TableCell align="right">{VND.format(10000000)}</TableCell>
-                <TableCell align="right">{VND.format(10000000)}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Laptop Dell</TableCell>
-                <TableCell align="center">1</TableCell>
-                <TableCell align="right">{VND.format(10000000)}</TableCell>
-                <TableCell align="right">{VND.format(10000000)}</TableCell>
-              </TableRow>
+              {order.map((e) => {
+                return e.orderArray.map((o, i) => {
+                  return (
+                    <TableRow key={i}>
+                      <TableCell>{o.nameProduct}</TableCell>
+                      <TableCell align="center">{o.quantity}</TableCell>
+                      <TableCell align="right">
+                        {VND.format(o.sellPrice)}
+                      </TableCell>
+                      <TableCell align="right">
+                        {VND.format(o.quantity * o.sellPrice)}
+                      </TableCell>
+                    </TableRow>
+                  );
+                });
+              })}
             </TableBody>
             <TableBody>
               <TableRow>
@@ -91,7 +149,7 @@ export default function Order() {
                 <TableCell align="right">
                   <h3>Tổng tiền:</h3>
                 </TableCell>
-                <TableCell align="right">{VND.format(20000000)}</TableCell>
+                <TableCell align="right">{VND.format(10000000)}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -106,25 +164,47 @@ export default function Order() {
           >
             <h1 style={{ textAlign: "center" }}>Thông tin người nhận</h1>
             <FormLabel sx={{ padding: 2, color: "black" }}>
-              Họ tên: <span className="info">{userId?.name}</span>
-              <InputBase>1</InputBase>
+              Họ tên:{" "}
+              <TextArea
+                className="info"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              ></TextArea>
             </FormLabel>
             <FormLabel sx={{ padding: 2, color: "black" }}>
-              Số điện thoại: <span className="info">{userId?.phone}</span>
+              Số điện thoại:{" "}
+              <TextArea
+                className="info"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              ></TextArea>
             </FormLabel>
             <FormLabel sx={{ padding: 2, color: "black" }}>
-              Email: <span className="info">{userId?.email}</span>
+              Email:{" "}
+              <TextArea
+                className="info"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              ></TextArea>
             </FormLabel>
             <FormLabel sx={{ padding: 2, color: "black" }}>
               <span>
                 Địa chỉ:
-                <TextArea></TextArea>
+                <TextArea
+                  className="info"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                ></TextArea>
               </span>
             </FormLabel>
             <FormLabel sx={{ padding: 2, color: "black" }}>
               <span>
                 Nội dung:
-                <TextArea></TextArea>
+                <TextArea
+                  className="info"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                ></TextArea>
               </span>
             </FormLabel>
           </FormControl>
@@ -138,7 +218,7 @@ export default function Order() {
             </select>
           </h2>
           <Button variant="contained">
-            <Link to="/payment" className="order-link">
+            <Link to="/payment" className="order-link" onClick={handleAddOrder}>
               thanh toán
             </Link>
           </Button>

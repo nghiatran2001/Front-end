@@ -224,8 +224,8 @@ export default function User() {
                             onConfirm={() => {
                               handleOpen(user._id);
                             }}
-                            title="Khóa"
-                            description="Bạn chắc chắn muốn khóa?"
+                            title="Mở Khóa"
+                            description="Bạn chắc chắn muốn mở khóa?"
                             onCancel={cancel}
                             okText="Có"
                             cancelText="Không"
@@ -237,13 +237,17 @@ export default function User() {
                             onConfirm={() => {
                               handleBlock(user._id);
                             }}
-                            title="Mở Khóa"
-                            description="Bạn chắc chắn muốn mở khóa?"
+                            title="Khóa"
+                            description="Bạn chắc chắn muốn khóa?"
                             onCancel={cancel}
                             okText="Có"
                             cancelText="Không"
                           >
-                            <Key className="user-delete"></Key>
+                            {user?.role ? (
+                              ""
+                            ) : (
+                              <Key className="user-delete"></Key>
+                            )}
                           </Popconfirm>
                         )}
                       </StyledTableCell>

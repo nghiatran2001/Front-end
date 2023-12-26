@@ -14,6 +14,10 @@ const cart = {
     const url = BACKEND_API + `/cart/${email}`;
     return await axios.get(url);
   },
+  deleteProduct: async ({ id }) => {
+    const url = BACKEND_API + `/cart/${id}`;
+    return await axios.delete(url);
+  },
 };
 
 export default cart;
