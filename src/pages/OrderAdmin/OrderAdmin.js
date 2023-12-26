@@ -1,5 +1,5 @@
-import React from "react";
-import { Box, Button, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, Typography } from "@mui/material";
 import Admin from "../Admin/Admin";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -13,6 +13,8 @@ import Update from "@mui/icons-material/ConstructionOutlined";
 import See from "@mui/icons-material/VisibilityOutlined";
 import "./OrderAdmin.css";
 import { Link } from "react-router-dom";
+
+import { payment as paymentAPI } from "../../API";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -28,13 +30,34 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,
   },
 }));
 
 export default function OrderAdmin() {
+  const VND = new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  });
+  const [order, setOrder] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      await getOrders();
+    })();
+  }, []);
+
+  const getOrders = async () => {
+    try {
+      const result = await paymentAPI.getList();
+      setOrder(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  console.log(order);
   return (
     <div>
       <Box
@@ -71,92 +94,28 @@ export default function OrderAdmin() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    Ma45465454
-                  </StyledTableCell>
-                  <StyledTableCell>Huu Nghia</StyledTableCell>
-                  <StyledTableCell>huunghia@gmail.com</StyledTableCell>
-                  <StyledTableCell>092323232</StyledTableCell>
-                  <StyledTableCell>180 Cao Lỗ, Q8</StyledTableCell>
-                  <StyledTableCell>Đang xử lý</StyledTableCell>
-                  <StyledTableCell align="center">
-                    <See className="orderadm-delete"></See>
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    <Link to="/updateorderadmin">
-                      <Update className="orderadm-delete"></Update>
-                    </Link>
-                  </StyledTableCell>
-                </StyledTableRow>
-
-                <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    Ma45465454
-                  </StyledTableCell>
-                  <StyledTableCell>Huu Nghia</StyledTableCell>
-                  <StyledTableCell>huunghia@gmail.com</StyledTableCell>
-                  <StyledTableCell>092323232</StyledTableCell>
-                  <StyledTableCell>180 Cao Lỗ, Q8</StyledTableCell>
-                  <StyledTableCell>Đang xử lý</StyledTableCell>
-                  <StyledTableCell align="center">
-                    <See className="orderadm-delete"></See>
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    <Update className="orderadm-delete"></Update>
-                  </StyledTableCell>
-                </StyledTableRow>
-
-                <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    Ma45465454
-                  </StyledTableCell>
-                  <StyledTableCell>Huu Nghia</StyledTableCell>
-                  <StyledTableCell>huunghia@gmail.com</StyledTableCell>
-                  <StyledTableCell>092323232</StyledTableCell>
-                  <StyledTableCell>180 Cao Lỗ, Q8</StyledTableCell>
-                  <StyledTableCell>Đang xử lý</StyledTableCell>
-                  <StyledTableCell align="center">
-                    <See className="orderadm-delete"></See>
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    <Update className="orderadm-delete"></Update>
-                  </StyledTableCell>
-                </StyledTableRow>
-
-                <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    Ma45465454
-                  </StyledTableCell>
-                  <StyledTableCell>Huu Nghia</StyledTableCell>
-                  <StyledTableCell>huunghia@gmail.com</StyledTableCell>
-                  <StyledTableCell>092323232</StyledTableCell>
-                  <StyledTableCell>180 Cao Lỗ, Q8</StyledTableCell>
-                  <StyledTableCell>Đang xử lý</StyledTableCell>
-                  <StyledTableCell align="center">
-                    <See className="orderadm-delete"></See>
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    <Update className="orderadm-delete"></Update>
-                  </StyledTableCell>
-                </StyledTableRow>
-
-                <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    Ma45465454
-                  </StyledTableCell>
-                  <StyledTableCell>Huu Nghia</StyledTableCell>
-                  <StyledTableCell>huunghia@gmail.com</StyledTableCell>
-                  <StyledTableCell>092323232</StyledTableCell>
-                  <StyledTableCell>180 Cao Lỗ, Q8</StyledTableCell>
-                  <StyledTableCell>Đang xử lý</StyledTableCell>
-                  <StyledTableCell align="center">
-                    <See className="orderadm-delete"></See>
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    <Update className="orderadm-delete"></Update>
-                  </StyledTableCell>
-                </StyledTableRow>
+                {order.map((o, i) => {
+                  return (
+                    <StyledTableRow key={i}>
+                      <StyledTableCell component="th" scope="row">
+                        {o._id}
+                      </StyledTableCell>
+                      <StyledTableCell>{o.name}</StyledTableCell>
+                      <StyledTableCell>{o.email}</StyledTableCell>
+                      <StyledTableCell>{o.phone}</StyledTableCell>
+                      <StyledTableCell>{o.address}</StyledTableCell>
+                      <StyledTableCell>{o.status}</StyledTableCell>
+                      <StyledTableCell align="center">
+                        <See className="orderadm-delete"></See>
+                      </StyledTableCell>
+                      <StyledTableCell align="center">
+                        <Link to={`/updateorderadmin?idOrder=${o._id}`}>
+                          <Update className="orderadm-delete"></Update>
+                        </Link>
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </TableContainer>

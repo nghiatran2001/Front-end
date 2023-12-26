@@ -1,8 +1,9 @@
 .follow-tab {
-  border: 1px solid black;
-  border-radius: 30px;
-  margin-right: 10px;
-  margin-bottom: 10px;
+  border: 1px solid black !important;
+  border-radius: 30px !important;
+  margin-right: 10px !important;
+  margin-bottom: 10px !important;
+  font-weight: bold !important;
 }
 .follow-table {
   margin-top: 30px;
@@ -10,5 +11,12 @@
 .follow {
   display: flex;
   justify-content: center;
-  margin-bottom: 30px;
+  margin-bottom: 100px;
+}
+.follow-delete {
+  cursor: pointer;
+  padding: 0 5px;
+}
+.follow-delete:hover {
+  scale: 1.5;
 }

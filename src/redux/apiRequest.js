@@ -33,6 +33,7 @@ export const loginUser = async (user, dispatch, navigate) => {
     } else {
       dispatch(loginSuccess(res.data));
       navigate("/");
+      window.location.reload();
     }
   } catch (error) {
     dispatch(loginFailed());

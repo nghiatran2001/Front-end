@@ -17,9 +17,9 @@ import {
 import { styled } from "@mui/material/styles";
 import { tableCellClasses } from "@mui/material/TableCell";
 import { notification } from "antd";
+import TextArea from "antd/es/input/TextArea";
 
 import { product as productAPI, category as categoryAPI } from "../../API";
-import TextArea from "antd/es/input/TextArea";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {

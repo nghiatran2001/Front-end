@@ -45,96 +45,6 @@ function Search(props) {
     navigate(`/productdetail?idProduct=${e._id}`);
   };
   return (
-    // <div className="searchPane">
-    //   {searchProduct && searchProduct?.length > 0 ? (
-    //     <>
-    //       <div
-    //         className="searchContent"
-    //         style={{
-    //           gridTemplateColumns: `repeat(${
-    //             windowWidth > 1200
-    //               ? 5
-    //               : windowWidth > 922
-    //               ? 4
-    //               : windowWidth > 768
-    //               ? 3
-    //               : windowWidth > 600
-    //               ? 2
-    //               : 1
-    //           },auto)`,
-    //         }}
-    //       >
-    //         {searchProduct?.map((item, index) => {
-    //           if (
-    //             item?.nameProduct?.includes(keywords) ||
-    //             item?.nameProduct?.toLowerCase()?.includes(keywords)
-    //           ) {
-    //             return item?.disable === "Ngừng hoạt động" ? (
-    //               ""
-    //             ) : (
-    //               <div
-    //                 className="movieItem"
-    //                 key={index}
-    //                 onClick={() => handleDetailProduct(item)}
-    //               >
-    //                 <img className="img_search" src={item?.image} alt="" />
-    //                 <p className="name_search">{item?.nameProduct}</p>
-    //                 <p className="price_search">
-    //                   {VND.format(item?.originPrice)}
-    //                 </p>
-    //                 <p className="price_search">
-    //                   {VND.format(item?.sellPrice)}
-    //                 </p>
-    //               </div>
-    //             );
-    //           } else if (
-    //             item?.nameCategory?.includes(keywords) ||
-    //             item?.nameCategory?.toLowerCase()?.includes(keywords)
-    //           ) {
-    //             return item?.disable === "Ngừng hoạt động" ? (
-    //               ""
-    //             ) : (
-    //               <div
-    //                 className="movieItem"
-    //                 key={index}
-    //                 onClick={() => handleDetailProduct(item)}
-    //               >
-    //                 <img className="img_search" src={item?.image} alt="" />
-    //                 <p className="name_search">{item?.nameProduct}</p>
-    //                 <p className="price_search">
-    //                   {VND.format(item?.sellPrice)}
-    //                 </p>
-    //               </div>
-    //             );
-    //           } else if (
-    //             item?.nameBrand?.includes(keywords) ||
-    //             item?.nameBrand?.toLowerCase()?.includes(keywords)
-    //           ) {
-    //             return item?.disable === "Ngừng hoạt động" ? (
-    //               ""
-    //             ) : (
-    //               <div
-    //                 className="movieItem"
-    //                 key={index}
-    //                 onClick={() => handleDetailProduct(item)}
-    //               >
-    //                 <img className="img_search" src={item?.image} alt="" />
-    //                 <p className="name_search">{item?.nameProduct}</p>
-    //                 <p className="price_search">
-    //                   {VND.format(item?.sellPrice)}
-    //                 </p>
-    //               </div>
-    //             );
-    //           }
-    //         })}
-    //       </div>
-    //     </>
-    //   ) : (
-    //     <div className="notFound">
-    //       <h1 style={{ color: "black" }}>Không tìm thấy sẩn phẩm</h1>
-    //     </div>
-    //   )}
-    // </div>
     <div>
       {searchProduct && searchProduct?.length > 0 ? (
         <>
@@ -280,7 +190,7 @@ function Search(props) {
         </>
       ) : (
         <div className="notFound">
-          <h1 style={{ color: "black" }}>Không tìm thấy sẩn phẩm</h1>
+          <Typography>Không tìm thấy</Typography>
         </div>
       )}
     </div>
