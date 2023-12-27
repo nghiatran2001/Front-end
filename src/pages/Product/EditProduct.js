@@ -19,7 +19,11 @@ import { tableCellClasses } from "@mui/material/TableCell";
 import { notification } from "antd";
 import TextArea from "antd/es/input/TextArea";
 
-import { product as productAPI, category as categoryAPI } from "../../API";
+import {
+  product as productAPI,
+  category as categoryAPI,
+  brand as brandAPI,
+} from "../../API";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -48,6 +52,7 @@ export default function EditProduct() {
 
   const [product, setProduct] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
+  const [brandList, setBrandList] = useState([]);
 
   const handlePicture = (e) => {
     let reader = new FileReader();
@@ -112,6 +117,21 @@ export default function EditProduct() {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    (async () => {
+      await getBrandList();
+    })();
+  }, []);
+  const getBrandList = async () => {
+    try {
+      const result = await brandAPI.getBrandList();
+      setBrandList(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       {contextHolder}
@@ -186,6 +206,28 @@ export default function EditProduct() {
                     >
                       {categoryList?.map((category, index) => {
                         return <option>{category.nameCategory}</option>;
+                      })}
+                    </select>
+                  </StyledTableCell>
+                </StyledTableRow>
+              </TableBody>
+
+              <TableBody>
+                <StyledTableRow>
+                  <StyledTableCell>Hãng:</StyledTableCell>
+                  <StyledTableCell>
+                    <select
+                      style={{ width: "100%", height: "40px" }}
+                      value={product.nameBrand || ""}
+                      onChange={(e) =>
+                        setProduct((pre) => ({
+                          ...pre,
+                          nameBrand: e.target.value,
+                        }))
+                      }
+                    >
+                      {brandList?.map((brand, index) => {
+                        return <option>{brand.nameBrand}</option>;
                       })}
                     </select>
                   </StyledTableCell>

@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, FormLabel, InputBase } from "@mui/material";
+import { Box, Button, OutlinedInput } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Order.css";
@@ -9,12 +9,12 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useSelector } from "react-redux";
-import TextArea from "antd/es/input/TextArea";
 import { notification } from "antd";
 
 import { user as userAPI } from "../../API";
 import { order as orderAPI } from "../../API";
 import { payment as paymentAPI } from "../../API";
+import { cart as cartAPI } from "../../API";
 
 export default function Order() {
   const user = useSelector((state) => state.auth.login?.currentUser);
@@ -76,8 +76,12 @@ export default function Order() {
         content,
         address,
       });
-      if (result.status === 200) {
-        navigate("/");
+      const result1 = await orderAPI.update({ order: order[0] });
+      order[0].orderArray.map(async (a) => {
+        const result2 = await cartAPI.update({ cart: a });
+      });
+      if (result.status === 200 && result1.status === 200) {
+        navigate("/payment");
       }
     } catch (error) {
       api.open({
@@ -88,7 +92,6 @@ export default function Order() {
     }
   };
 
-  console.log(order);
   return (
     <div>
       {contextHolder}
@@ -126,95 +129,117 @@ export default function Order() {
             </TableHead>
             <TableBody>
               {order.map((e) => {
-                return e.orderArray.map((o, i) => {
+                if (!e.disable) {
+                  return e.orderArray.map((o, i) => {
+                    return (
+                      <TableRow key={i}>
+                        <TableCell>{o.nameProduct}</TableCell>
+                        <TableCell align="center">{o.quantity}</TableCell>
+                        <TableCell align="right">
+                          {VND.format(o.sellPrice)}
+                        </TableCell>
+                        <TableCell align="right">
+                          {VND.format(o.quantity * o.sellPrice)}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  });
+                }
+              })}
+              {order.map((e) => {
+                if (!e.disable) {
                   return (
-                    <TableRow key={i}>
-                      <TableCell>{o.nameProduct}</TableCell>
-                      <TableCell align="center">{o.quantity}</TableCell>
+                    <TableRow>
+                      <TableCell></TableCell>
+                      <TableCell align="right"></TableCell>
                       <TableCell align="right">
-                        {VND.format(o.sellPrice)}
+                        <h3>Tổng tiền:</h3>
                       </TableCell>
-                      <TableCell align="right">
-                        {VND.format(o.quantity * o.sellPrice)}
-                      </TableCell>
+                      <TableCell align="right">{VND.format(e.total)}</TableCell>
                     </TableRow>
                   );
-                });
+                }
               })}
-            </TableBody>
-            <TableBody>
-              <TableRow>
-                <TableCell></TableCell>
-                <TableCell align="right"></TableCell>
-                <TableCell align="right">
-                  <h3>Tổng tiền:</h3>
-                </TableCell>
-                <TableCell align="right">{VND.format(10000000)}</TableCell>
-              </TableRow>
             </TableBody>
           </Table>
 
-          <FormControl
+          <Table
             sx={{
+              maxWidth: "50%",
+              margin: 5,
               background: "white",
               borderRadius: 10,
-              width: "40%",
-              margin: 5,
             }}
+            aria-label="spanning table"
           >
-            <h1 style={{ textAlign: "center" }}>Thông tin người nhận</h1>
-            <FormLabel sx={{ padding: 2, color: "black" }}>
-              Họ tên:{" "}
-              <TextArea
-                className="info"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              ></TextArea>
-            </FormLabel>
-            <FormLabel sx={{ padding: 2, color: "black" }}>
-              Số điện thoại:{" "}
-              <TextArea
-                className="info"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-              ></TextArea>
-            </FormLabel>
-            <FormLabel sx={{ padding: 2, color: "black" }}>
-              Email:{" "}
-              <TextArea
-                className="info"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              ></TextArea>
-            </FormLabel>
-            <FormLabel sx={{ padding: 2, color: "black" }}>
-              <span>
-                Địa chỉ:
-                <TextArea
-                  className="info"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                ></TextArea>
-              </span>
-            </FormLabel>
-            <FormLabel sx={{ padding: 2, color: "black" }}>
-              <span>
-                Nội dung:
-                <TextArea
-                  className="info"
-                  value={content}
-                  onChange={(e) => setContent(e.target.value)}
-                ></TextArea>
-              </span>
-            </FormLabel>
-          </FormControl>
+            <TableBody>
+              <TableRow>
+                <TableCell>Email:</TableCell>
+                <TableCell>
+                  <OutlinedInput
+                    value={user.email}
+                    type="text"
+                    sx={{ width: "100%", height: "40px" }}
+                  ></OutlinedInput>
+                </TableCell>
+              </TableRow>
+
+              <TableRow>
+                <TableCell>Họ tên:</TableCell>
+                <TableCell>
+                  <OutlinedInput
+                    value={name || ""}
+                    onChange={(e) => setName(e.target.value)}
+                    type="text"
+                    sx={{ width: "100%", height: "40px" }}
+                  ></OutlinedInput>
+                </TableCell>
+              </TableRow>
+
+              <TableRow>
+                <TableCell>Số điện thoại:</TableCell>
+                <TableCell>
+                  <OutlinedInput
+                    value={phone || ""}
+                    onChange={(e) => setPhone(e.target.value)}
+                    type="text"
+                    sx={{ width: "100%", height: "40px" }}
+                  ></OutlinedInput>
+                </TableCell>
+              </TableRow>
+
+              <TableRow>
+                <TableCell>Địa chỉ:</TableCell>
+                <TableCell>
+                  <OutlinedInput
+                    value={address || ""}
+                    onChange={(e) => setAddress(e.target.value)}
+                    type="text"
+                    sx={{ width: "100%", height: "40px" }}
+                  ></OutlinedInput>
+                </TableCell>
+              </TableRow>
+
+              <TableRow>
+                <TableCell>Nội dung:</TableCell>
+                <TableCell>
+                  <OutlinedInput
+                    value={content || ""}
+                    onChange={(e) => setContent(e.target.value)}
+                    type="text"
+                    sx={{ width: "100%", height: "40px" }}
+                  ></OutlinedInput>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
         </TableContainer>
         <Box className="order-pay">
           <h2>
             <span>Hình thức thanh toán: </span>
             <select style={{ fontSize: "20px" }}>
               <option>Paypal</option>
-              <option>CoD</option>
+              <option>COD</option>
             </select>
           </h2>
           <Button variant="contained">

@@ -18,6 +18,10 @@ const cart = {
     const url = BACKEND_API + `/cart/${id}`;
     return await axios.delete(url);
   },
+  update: async ({ ...cart }) => {
+    const url = BACKEND_API + `/cart/${cart._id}`;
+    return await axios.put(url, cart);
+  },
 };
 
 export default cart;

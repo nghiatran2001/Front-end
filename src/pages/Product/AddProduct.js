@@ -97,6 +97,7 @@ export default function AddProduct() {
           image,
           quantity,
           description,
+          dateAdd: new Date(),
         });
         if (result.status === 200) {
           api.open({

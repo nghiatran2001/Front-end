@@ -10,6 +10,10 @@ const order = {
     const url = BACKEND_API + `/order/${email}`;
     return await axios.get(url);
   },
+  update: async ({ ...order }) => {
+    const url = BACKEND_API + `/order/${order._id}`;
+    return await axios.put(url, order);
+  },
 };
 
 export default order;

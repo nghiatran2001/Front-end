@@ -46,10 +46,10 @@ export default function Cart() {
     }
   };
 
-  var total = 0;
-  product.forEach((e) => {
-    total += e.sellPrice;
-  });
+  var totalCart = 0;
+  // product.forEach((e) => {
+  //   totalCart += e.sellPrice;
+  // });
 
   const handleDeleteProduct = async (id) => {
     try {
@@ -79,6 +79,7 @@ export default function Cart() {
       const result = await orderAPI.addArray({
         orderArray: arr,
         email: user.email,
+        total: totalCart,
       });
       if (result.status === 200) {
         navigate(`/order?email=${user.email}`);
@@ -90,6 +91,15 @@ export default function Cart() {
       });
       console.log(error);
     }
+  };
+
+  const handleAmountTru = (e) => {
+    e.quantity--;
+    console.log(e);
+  };
+  const handleAmountCong = (e) => {
+    e.quantity++;
+    console.log(e);
   };
 
   return (
@@ -135,45 +145,59 @@ export default function Cart() {
           </TableHead>
           <TableBody>
             {product.map((product) => {
-              return (
-                <TableRow key={product.idProduct}>
-                  <TableCell>{product.nameProduct}</TableCell>
-                  <TableCell>
-                    <img
-                      className="image-cart"
-                      src={product.image}
-                      alt=""
-                      align="center"
-                    ></img>
-                  </TableCell>
-                  <TableCell align="center" className="btn">
-                    <button className="btn-cart">-</button>
-                    <span className="btn-quantity">{product.quantity}</span>
-                    <button className="btn-cart">+</button>
-                  </TableCell>
-                  <TableCell align="center" className="btn">
-                    <span className="btn-quantity">{product.amount}</span>
-                  </TableCell>
-                  <TableCell align="center">
-                    {VND.format(product.sellPrice)}
-                  </TableCell>
-                  <TableCell align="right">
-                    {VND.format(product.quantity * product.sellPrice)}
-                  </TableCell>
-                  <TableCell align="right" className="cart-delete">
-                    <Popconfirm
-                      onConfirm={() => handleDeleteProduct(product._id)}
-                      title="Xóa"
-                      description="Bạn chắc chắn muốn xóa?"
-                      onCancel={cancel}
-                      okText="Có"
-                      cancelText="Không"
-                    >
-                      <Delete></Delete>
-                    </Popconfirm>
-                  </TableCell>
-                </TableRow>
-              );
+              if (!product.disable) {
+                return (
+                  <TableRow key={product.idProduct}>
+                    <TableCell>{product.nameProduct}</TableCell>
+                    <TableCell>
+                      <img
+                        className="image-cart"
+                        src={product.image}
+                        alt=""
+                        align="center"
+                      ></img>
+                    </TableCell>
+                    <TableCell align="center" className="btn">
+                      <button
+                        className="btn-cart"
+                        onClick={() => handleAmountTru(product)}
+                      >
+                        -
+                      </button>
+                      <span className="btn-quantity" value={product.quantity}>
+                        {product.quantity}
+                      </span>
+                      <button
+                        className="btn-cart"
+                        onClick={() => handleAmountCong(product)}
+                      >
+                        +
+                      </button>
+                    </TableCell>
+                    <TableCell align="center" className="btn">
+                      <span className="btn-quantity">{product.amount}</span>
+                    </TableCell>
+                    <TableCell align="center">
+                      {VND.format(product.sellPrice)}
+                    </TableCell>
+                    <TableCell align="right">
+                      {VND.format(product.quantity * product.sellPrice)}
+                    </TableCell>
+                    <TableCell align="right" className="cart-delete">
+                      <Popconfirm
+                        onConfirm={() => handleDeleteProduct(product._id)}
+                        title="Xóa"
+                        description="Bạn chắc chắn muốn xóa?"
+                        onCancel={cancel}
+                        okText="Có"
+                        cancelText="Không"
+                      >
+                        <Delete></Delete>
+                      </Popconfirm>
+                    </TableCell>
+                  </TableRow>
+                );
+              }
             })}
           </TableBody>
           <TableBody>
@@ -184,7 +208,15 @@ export default function Cart() {
               <TableCell align="right">
                 <h3>Tổng tiền: </h3>
               </TableCell>
-              <TableCell align="right">{VND.format(total)}</TableCell>
+              <TableCell align="right">
+                {product.map((e) => {
+                  if (e.disable) {
+                    return 0;
+                  } else {
+                    return VND.format((totalCart += e.sellPrice));
+                  }
+                })}
+              </TableCell>
               <TableCell></TableCell>
             </TableRow>
             <TableCell></TableCell>
@@ -192,11 +224,15 @@ export default function Cart() {
             <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell align="right">
-              <Link to="/order">
-                <Button variant="contained" onClick={handleAddArray}>
-                  Lập hóa đơn
-                </Button>
-              </Link>
+              {product.length !== 0 ? (
+                <Link to="/order">
+                  <Button variant="contained" onClick={handleAddArray}>
+                    Lập hóa đơn
+                  </Button>
+                </Link>
+              ) : (
+                ""
+              )}
             </TableCell>
             <TableCell></TableCell>
           </TableBody>
