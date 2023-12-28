@@ -133,25 +133,29 @@ export default function ProductDetail() {
                   {product.description}
                 </Typography>
               </CardContent>
-              <Box
-                sx={{
-                  borderRadius: "10px",
-                  padding: 2,
-                }}
-              >
-                {product.quantity > 0 && product.disable === "Hoạt động" ? (
-                  <Button
-                    sx={{ fontSize: 15 }}
-                    variant="contained"
-                    startIcon={<ShoppingCartRounded />}
-                    onClick={handleAddCart}
-                  >
-                    Thêm giỏ hàng
-                  </Button>
-                ) : (
-                  ""
-                )}
-              </Box>
+              {user ? (
+                <Box
+                  sx={{
+                    borderRadius: "10px",
+                    padding: 2,
+                  }}
+                >
+                  {product.quantity > 0 && product.disable === "Hoạt động" ? (
+                    <Button
+                      sx={{ fontSize: 15 }}
+                      variant="contained"
+                      startIcon={<ShoppingCartRounded />}
+                      onClick={handleAddCart}
+                    >
+                      Thêm giỏ hàng
+                    </Button>
+                  ) : (
+                    ""
+                  )}
+                </Box>
+              ) : (
+                ""
+              )}
             </Col>
           </Row>
         </Col>

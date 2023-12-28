@@ -47,9 +47,6 @@ export default function Cart() {
   };
 
   var totalCart = 0;
-  // product.forEach((e) => {
-  //   totalCart += e.sellPrice;
-  // });
 
   const handleDeleteProduct = async (id) => {
     try {
@@ -93,14 +90,8 @@ export default function Cart() {
     }
   };
 
-  const handleAmountTru = (e) => {
-    e.quantity--;
-    console.log(e);
-  };
-  const handleAmountCong = (e) => {
-    e.quantity++;
-    console.log(e);
-  };
+  const handleAmountTru = (e) => {};
+  const handleAmountCong = (e) => {};
 
   return (
     <div className="cart">
@@ -146,6 +137,7 @@ export default function Cart() {
           <TableBody>
             {product.map((product) => {
               if (!product.disable) {
+                totalCart += product.sellPrice * product.quantity;
                 return (
                   <TableRow key={product.idProduct}>
                     <TableCell>{product.nameProduct}</TableCell>
@@ -158,19 +150,11 @@ export default function Cart() {
                       ></img>
                     </TableCell>
                     <TableCell align="center" className="btn">
-                      <button
-                        className="btn-cart"
-                        onClick={() => handleAmountTru(product)}
-                      >
+                      <button className="btn-cart" onClick={handleAmountTru}>
                         -
                       </button>
-                      <span className="btn-quantity" value={product.quantity}>
-                        {product.quantity}
-                      </span>
-                      <button
-                        className="btn-cart"
-                        onClick={() => handleAmountCong(product)}
-                      >
+                      <span className="btn-quantity">{product.quantity}</span>
+                      <button className="btn-cart" onClick={handleAmountCong}>
                         +
                       </button>
                     </TableCell>
@@ -208,15 +192,7 @@ export default function Cart() {
               <TableCell align="right">
                 <h3>Tổng tiền: </h3>
               </TableCell>
-              <TableCell align="right">
-                {product.map((e) => {
-                  if (e.disable) {
-                    return 0;
-                  } else {
-                    return VND.format((totalCart += e.sellPrice));
-                  }
-                })}
-              </TableCell>
+              <TableCell align="right">{VND.format(totalCart)}</TableCell>
               <TableCell></TableCell>
             </TableRow>
             <TableCell></TableCell>
@@ -224,15 +200,19 @@ export default function Cart() {
             <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell align="right">
-              {product.length !== 0 ? (
-                <Link to="/order">
-                  <Button variant="contained" onClick={handleAddArray}>
-                    Lập hóa đơn
-                  </Button>
-                </Link>
-              ) : (
-                ""
-              )}
+              {product.map((p) => {
+                if (p.disable) {
+                  return;
+                } else {
+                  return (
+                    <Link to="/order">
+                      <Button variant="contained" onClick={handleAddArray}>
+                        Lập hóa đơn
+                      </Button>
+                    </Link>
+                  );
+                }
+              })}
             </TableCell>
             <TableCell></TableCell>
           </TableBody>

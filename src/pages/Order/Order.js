@@ -68,29 +68,43 @@ export default function Order() {
   const handleAddOrder = async (e) => {
     e.preventDefault();
     try {
-      const result = await paymentAPI.addOrder({
-        order: order[0].orderArray,
-        name,
-        phone,
-        email,
-        content,
-        address,
-      });
-      const result1 = await orderAPI.update({ order: order[0] });
-      order[0].orderArray.map(async (a) => {
-        const result2 = await cartAPI.update({ cart: a });
-      });
-      if (result.status === 200 && result1.status === 200) {
-        navigate("/payment");
+      if (name === "" || phone === "" || email === "" || address === "") {
+        api.open({
+          type: "error",
+          message: "Vui lòng nhập đủ thông tin.",
+        });
+      } else {
+        const result = await paymentAPI.addOrder({
+          order: order[0].orderArray,
+          name,
+          phone,
+          email,
+          content,
+          address,
+        });
+        let result1;
+        order.map(async (o) => {
+          return (result1 = await orderAPI.update({ order: o }));
+        });
+        let result2;
+        order.map(async (o) => {
+          return o.orderArray.map(async (e) => {
+            return (result2 = await cartAPI.update({ cart: e }));
+          });
+        });
+        if (result.status === 200) {
+          navigate("/payment");
+        }
       }
     } catch (error) {
       api.open({
         type: "error",
-        message: "Thất bại.",
+        message: "Thanh toán thất bại.",
       });
       console.log(error);
     }
   };
+  console.log(order);
 
   return (
     <div>
@@ -131,18 +145,20 @@ export default function Order() {
               {order.map((e) => {
                 if (!e.disable) {
                   return e.orderArray.map((o, i) => {
-                    return (
-                      <TableRow key={i}>
-                        <TableCell>{o.nameProduct}</TableCell>
-                        <TableCell align="center">{o.quantity}</TableCell>
-                        <TableCell align="right">
-                          {VND.format(o.sellPrice)}
-                        </TableCell>
-                        <TableCell align="right">
-                          {VND.format(o.quantity * o.sellPrice)}
-                        </TableCell>
-                      </TableRow>
-                    );
+                    if (!o.disable) {
+                      return (
+                        <TableRow key={i}>
+                          <TableCell>{o.nameProduct}</TableCell>
+                          <TableCell align="center">{o.quantity}</TableCell>
+                          <TableCell align="right">
+                            {VND.format(o.sellPrice)}
+                          </TableCell>
+                          <TableCell align="right">
+                            {VND.format(o.quantity * o.sellPrice)}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    }
                   });
                 }
               })}
@@ -177,7 +193,8 @@ export default function Order() {
                 <TableCell>Email:</TableCell>
                 <TableCell>
                   <OutlinedInput
-                    value={user.email}
+                    value={email || ""}
+                    onChange={(e) => setEmail(e.target.value)}
                     type="text"
                     sx={{ width: "100%", height: "40px" }}
                   ></OutlinedInput>

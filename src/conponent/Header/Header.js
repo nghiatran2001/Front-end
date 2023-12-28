@@ -140,7 +140,7 @@ export default function Header() {
                 textDecoration: "none",
               }}
             >
-              NGHIA
+              LAPTOP
             </Typography>
 
             <Box
@@ -206,7 +206,7 @@ export default function Header() {
                 textDecoration: "none",
               }}
             >
-              NGHIA
+              LAPTOP
             </Typography>
 
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
@@ -383,11 +383,6 @@ export default function Header() {
                   <MenuItem onClick={handleCloseUserMenu}>
                     <Link to="/register" className="header-link">
                       Đăng ký
-                    </Link>
-                  </MenuItem>
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Link to="/follow" className="header-link">
-                      Theo dõi đơn hàng
                     </Link>
                   </MenuItem>
                 </Menu>
