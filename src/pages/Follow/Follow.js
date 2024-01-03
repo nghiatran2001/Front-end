@@ -94,6 +94,10 @@ export default function Follow() {
     }
   };
 
+  idProduct?.order?.map((e) => {
+    console.log(e);
+  });
+
   return (
     <div>
       <Box className="follow">
@@ -123,6 +127,7 @@ export default function Follow() {
                   <StyledTableCell>Email</StyledTableCell>
                   <StyledTableCell>Số Điện Thoại</StyledTableCell>
                   <StyledTableCell>Trạng thái</StyledTableCell>
+                  <StyledTableCell>Tổng tiền</StyledTableCell>
                   <StyledTableCell>Chi tiết sản phẩm</StyledTableCell>
                   <StyledTableCell>Thao tác</StyledTableCell>
                 </TableRow>
@@ -140,6 +145,9 @@ export default function Follow() {
                           <StyledTableCell>{o.email}</StyledTableCell>
                           <StyledTableCell>{o.phone}</StyledTableCell>
                           <StyledTableCell>{o.status}</StyledTableCell>
+                          <StyledTableCell>
+                            {VND.format(o.total)}
+                          </StyledTableCell>
                           <StyledTableCell align="center">
                             <See
                               className="follow-delete"
@@ -182,46 +190,41 @@ export default function Follow() {
                                     </TableRow>
                                   </TableHead>
                                   <TableBody>
-                                    {/* {idProduct.order.map((e) => {
-                                  <TableRow>
-                                    <TableCell>{o.nameProduct}</TableCell>
-                                    <TableCell>
-                                      <img
-                                        className="image-cart"
-                                        src={o.image}
-                                        alt=""
-                                        align="center"
-                                      ></img>
-                                    </TableCell>
-                                    <TableCell align="center" className="btn">
-                                      <span className="btn-quantity">
-                                        {o.quantity}
-                                      </span>
-                                    </TableCell>
-                                    <TableCell align="center">
-                                      {VND.format(o.sellPrice)}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                      {VND.format(o.quantity * o.sellPrice)}
-                                    </TableCell>
-                                  </TableRow>;
-                                })} */}
-                                  </TableBody>
-                                  <TableBody>
-                                    <TableRow>
-                                      <TableCell></TableCell>
-                                      <TableCell></TableCell>
-                                      <TableCell
-                                        align="center"
-                                        className="btn"
-                                      ></TableCell>
-                                      <TableCell align="center">
-                                        Tổng tiền:
-                                      </TableCell>
-                                      <TableCell align="right">
-                                        {VND.format(1)}
-                                      </TableCell>
-                                    </TableRow>
+                                    {idProduct?.order?.map((o) => {
+                                      if (o.disable === false) {
+                                        return (
+                                          <TableRow>
+                                            <TableCell>
+                                              {o.nameProduct}
+                                            </TableCell>
+                                            <TableCell>
+                                              <img
+                                                className="image-cart"
+                                                src={o.image}
+                                                alt=""
+                                                align="center"
+                                              ></img>
+                                            </TableCell>
+                                            <TableCell
+                                              align="center"
+                                              className="btn"
+                                            >
+                                              <span className="btn-quantity">
+                                                {o.quantity}
+                                              </span>
+                                            </TableCell>
+                                            <TableCell align="center">
+                                              {VND.format(o.sellPrice)}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                              {VND.format(
+                                                o.quantity * o.sellPrice
+                                              )}
+                                            </TableCell>
+                                          </TableRow>
+                                        );
+                                      }
+                                    })}
                                   </TableBody>
                                 </Table>
                               </TableContainer>
@@ -294,46 +297,37 @@ export default function Follow() {
                                     </TableRow>
                                   </TableHead>
                                   <TableBody>
-                                    {/* {idProduct.order.map((e) => {
-                                  <TableRow>
-                                    <TableCell>{o.nameProduct}</TableCell>
-                                    <TableCell>
-                                      <img
-                                        className="image-cart"
-                                        src={o.image}
-                                        alt=""
-                                        align="center"
-                                      ></img>
-                                    </TableCell>
-                                    <TableCell align="center" className="btn">
-                                      <span className="btn-quantity">
-                                        {o.quantity}
-                                      </span>
-                                    </TableCell>
-                                    <TableCell align="center">
-                                      {VND.format(o.sellPrice)}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                      {VND.format(o.quantity * o.sellPrice)}
-                                    </TableCell>
-                                  </TableRow>;
-                                })} */}
-                                  </TableBody>
-                                  <TableBody>
-                                    <TableRow>
-                                      <TableCell></TableCell>
-                                      <TableCell></TableCell>
-                                      <TableCell
-                                        align="center"
-                                        className="btn"
-                                      ></TableCell>
-                                      <TableCell align="center">
-                                        Tổng tiền:
-                                      </TableCell>
-                                      <TableCell align="right">
-                                        {VND.format(1)}
-                                      </TableCell>
-                                    </TableRow>
+                                    {idProduct?.order?.map((o) => {
+                                      return (
+                                        <TableRow>
+                                          <TableCell>{o.nameProduct}</TableCell>
+                                          <TableCell>
+                                            <img
+                                              className="image-cart"
+                                              src={o.image}
+                                              alt=""
+                                              align="center"
+                                            ></img>
+                                          </TableCell>
+                                          <TableCell
+                                            align="center"
+                                            className="btn"
+                                          >
+                                            <span className="btn-quantity">
+                                              {o.quantity}
+                                            </span>
+                                          </TableCell>
+                                          <TableCell align="center">
+                                            {VND.format(o.sellPrice)}
+                                          </TableCell>
+                                          <TableCell align="right">
+                                            {VND.format(
+                                              o.quantity * o.sellPrice
+                                            )}
+                                          </TableCell>
+                                        </TableRow>
+                                      );
+                                    })}
                                   </TableBody>
                                 </Table>
                               </TableContainer>
@@ -366,7 +360,73 @@ export default function Follow() {
                               title="Thông tin sản phẩm"
                               open={isModalOpen}
                               onCancel={handleCancel}
-                            ></Modal>
+                            >
+                              <TableContainer className="cart-bg">
+                                <Table
+                                  sx={{
+                                    maxWidth: "85%",
+                                    margin: 10,
+                                    borderRadius: 10,
+                                    background: "white",
+                                  }}
+                                  aria-label="spanning table"
+                                >
+                                  <TableHead>
+                                    <TableRow>
+                                      <TableCell>
+                                        <h3>Tên sản phẩm</h3>
+                                      </TableCell>
+                                      <TableCell>
+                                        <h3>Hình ảnh</h3>
+                                      </TableCell>
+                                      <TableCell align="center">
+                                        <h3>Số lượng</h3>
+                                      </TableCell>
+                                      <TableCell align="center">
+                                        <h3>Đơn giá</h3>
+                                      </TableCell>
+                                      <TableCell align="right">
+                                        <h3>Thành tiền</h3>
+                                      </TableCell>
+                                      <TableCell align="right"></TableCell>
+                                    </TableRow>
+                                  </TableHead>
+                                  <TableBody>
+                                    {idProduct?.order?.map((o) => {
+                                      return (
+                                        <TableRow>
+                                          <TableCell>{o.nameProduct}</TableCell>
+                                          <TableCell>
+                                            <img
+                                              className="image-cart"
+                                              src={o.image}
+                                              alt=""
+                                              align="center"
+                                            ></img>
+                                          </TableCell>
+                                          <TableCell
+                                            align="center"
+                                            className="btn"
+                                          >
+                                            <span className="btn-quantity">
+                                              {o.quantity}
+                                            </span>
+                                          </TableCell>
+                                          <TableCell align="center">
+                                            {VND.format(o.sellPrice)}
+                                          </TableCell>
+                                          <TableCell align="right">
+                                            {VND.format(
+                                              o.quantity * o.sellPrice
+                                            )}
+                                          </TableCell>
+                                        </TableRow>
+                                      );
+                                    })}
+                                  </TableBody>
+                                </Table>
+                              </TableContainer>
+                            </Modal>
                           </StyledTableCell>
                           <StyledTableCell>
                             <Button sx={{ marginRight: 2 }} variant="contained">
@@ -399,7 +459,73 @@ export default function Follow() {
                               title="Thông tin sản phẩm"
                               open={isModalOpen}
                               onCancel={handleCancel}
-                            ></Modal>
+                            >
+                              <TableContainer className="cart-bg">
+                                <Table
+                                  sx={{
+                                    maxWidth: "85%",
+                                    margin: 10,
+                                    borderRadius: 10,
+                                    background: "white",
+                                  }}
+                                  aria-label="spanning table"
+                                >
+                                  <TableHead>
+                                    <TableRow>
+                                      <TableCell>
+                                        <h3>Tên sản phẩm</h3>
+                                      </TableCell>
+                                      <TableCell>
+                                        <h3>Hình ảnh</h3>
+                                      </TableCell>
+                                      <TableCell align="center">
+                                        <h3>Số lượng</h3>
+                                      </TableCell>
+                                      <TableCell align="center">
+                                        <h3>Đơn giá</h3>
+                                      </TableCell>
+                                      <TableCell align="right">
+                                        <h3>Thành tiền</h3>
+                                      </TableCell>
+                                      <TableCell align="right"></TableCell>
+                                    </TableRow>
+                                  </TableHead>
+                                  <TableBody>
+                                    {idProduct?.order?.map((o) => {
+                                      return (
+                                        <TableRow>
+                                          <TableCell>{o.nameProduct}</TableCell>
+                                          <TableCell>
+                                            <img
+                                              className="image-cart"
+                                              src={o.image}
+                                              alt=""
+                                              align="center"
+                                            ></img>
+                                          </TableCell>
+                                          <TableCell
+                                            align="center"
+                                            className="btn"
+                                          >
+                                            <span className="btn-quantity">
+                                              {o.quantity}
+                                            </span>
+                                          </TableCell>
+                                          <TableCell align="center">
+                                            {VND.format(o.sellPrice)}
+                                          </TableCell>
+                                          <TableCell align="right">
+                                            {VND.format(
+                                              o.quantity * o.sellPrice
+                                            )}
+                                          </TableCell>
+                                        </TableRow>
+                                      );
+                                    })}
+                                  </TableBody>
+                                </Table>
+                              </TableContainer>
+                            </Modal>
                           </StyledTableCell>
                         </StyledTableRow>
                       );
@@ -423,7 +549,73 @@ export default function Follow() {
                               title="Thông tin sản phẩm"
                               open={isModalOpen}
                               onCancel={handleCancel}
-                            ></Modal>
+                            >
+                              <TableContainer className="cart-bg">
+                                <Table
+                                  sx={{
+                                    maxWidth: "85%",
+                                    margin: 10,
+                                    borderRadius: 10,
+                                    background: "white",
+                                  }}
+                                  aria-label="spanning table"
+                                >
+                                  <TableHead>
+                                    <TableRow>
+                                      <TableCell>
+                                        <h3>Tên sản phẩm</h3>
+                                      </TableCell>
+                                      <TableCell>
+                                        <h3>Hình ảnh</h3>
+                                      </TableCell>
+                                      <TableCell align="center">
+                                        <h3>Số lượng</h3>
+                                      </TableCell>
+                                      <TableCell align="center">
+                                        <h3>Đơn giá</h3>
+                                      </TableCell>
+                                      <TableCell align="right">
+                                        <h3>Thành tiền</h3>
+                                      </TableCell>
+                                      <TableCell align="right"></TableCell>
+                                    </TableRow>
+                                  </TableHead>
+                                  <TableBody>
+                                    {idProduct?.order?.map((o) => {
+                                      return (
+                                        <TableRow>
+                                          <TableCell>{o.nameProduct}</TableCell>
+                                          <TableCell>
+                                            <img
+                                              className="image-cart"
+                                              src={o.image}
+                                              alt=""
+                                              align="center"
+                                            ></img>
+                                          </TableCell>
+                                          <TableCell
+                                            align="center"
+                                            className="btn"
+                                          >
+                                            <span className="btn-quantity">
+                                              {o.quantity}
+                                            </span>
+                                          </TableCell>
+                                          <TableCell align="center">
+                                            {VND.format(o.sellPrice)}
+                                          </TableCell>
+                                          <TableCell align="right">
+                                            {VND.format(
+                                              o.quantity * o.sellPrice
+                                            )}
+                                          </TableCell>
+                                        </TableRow>
+                                      );
+                                    })}
+                                  </TableBody>
+                                </Table>
+                              </TableContainer>
+                            </Modal>
                           </StyledTableCell>
                         </StyledTableRow>
                       );
@@ -447,7 +639,73 @@ export default function Follow() {
                               title="Thông tin sản phẩm"
                               open={isModalOpen}
                               onCancel={handleCancel}
-                            ></Modal>
+                            >
+                              <TableContainer className="cart-bg">
+                                <Table
+                                  sx={{
+                                    maxWidth: "85%",
+                                    margin: 10,
+                                    borderRadius: 10,
+                                    background: "white",
+                                  }}
+                                  aria-label="spanning table"
+                                >
+                                  <TableHead>
+                                    <TableRow>
+                                      <TableCell>
+                                        <h3>Tên sản phẩm</h3>
+                                      </TableCell>
+                                      <TableCell>
+                                        <h3>Hình ảnh</h3>
+                                      </TableCell>
+                                      <TableCell align="center">
+                                        <h3>Số lượng</h3>
+                                      </TableCell>
+                                      <TableCell align="center">
+                                        <h3>Đơn giá</h3>
+                                      </TableCell>
+                                      <TableCell align="right">
+                                        <h3>Thành tiền</h3>
+                                      </TableCell>
+                                      <TableCell align="right"></TableCell>
+                                    </TableRow>
+                                  </TableHead>
+                                  <TableBody>
+                                    {idProduct?.order?.map((o) => {
+                                      return (
+                                        <TableRow>
+                                          <TableCell>{o.nameProduct}</TableCell>
+                                          <TableCell>
+                                            <img
+                                              className="image-cart"
+                                              src={o.image}
+                                              alt=""
+                                              align="center"
+                                            ></img>
+                                          </TableCell>
+                                          <TableCell
+                                            align="center"
+                                            className="btn"
+                                          >
+                                            <span className="btn-quantity">
+                                              {o.quantity}
+                                            </span>
+                                          </TableCell>
+                                          <TableCell align="center">
+                                            {VND.format(o.sellPrice)}
+                                          </TableCell>
+                                          <TableCell align="right">
+                                            {VND.format(
+                                              o.quantity * o.sellPrice
+                                            )}
+                                          </TableCell>
+                                        </TableRow>
+                                      );
+                                    })}
+                                  </TableBody>
+                                </Table>
+                              </TableContainer>
+                            </Modal>
                           </StyledTableCell>
                         </StyledTableRow>
                       );

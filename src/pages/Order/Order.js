@@ -74,13 +74,19 @@ export default function Order() {
           message: "Vui lòng nhập đủ thông tin.",
         });
       } else {
-        const result = await paymentAPI.addOrder({
-          order: order[0].orderArray,
-          name,
-          phone,
-          email,
-          content,
-          address,
+        var result;
+        order.map(async (e) => {
+          if (e.disable === false) {
+            result = await paymentAPI.addOrder({
+              order: e.orderArray,
+              total: e.total,
+              name,
+              phone,
+              email,
+              content,
+              address,
+            });
+          }
         });
         let result1;
         order.map(async (o) => {
@@ -92,9 +98,7 @@ export default function Order() {
             return (result2 = await cartAPI.update({ cart: e }));
           });
         });
-        if (result.status === 200) {
-          navigate("/payment");
-        }
+        navigate("/payment");
       }
     } catch (error) {
       api.open({
@@ -105,7 +109,6 @@ export default function Order() {
     }
   };
   console.log(order);
-
   return (
     <div>
       {contextHolder}
