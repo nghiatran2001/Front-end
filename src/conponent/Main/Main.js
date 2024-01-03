@@ -44,7 +44,7 @@ export default function Main() {
                 <CardActionArea>
                   <img className="img" src={product.image} alt="" />
                   <CardContent>
-                    <Typography gutterBottom variant="h5">
+                    <Typography gutterBottom variant="h5" sx={{ height: 120 }}>
                       {product.nameProduct}
                     </Typography>
                     <Typography

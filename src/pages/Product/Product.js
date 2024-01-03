@@ -16,6 +16,7 @@ import DoubleLeft from "@mui/icons-material/KeyboardDoubleArrowLeftOutlined";
 import Update from "@mui/icons-material/ConstructionOutlined";
 import Delete from "@mui/icons-material/DeleteForeverOutlined";
 import Add from "@mui/icons-material/AddOutlined";
+import DropDown from "@mui/icons-material/ArrowDropDownOutlined";
 import { Popconfirm, notification } from "antd";
 
 import { product as productAPI } from "../../API";
@@ -34,7 +35,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
+
   "&:last-child td, &:last-child th": {
     border: 0,
   },
@@ -42,9 +43,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function Product() {
   const [listProduct, setListProduct] = useState([]);
+  const [sortProduct, setSortProduct] = useState("ASC");
 
   const [currentPage, setCurrentPage] = useState(1);
-  const productPerPage = 3;
+  const productPerPage = 4;
   const lastIndex = currentPage * productPerPage;
   const firstIndex = lastIndex - productPerPage;
   const products = listProduct.slice(firstIndex, lastIndex);
@@ -106,6 +108,39 @@ export default function Product() {
     setCurrentPage(id);
   };
 
+  const sorting = (col) => {
+    if (sortProduct === "ASC") {
+      const sorted = [...listProduct].sort((a, b) =>
+        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+      );
+      setListProduct(sorted);
+      setSortProduct("DSC");
+    }
+    if (sortProduct === "DSC") {
+      const sorted = [...listProduct].sort((a, b) =>
+        a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
+      );
+      setListProduct(sorted);
+      setSortProduct("ASC");
+    }
+  };
+
+  const sorting2 = (col) => {
+    if (sortProduct === "ASC") {
+      const sorted = [...listProduct].sort((a, b) =>
+        a[col] > b[col] ? 1 : -1
+      );
+      setListProduct(sorted);
+      setSortProduct("DSC");
+    }
+    if (sortProduct === "DSC") {
+      const sorted = [...listProduct].sort((a, b) =>
+        a[col] < b[col] ? 1 : -1
+      );
+      setListProduct(sorted);
+      setSortProduct("ASC");
+    }
+  };
   return (
     <div>
       {contextHolder}
@@ -141,14 +176,63 @@ export default function Product() {
             <Table sx={{ minWidth: 1000 }} aria-label="customized table">
               <TableHead>
                 <TableRow>
-                  <StyledTableCell align="center">Tên sản phẩm</StyledTableCell>
+                  <StyledTableCell
+                    align="center"
+                    className="product-down"
+                    onClick={() => sorting("nameProduct")}
+                  >
+                    Sản phẩm
+                    <DropDown></DropDown>
+                  </StyledTableCell>
                   <StyledTableCell align="center">Hình ảnh</StyledTableCell>
-                  <StyledTableCell align="center">Hãng</StyledTableCell>
-                  <StyledTableCell align="center">Thể loại</StyledTableCell>
-                  <StyledTableCell align="center">Giá gốc</StyledTableCell>
-                  <StyledTableCell align="center">Giá bán</StyledTableCell>
-                  <StyledTableCell align="center">Số lượng kho</StyledTableCell>
-                  <StyledTableCell align="center">Tình trạng</StyledTableCell>
+                  <StyledTableCell
+                    align="center"
+                    className="product-down"
+                    onClick={() => sorting("nameBrand")}
+                  >
+                    Hãng
+                    <DropDown></DropDown>
+                  </StyledTableCell>
+                  <StyledTableCell
+                    align="center"
+                    className="product-down"
+                    onClick={() => sorting("nameCategory")}
+                  >
+                    Thể loại
+                    <DropDown></DropDown>
+                  </StyledTableCell>
+                  <StyledTableCell
+                    align="center"
+                    className="product-down"
+                    onClick={() => sorting2("originPrice")}
+                  >
+                    Giá gốc
+                    <DropDown></DropDown>
+                  </StyledTableCell>
+                  <StyledTableCell
+                    align="center"
+                    className="product-down"
+                    onClick={() => sorting2("sellPrice")}
+                  >
+                    Giá bán
+                    <DropDown></DropDown>
+                  </StyledTableCell>
+                  <StyledTableCell
+                    align="center"
+                    className="product-down"
+                    onClick={() => sorting2("quantity")}
+                  >
+                    Số lượng
+                    <DropDown></DropDown>
+                  </StyledTableCell>
+                  <StyledTableCell
+                    align="center"
+                    className="product-down"
+                    onClick={() => sorting("disable")}
+                  >
+                    Tình trạng
+                    <DropDown></DropDown>
+                  </StyledTableCell>
                   <StyledTableCell align="center">Thao tác</StyledTableCell>
                 </TableRow>
               </TableHead>

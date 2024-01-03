@@ -14,7 +14,7 @@ export default function Banner() {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 2000,
   };
   const arrImg = [logo1, logo2, logo3, logo4];
   return (
@@ -33,7 +33,7 @@ export default function Banner() {
                 alt="banner"
                 preview={false}
                 width="100%"
-                height="350px"
+                height="450px"
               />
             );
           })}

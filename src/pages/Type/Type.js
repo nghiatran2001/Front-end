@@ -32,7 +32,7 @@ export default function Type() {
   const [listCategory, setListCategory] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const productPerPage = 4;
+  const productPerPage = 8;
   const lastIndex = currentPage * productPerPage;
   const firstIndex = lastIndex - productPerPage;
   const products = listProduct.slice(firstIndex, lastIndex);
@@ -140,7 +140,12 @@ export default function Type() {
                     <CardActionArea>
                       <img className="img" src={product.image} alt="" />
                       <CardContent>
-                        <Typography gutterBottom variant="h5" className="text1">
+                        <Typography
+                          gutterBottom
+                          variant="h5"
+                          className="text1"
+                          sx={{ height: 120 }}
+                        >
                           {product.nameProduct}
                         </Typography>
                         <Typography

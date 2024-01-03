@@ -27,18 +27,19 @@ export default function Admin() {
           sx={{
             width: "100%",
             maxWidth: 250,
-            bgcolor: "#999999",
+            background: "#87ceeb",
             height: "1000px",
+            borderTopRightRadius: 50,
+            borderBottomRightRadius: 50,
           }}
         >
           <Box
             sx={{
               fontSize: 30,
               textAlign: "center",
-              paddingTop: 3,
             }}
           >
-            <Box sx={{ marginBottom: "50px", marginTop: "50px", fontSize: 40 }}>
+            <Box sx={{ marginBottom: "50px", marginTop: "50px", fontSize: 35 }}>
               <StarBorder></StarBorder>
               <Link
                 to="/"
@@ -47,13 +48,16 @@ export default function Admin() {
                   color: "black",
                 }}
               >
-                Dashboard
+                TRANG CHỦ
               </Link>
             </Box>
           </Box>
           <List component="nav" aria-labelledby="nested-list-subheader">
             <ListItemButton onClick={handleClick}>
-              <ListItemText primary="Quản lý người dùng" />
+              <ListItemText
+                className="admin-title"
+                primary="QUẢN LÝ NGƯỜI DÙNG"
+              />
               {open ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>
@@ -68,7 +72,10 @@ export default function Admin() {
           </List>
           <List component="nav" aria-labelledby="nested-list-subheader">
             <ListItemButton onClick={handleClick}>
-              <ListItemText primary="Quản lý sản phẩm" />
+              <ListItemText
+                className="admin-title"
+                primary="QUẢN LÝ SẢN PHẨM"
+              />
               {open ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>
@@ -83,7 +90,10 @@ export default function Admin() {
           </List>
           <List component="nav" aria-labelledby="nested-list-subheader">
             <ListItemButton onClick={handleClick}>
-              <ListItemText primary="Quản lý thể loại" />
+              <ListItemText
+                className="admin-title"
+                primary="QUẢN LÝ THỂ LOẠI"
+              />
               {open ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>
@@ -98,7 +108,7 @@ export default function Admin() {
           </List>
           <List component="nav" aria-labelledby="nested-list-subheader">
             <ListItemButton onClick={handleClick}>
-              <ListItemText primary="Quản lý hãng sản xuất" />
+              <ListItemText className="admin-title" primary="QUẢN LÝ HÃNG" />
               {open ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>
@@ -113,7 +123,10 @@ export default function Admin() {
           </List>
           <List component="nav" aria-labelledby="nested-list-subheader">
             <ListItemButton onClick={handleClick}>
-              <ListItemText primary="Quản lý đơn hàng" />
+              <ListItemText
+                className="admin-title"
+                primary="QUẢN LÝ ĐƠN HÀNG"
+              />
               {open ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>
@@ -128,7 +141,11 @@ export default function Admin() {
           </List>
           <List component="nav" aria-labelledby="nested-list-subheader">
             <ListItemButton onClick={handleClick}>
-              <ListItemText primary="Quản lý thống kê" />
+              <ListItemText
+                className="admin-title"
+                primary="QUẢN LÝ THỐNG KÊ"
+              />
+
               {open ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Collapse in={open} timeout="auto" unmountOnExit>

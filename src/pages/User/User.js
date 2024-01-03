@@ -18,6 +18,7 @@ import Key from "@mui/icons-material/KeyOutlined";
 import Block from "@mui/icons-material/LockOutlined";
 import DoubleRight from "@mui/icons-material/KeyboardDoubleArrowRightOutlined";
 import DoubleLeft from "@mui/icons-material/KeyboardDoubleArrowLeftOutlined";
+import DropDown from "@mui/icons-material/ArrowDropDownOutlined";
 import { Popconfirm, notification } from "antd";
 
 import { user as userAPI } from "../../API";
@@ -44,6 +45,7 @@ export default function User() {
   const user = useSelector((state) => state.auth.login?.currentUser);
 
   const [userList, setUserList] = useState([]);
+  const [sortUser, setSortUser] = useState("ASC");
 
   const [currentPage, setCurrentPage] = useState(1);
   const userPerPage = 3;
@@ -144,6 +146,22 @@ export default function User() {
     setCurrentPage(id);
   };
 
+  const sorting = (col) => {
+    if (sortUser === "ASC") {
+      const sorted = [...userList].sort((a, b) =>
+        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+      );
+      setUserList(sorted);
+      setSortUser("DSC");
+    }
+    if (sortUser === "DSC") {
+      const sorted = [...userList].sort((a, b) =>
+        a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
+      );
+      setUserList(sorted);
+      setSortUser("ASC");
+    }
+  };
   return (
     <div>
       {contextHolder}
@@ -171,8 +189,22 @@ export default function User() {
               <TableHead>
                 <TableRow>
                   <StyledTableCell align="center">STT</StyledTableCell>
-                  <StyledTableCell align="center">Họ Tên</StyledTableCell>
-                  <StyledTableCell align="center">Email</StyledTableCell>
+                  <StyledTableCell
+                    align="center"
+                    className="user-down"
+                    onClick={() => sorting("name")}
+                  >
+                    Họ Tên
+                    <DropDown></DropDown>
+                  </StyledTableCell>
+                  <StyledTableCell
+                    align="center"
+                    className="user-down"
+                    onClick={() => sorting("email")}
+                  >
+                    Email
+                    <DropDown></DropDown>
+                  </StyledTableCell>
                   <StyledTableCell align="center">
                     Số Điện Thoại
                   </StyledTableCell>

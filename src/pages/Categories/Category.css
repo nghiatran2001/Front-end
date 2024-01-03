@@ -36,3 +36,6 @@
 .category-delete:hover {
   scale: 1.5;
 }
+.down {
+  cursor: pointer;
+}

@@ -7,7 +7,8 @@
 .page-item {
   margin: 0 3px;
   border: 1px solid black;
-  border-radius: 50%;
+  border-radius: 40% !important;
+  font-size: 23px;
 }
 .page-item.red {
   background-color: yellow;
@@ -21,7 +22,7 @@
   background-color: white;
 }
 .page-link {
-  font-size: 18px;
+  font-size: 23px !important;
   padding: 5px !important;
   text-decoration: none;
   color: black;
@@ -35,4 +36,7 @@
 }
 .product-delete:hover {
   scale: 1.5;
+}
+.product-down {
+  cursor: pointer;
 }

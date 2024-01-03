@@ -36,3 +36,6 @@
 .brand-delete:hover {
   scale: 1.5;
 }
+.brand-down {
+  cursor: pointer;
+}

@@ -122,9 +122,9 @@ export default function Cart() {
               <TableCell align="center">
                 <h3>Số lượng</h3>
               </TableCell>
-              <TableCell align="center">
+              {/* <TableCell align="center">
                 <h3>Tồn kho</h3>
-              </TableCell>
+              </TableCell> */}
               <TableCell align="center">
                 <h3>Đơn giá</h3>
               </TableCell>
@@ -158,9 +158,9 @@ export default function Cart() {
                         +
                       </button>
                     </TableCell>
-                    <TableCell align="center" className="btn">
+                    {/* <TableCell align="center" className="btn">
                       <span className="btn-quantity">{product.amount}</span>
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell align="center">
                       {VND.format(product.sellPrice)}
                     </TableCell>

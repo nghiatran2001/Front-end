@@ -77,7 +77,10 @@ export default function Follow() {
     setIsModalOpen(false);
     window.location.reload(true);
   };
-
+  const handleOk = () => {
+    setIsModalOpen(false);
+    window.location.reload(true);
+  };
   useEffect(() => {
     if (idOrder) {
       (async () => {
@@ -93,10 +96,6 @@ export default function Follow() {
       console.log(error);
     }
   };
-
-  idProduct?.order?.map((e) => {
-    console.log(e);
-  });
 
   return (
     <div>
@@ -154,18 +153,16 @@ export default function Follow() {
                               onClick={(e) => showModal(o._id)}
                             ></See>
                             <Modal
-                              width="100%"
+                              width="70%"
                               title="Thông tin sản phẩm"
                               open={isModalOpen}
                               onCancel={handleCancel}
+                              onOk={handleOk}
                             >
-                              <TableContainer className="cart-bg">
+                              <TableContainer className="follow-bg">
                                 <Table
                                   sx={{
-                                    maxWidth: "85%",
-                                    margin: 10,
-                                    borderRadius: 10,
-                                    background: "white",
+                                    maxWidth: "100%",
                                   }}
                                   aria-label="spanning table"
                                 >

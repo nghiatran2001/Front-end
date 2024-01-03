@@ -16,6 +16,7 @@ import DoubleRight from "@mui/icons-material/KeyboardDoubleArrowRightOutlined";
 import DoubleLeft from "@mui/icons-material/KeyboardDoubleArrowLeftOutlined";
 import Delete from "@mui/icons-material/DeleteForeverOutlined";
 import Add from "@mui/icons-material/AddOutlined";
+import DropDown from "@mui/icons-material/ArrowDropDownOutlined";
 import { Link } from "react-router-dom";
 
 import { brand as brandAPI } from "../../API";
@@ -44,9 +45,10 @@ export default function Brand() {
   const [api, contextHolder] = notification.useNotification();
 
   const [listBrand, setListBrand] = useState([]);
+  const [sortBrand, setSortBrand] = useState("ASC");
 
   const [currentPage, setCurrentPage] = useState(1);
-  const brandPerPage = 3;
+  const brandPerPage = 6;
   const lastIndex = currentPage * brandPerPage;
   const firstIndex = lastIndex - brandPerPage;
   const brands = listBrand.slice(firstIndex, lastIndex);
@@ -102,6 +104,22 @@ export default function Brand() {
     setCurrentPage(id);
   };
 
+  const sorting = (col) => {
+    if (sortBrand === "ASC") {
+      const sorted = [...listBrand].sort((a, b) =>
+        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+      );
+      setListBrand(sorted);
+      setSortBrand("DSC");
+    }
+    if (sortBrand === "DSC") {
+      const sorted = [...listBrand].sort((a, b) =>
+        a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
+      );
+      setListBrand(sorted);
+      setSortBrand("ASC");
+    }
+  };
   return (
     <div>
       {contextHolder}
@@ -138,9 +156,30 @@ export default function Brand() {
               <TableHead>
                 <TableRow>
                   <StyledTableCell align="center">STT</StyledTableCell>
-                  <StyledTableCell align="center">Hãng</StyledTableCell>
-                  <StyledTableCell align="center">Slug</StyledTableCell>
-                  <StyledTableCell align="center">Mô tả</StyledTableCell>
+                  <StyledTableCell
+                    align="center"
+                    className="brand-down"
+                    onClick={() => sorting("nameBrand")}
+                  >
+                    Hãng
+                    <DropDown></DropDown>
+                  </StyledTableCell>
+                  <StyledTableCell
+                    align="center"
+                    className="brand-down"
+                    onClick={() => sorting("slug")}
+                  >
+                    Slug
+                    <DropDown></DropDown>
+                  </StyledTableCell>
+                  <StyledTableCell
+                    align="center"
+                    className="brand-down"
+                    onClick={() => sorting("description")}
+                  >
+                    Mô tả
+                    <DropDown></DropDown>
+                  </StyledTableCell>
                   <StyledTableCell align="center">Thao tác</StyledTableCell>
                 </TableRow>
               </TableHead>

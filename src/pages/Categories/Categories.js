@@ -17,6 +17,7 @@ import DoubleRight from "@mui/icons-material/KeyboardDoubleArrowRightOutlined";
 import DoubleLeft from "@mui/icons-material/KeyboardDoubleArrowLeftOutlined";
 import Delete from "@mui/icons-material/DeleteForeverOutlined";
 import Add from "@mui/icons-material/AddOutlined";
+import DropDown from "@mui/icons-material/ArrowDropDownOutlined";
 import { category as categoryAPI } from "../../API";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -43,9 +44,10 @@ export default function Categories() {
   const [api, contextHolder] = notification.useNotification();
 
   const [listCategory, setListCategory] = useState([]);
+  const [sortCategory, setSortCategory] = useState("ASC");
 
   const [currentPage, setCurrentPage] = useState(1);
-  const catePerPage = 3;
+  const catePerPage = 4;
   const lastIndex = currentPage * catePerPage;
   const firstIndex = lastIndex - catePerPage;
   const cates = listCategory.slice(firstIndex, lastIndex);
@@ -101,6 +103,22 @@ export default function Categories() {
     setCurrentPage(id);
   };
 
+  const sorting = (col) => {
+    if (sortCategory === "ASC") {
+      const sorted = [...listCategory].sort((a, b) =>
+        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+      );
+      setListCategory(sorted);
+      setSortCategory("DSC");
+    }
+    if (sortCategory === "DSC") {
+      const sorted = [...listCategory].sort((a, b) =>
+        a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
+      );
+      setListCategory(sorted);
+      setSortCategory("ASC");
+    }
+  };
   return (
     <div>
       {contextHolder}
@@ -137,9 +155,30 @@ export default function Categories() {
               <TableHead>
                 <TableRow>
                   <StyledTableCell align="center">STT</StyledTableCell>
-                  <StyledTableCell align="center">Thể loại</StyledTableCell>
-                  <StyledTableCell align="center">Slug</StyledTableCell>
-                  <StyledTableCell align="center">Mô tả</StyledTableCell>
+                  <StyledTableCell
+                    align="center"
+                    className="down"
+                    onClick={() => sorting("nameCategory")}
+                  >
+                    Thể loại
+                    <DropDown></DropDown>
+                  </StyledTableCell>
+                  <StyledTableCell
+                    align="center"
+                    className="down"
+                    onClick={() => sorting("slug")}
+                  >
+                    Slug
+                    <DropDown></DropDown>
+                  </StyledTableCell>
+                  <StyledTableCell
+                    align="center"
+                    className="down"
+                    onClick={() => sorting("description")}
+                  >
+                    Mô tả
+                    <DropDown></DropDown>
+                  </StyledTableCell>
                   <StyledTableCell align="center">Thao tác</StyledTableCell>
                 </TableRow>
               </TableHead>
