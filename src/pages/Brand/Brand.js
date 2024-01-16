@@ -16,6 +16,7 @@ import DoubleRight from "@mui/icons-material/KeyboardDoubleArrowRightOutlined";
 import DoubleLeft from "@mui/icons-material/KeyboardDoubleArrowLeftOutlined";
 import Delete from "@mui/icons-material/DeleteForeverOutlined";
 import Add from "@mui/icons-material/AddOutlined";
+import Update from "@mui/icons-material/ConstructionOutlined";
 import DropDown from "@mui/icons-material/ArrowDropDownOutlined";
 import { Link } from "react-router-dom";
 
@@ -169,7 +170,7 @@ export default function Brand() {
                     className="brand-down"
                     onClick={() => sorting("slug")}
                   >
-                    Slug
+                    Tiêu đề
                     <DropDown></DropDown>
                   </StyledTableCell>
                   <StyledTableCell
@@ -201,6 +202,9 @@ export default function Brand() {
                         {brand.description}
                       </StyledTableCell>
                       <StyledTableCell align="center">
+                        <Link to={`/updatebrand?idBrand=${brand._id}`}>
+                          <Update className="brand-delete "></Update>
+                        </Link>
                         <Popconfirm
                           title="Xóa"
                           description="Bạn chắc chắn muốn xóa?"

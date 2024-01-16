@@ -18,6 +18,10 @@ const payment = {
     const url = BACKEND_API + `/payment/${order._id}`;
     return await axios.put(url, order);
   },
+  getConfig: async () => {
+    const url = BACKEND_API + `/payment/config`;
+    return await axios.get(url);
+  },
 };
 
 export default payment;

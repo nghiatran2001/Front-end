@@ -17,6 +17,7 @@ import DoubleRight from "@mui/icons-material/KeyboardDoubleArrowRightOutlined";
 import DoubleLeft from "@mui/icons-material/KeyboardDoubleArrowLeftOutlined";
 import Delete from "@mui/icons-material/DeleteForeverOutlined";
 import Add from "@mui/icons-material/AddOutlined";
+import Update from "@mui/icons-material/ConstructionOutlined";
 import DropDown from "@mui/icons-material/ArrowDropDownOutlined";
 import { category as categoryAPI } from "../../API";
 
@@ -59,6 +60,13 @@ export default function Categories() {
       const result = await categoryAPI.deleteCategory({
         id,
       });
+      if (result.status === 211) {
+        await getCategoryList();
+        api.open({
+          type: "error",
+          message: "Không thể xoá vì tồn tại sản phẩm",
+        });
+      }
       if (result.status === 200) {
         await getCategoryList();
         api.open({
@@ -168,7 +176,7 @@ export default function Categories() {
                     className="down"
                     onClick={() => sorting("slug")}
                   >
-                    Slug
+                    Tiêu đề
                     <DropDown></DropDown>
                   </StyledTableCell>
                   <StyledTableCell
@@ -200,6 +208,9 @@ export default function Categories() {
                         {category.description}
                       </StyledTableCell>
                       <StyledTableCell align="center">
+                        <Link>
+                          <Update className="category-delete "></Update>
+                        </Link>
                         <Popconfirm
                           title="Xóa"
                           description="Bạn chắc chắn muốn xóa?"

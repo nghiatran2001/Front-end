@@ -74,18 +74,26 @@ export default function AddProduct() {
     e.preventDefault();
     try {
       if (
-        nameProduct === "" ||
-        nameCategory === "" ||
-        nameBrand === "" ||
-        originPrice === "" ||
-        sellPrice === "" ||
-        quantity === "" ||
-        description === "" ||
-        image === ""
+        nameProduct === ""
+        // nameBrand === "" ||
+        // originPrice === "" ||
+        // sellPrice === "" ||
+        // quantity === "" ||
+        // description === "" ||
       ) {
         api.open({
           type: "error",
-          message: "Vui lòng nhập đủ thông tin.",
+          message: "Vui lòng tên sản phẩm.",
+        });
+      } else if (description === "") {
+        api.open({
+          type: "error",
+          message: "Vui lòng mô tả.",
+        });
+      } else if (image === "") {
+        api.open({
+          type: "error",
+          message: "Vui lòng chọn hình.",
         });
       } else {
         const result = await productAPI.addProduct({

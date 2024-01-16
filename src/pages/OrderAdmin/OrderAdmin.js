@@ -161,7 +161,7 @@ export default function OrderAdmin() {
                       </StyledTableCell>
                       <StyledTableCell>{o.name}</StyledTableCell>
                       <StyledTableCell>{o.email}</StyledTableCell>
-                      <StyledTableCell>{o.phone}</StyledTableCell>
+                      <StyledTableCell>0{o.phone}</StyledTableCell>
                       <StyledTableCell>{o.address}</StyledTableCell>
                       <StyledTableCell>{VND.format(o.total)}</StyledTableCell>
                       <StyledTableCell>{o.status}</StyledTableCell>

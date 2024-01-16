@@ -1,0 +1,179 @@
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import Admin from "../Admin/Admin";
+
+import {
+  Box,
+  Button,
+  OutlinedInput,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Typography,
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { tableCellClasses } from "@mui/material/TableCell";
+import { notification } from "antd";
+import TextArea from "antd/es/input/TextArea";
+
+import { brand as brandAPI } from "../../API";
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}));
+
+const StyledTableRow = styled(TableRow)(() => ({
+  "&:nth-of-type(odd)": {
+    background: "white",
+  },
+  "&:last-child td, &:last-child th": {
+    border: 0,
+  },
+}));
+
+export default function UpdateBrand() {
+  const [api, contextHolder] = notification.useNotification();
+  const keyValue = window.location.search;
+  const urlParams = new URLSearchParams(keyValue);
+  const idBrand = urlParams.get("idBrand");
+
+  const [brandList, setBrandList] = useState([]);
+
+  const handleEditProduct = async () => {
+    try {
+      if (brandList.nameBrand === "") {
+        api.open({
+          type: "error",
+          message: "Vui lòng nhập đủ thông tin.",
+        });
+      } else {
+        const result = await brandAPI.editBrand(brandList);
+        api.open({
+          type: "success",
+          message: "Sửa thành công.",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      await getIdBrand();
+    })();
+  }, []);
+  const getIdBrand = async () => {
+    try {
+      const result = await brandAPI.getIdBrand({ id: idBrand });
+      setBrandList(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <div>
+      {contextHolder}
+      <Box
+        sx={{
+          display: "flex",
+        }}
+      >
+        <Box
+          sx={{
+            width: "100%",
+            maxWidth: 250,
+            bgcolor: "#999999",
+            height: "100vh",
+          }}
+        >
+          <Admin></Admin>
+        </Box>
+        <Box sx={{ marginTop: 5, marginLeft: 5 }}>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography variant="h5" sx={{ marginBottom: 5 }}>
+              Sửa sản phẩm
+            </Typography>
+            <Typography variant="h5" sx={{ marginBottom: 5 }}>
+              <Link to="/brand">
+                <Button variant="contained">Danh sách hãng</Button>
+              </Link>
+            </Typography>
+          </Box>
+
+          <TableContainer
+            sx={{
+              minWidth: 800,
+              border: 1,
+              borderRadius: 5,
+            }}
+            aria-label="customized table"
+          >
+            <Table>
+              <TableBody>
+                <StyledTableRow>
+                  <StyledTableCell>Tên hãng:</StyledTableCell>
+                  <StyledTableCell>
+                    <OutlinedInput
+                      value={brandList.nameBrand || ""}
+                      onChange={(e) =>
+                        setBrandList((pre) => ({
+                          ...pre,
+                          nameBrand: e.target.value,
+                        }))
+                      }
+                      type="text"
+                      sx={{ width: "100%", height: "40px" }}
+                    ></OutlinedInput>
+                  </StyledTableCell>
+                </StyledTableRow>
+              </TableBody>
+
+              <TableBody>
+                <StyledTableRow>
+                  <StyledTableCell>Mô tả:</StyledTableCell>
+                  <StyledTableCell>
+                    <TextArea
+                      value={brandList.description || ""}
+                      onChange={(e) =>
+                        setBrandList((pre) => ({
+                          ...pre,
+                          description: e.target.value,
+                        }))
+                      }
+                      type="text"
+                      sx={{ width: "100%", height: "40px" }}
+                    ></TextArea>
+                  </StyledTableCell>
+                </StyledTableRow>
+              </TableBody>
+
+              <TableBody>
+                <StyledTableRow>
+                  <StyledTableCell></StyledTableCell>
+                  <StyledTableCell>
+                    <Button
+                      onClick={() => handleEditProduct()}
+                      variant="contained"
+                    >
+                      Sửa
+                    </Button>
+                  </StyledTableCell>
+                </StyledTableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+      </Box>
+    </div>
+  );
+}

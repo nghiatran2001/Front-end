@@ -9,7 +9,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useSelector } from "react-redux";
-import { notification } from "antd";
+import { Radio, notification } from "antd";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 import { user as userAPI } from "../../API";
 import { order as orderAPI } from "../../API";
@@ -20,7 +21,7 @@ export default function Order() {
   const user = useSelector((state) => state.auth.login?.currentUser);
   const [api, contextHolder] = notification.useNotification();
   const navigate = useNavigate();
-
+  const [sdkReady, setSdkReady] = useState(false);
   const [userId, setUserId] = useState("");
   const [order, setOrder] = useState([]);
 
@@ -29,6 +30,11 @@ export default function Order() {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [content, setContent] = useState("");
+
+  const [value, setValue] = useState(1);
+  const onChange = (e) => {
+    setValue(e.target.value);
+  };
 
   const VND = new Intl.NumberFormat("vi-VN", {
     style: "currency",
@@ -108,7 +114,48 @@ export default function Order() {
       console.log(error);
     }
   };
-  console.log(order);
+  const handleAddOrder1 = async (e) => {
+    try {
+      if (name === "" || phone === "" || email === "" || address === "") {
+        api.open({
+          type: "error",
+          message: "Vui lòng nhập đủ thông tin.",
+        });
+      } else {
+        var result;
+        order.map(async (e) => {
+          if (e.disable === false) {
+            result = await paymentAPI.addOrder({
+              order: e.orderArray,
+              total: e.total,
+              name,
+              phone,
+              email,
+              content,
+              address,
+            });
+          }
+        });
+        let result1;
+        order.map(async (o) => {
+          return (result1 = await orderAPI.update({ order: o }));
+        });
+        let result2;
+        order.map(async (o) => {
+          return o.orderArray.map(async (e) => {
+            return (result2 = await cartAPI.update({ cart: e }));
+          });
+        });
+      }
+    } catch (error) {
+      api.open({
+        type: "error",
+        message: "Thanh toán thất bại.",
+      });
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       {contextHolder}
@@ -255,18 +302,58 @@ export default function Order() {
           </Table>
         </TableContainer>
         <Box className="order-pay">
-          <h2>
+          {/* <h2>
             <span>Hình thức thanh toán: </span>
             <select style={{ fontSize: "20px" }}>
               <option>Paypal</option>
               <option>COD</option>
             </select>
-          </h2>
-          <Button variant="contained">
-            <Link to="/payment" className="order-link" onClick={handleAddOrder}>
-              thanh toán
-            </Link>
-          </Button>
+          </h2> */}
+          <div>
+            <Radio.Group onChange={onChange} value={value}>
+              <Radio value="tm">Thanh toán tiền mặt</Radio>
+              <Radio value="paypal">Thanh toán PayPal</Radio>
+            </Radio.Group>
+          </div>
+          {value === "paypal" ? (
+            <div
+              className="final-form"
+              style={{ marginLeft: "100px", width: "400px" }}
+            >
+              <PayPalScriptProvider options={{ clientId: "test" }}>
+                <PayPalButtons
+                  createOrder={(data, actions) => {
+                    return actions.order.create({
+                      purchase_units: [
+                        {
+                          amount: {
+                            value: "1.99",
+                          },
+                        },
+                      ],
+                    });
+                  }}
+                  onApprove={(data, actions) => {
+                    return actions.order.capture().then((details) => {
+                      const name = details.payer.name.given_name;
+                      handleAddOrder1();
+                      navigate("/payment");
+                    });
+                  }}
+                />
+              </PayPalScriptProvider>
+            </div>
+          ) : (
+            <Button variant="contained">
+              <Link
+                to="/payment"
+                className="order-link"
+                onClick={handleAddOrder}
+              >
+                thanh toán
+              </Link>
+            </Button>
+          )}
         </Box>
       </Box>
     </div>

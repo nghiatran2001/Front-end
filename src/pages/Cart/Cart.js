@@ -90,8 +90,38 @@ export default function Cart() {
     }
   };
 
-  const handleAmountTru = (e) => {};
-  const handleAmountCong = (e) => {};
+  const handleAmountTru = async (e) => {
+    try {
+      const result = await cartAPI.updateQuantityTru({
+        cart: e,
+      });
+      if (result.status === 200) {
+        await getProducts();
+        api.open({
+          type: "success",
+          message: "Xóa thành công.",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleAmountCong = async (e) => {
+    try {
+      const result = await cartAPI.updateQuantity({
+        cart: e,
+      });
+      if (result.status === 200) {
+        await getProducts();
+        api.open({
+          type: "success",
+          message: "Xóa thành công.",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="cart">
@@ -150,11 +180,17 @@ export default function Cart() {
                       ></img>
                     </TableCell>
                     <TableCell align="center" className="btn">
-                      <button className="btn-cart" onClick={handleAmountTru}>
+                      <button
+                        className="btn-cart"
+                        onClick={() => handleAmountTru(product)}
+                      >
                         -
                       </button>
                       <span className="btn-quantity">{product.quantity}</span>
-                      <button className="btn-cart" onClick={handleAmountCong}>
+                      <button
+                        className="btn-cart"
+                        onClick={() => handleAmountCong(product)}
+                      >
                         +
                       </button>
                     </TableCell>
@@ -200,19 +236,20 @@ export default function Cart() {
             <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell align="right">
-              {product.map((p) => {
+              {/* {product.map((p) => {
                 if (p.disable) {
                   return;
                 } else {
                   return (
-                    <Link to="/order">
-                      <Button variant="contained" onClick={handleAddArray}>
-                        Lập hóa đơn
-                      </Button>
-                    </Link>
+                    
                   );
                 }
-              })}
+              })} */}
+              <Link to="/order">
+                <Button variant="contained" onClick={handleAddArray}>
+                  Lập hóa đơn
+                </Button>
+              </Link>
             </TableCell>
             <TableCell></TableCell>
           </TableBody>

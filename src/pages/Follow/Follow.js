@@ -101,9 +101,9 @@ export default function Follow() {
     <div>
       <Box className="follow">
         <Box sx={{ marginTop: 5, marginLeft: 5 }}>
-          <Typography variant="h5" sx={{ marginBottom: 5 }}>
+          {/* <Typography variant="h5" sx={{ marginBottom: 5 }}>
             <h3>Tra cứu đơn hàng</h3>
-          </Typography>
+          </Typography> */}
           <Typography variant="h5" sx={{ marginBottom: 5 }}>
             <h3>Danh sách đơn hàng</h3>
           </Typography>
@@ -125,10 +125,11 @@ export default function Follow() {
                   <StyledTableCell>Họ Tên</StyledTableCell>
                   <StyledTableCell>Email</StyledTableCell>
                   <StyledTableCell>Số Điện Thoại</StyledTableCell>
+                  <StyledTableCell>Địa chỉ</StyledTableCell>
                   <StyledTableCell>Trạng thái</StyledTableCell>
                   <StyledTableCell>Tổng tiền</StyledTableCell>
                   <StyledTableCell>Chi tiết sản phẩm</StyledTableCell>
-                  <StyledTableCell>Thao tác</StyledTableCell>
+                  <StyledTableCell></StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -142,7 +143,8 @@ export default function Follow() {
                           </StyledTableCell>
                           <StyledTableCell>{o.name}</StyledTableCell>
                           <StyledTableCell>{o.email}</StyledTableCell>
-                          <StyledTableCell>{o.phone}</StyledTableCell>
+                          <StyledTableCell>0{o.phone}</StyledTableCell>
+                          <StyledTableCell>{o.address}</StyledTableCell>
                           <StyledTableCell>{o.status}</StyledTableCell>
                           <StyledTableCell>
                             {VND.format(o.total)}

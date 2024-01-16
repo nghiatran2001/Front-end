@@ -22,8 +22,12 @@ const cart = {
     const url = BACKEND_API + `/cart/${cart._id}`;
     return await axios.put(url, cart);
   },
-  updateAmount: async ({ ...cart }) => {
-    const url = BACKEND_API + `/cart/${cart._id}`;
+  updateQuantity: async ({ ...cart }) => {
+    const url = BACKEND_API + `/cart/quantity/${cart._id}`;
+    return await axios.put(url, cart);
+  },
+  updateQuantityTru: async ({ ...cart }) => {
+    const url = BACKEND_API + `/cart/quantity1/${cart._id}`;
     return await axios.put(url, cart);
   },
 };

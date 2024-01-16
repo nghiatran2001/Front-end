@@ -28,6 +28,7 @@ import Search from "./pages/Search/Search";
 import Brand from "./pages/Brand/Brand";
 import AddBrand from "./pages/Brand/AddBrand";
 import UpdateOrderAdmin from "./pages/OrderAdmin/UpdateOrderAdmin";
+import UpdateBrand from "./pages/Brand/UpdateBrand";
 
 const LayoutPage = () => {
   return (
@@ -156,6 +157,10 @@ const router = createBrowserRouter([
   {
     path: "/updateorderadmin",
     element: <UpdateOrderAdmin />,
+  },
+  {
+    path: "/updatebrand",
+    element: <UpdateBrand />,
   },
 ]);
 

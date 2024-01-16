@@ -48,7 +48,7 @@ export default function User() {
   const [sortUser, setSortUser] = useState("ASC");
 
   const [currentPage, setCurrentPage] = useState(1);
-  const userPerPage = 3;
+  const userPerPage = 5;
   const lastIndex = currentPage * userPerPage;
   const firstIndex = lastIndex - userPerPage;
   const users = userList.slice(firstIndex, lastIndex);

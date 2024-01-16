@@ -65,6 +65,13 @@ export default function Product() {
       const result = await productAPI.deleteProduct({
         id,
       });
+      if (result.status === 211) {
+        await getProductList();
+        api.open({
+          type: "error",
+          message: "Không thể xoá vì hàng đã được đặt",
+        });
+      }
       if (result.status === 200) {
         await getProductList();
         api.open({
@@ -201,6 +208,7 @@ export default function Product() {
                     Thể loại
                     <DropDown></DropDown>
                   </StyledTableCell>
+
                   <StyledTableCell
                     align="center"
                     className="product-down"
@@ -257,6 +265,7 @@ export default function Product() {
                       <StyledTableCell align="center">
                         {product.nameCategory}
                       </StyledTableCell>
+
                       <StyledTableCell align="center">
                         {VND.format(product.originPrice)}
                       </StyledTableCell>
