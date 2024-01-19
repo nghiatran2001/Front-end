@@ -180,20 +180,18 @@ export default function Product() {
             </Typography>
           </Box>
           <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 1000 }} aria-label="customized table">
+            <Table sx={{ maxWidth: 1200 }} aria-label="customized table">
               <TableHead>
                 <TableRow>
                   <StyledTableCell
-                    align="center"
                     className="product-down"
                     onClick={() => sorting("nameProduct")}
                   >
                     Sản phẩm
                     <DropDown></DropDown>
                   </StyledTableCell>
-                  <StyledTableCell align="center">Hình ảnh</StyledTableCell>
+                  <StyledTableCell>Hình ảnh</StyledTableCell>
                   <StyledTableCell
-                    align="center"
                     className="product-down"
                     onClick={() => sorting("nameBrand")}
                   >
@@ -201,7 +199,6 @@ export default function Product() {
                     <DropDown></DropDown>
                   </StyledTableCell>
                   <StyledTableCell
-                    align="center"
                     className="product-down"
                     onClick={() => sorting("nameCategory")}
                   >
@@ -210,7 +207,6 @@ export default function Product() {
                   </StyledTableCell>
 
                   <StyledTableCell
-                    align="center"
                     className="product-down"
                     onClick={() => sorting2("originPrice")}
                   >
@@ -218,7 +214,6 @@ export default function Product() {
                     <DropDown></DropDown>
                   </StyledTableCell>
                   <StyledTableCell
-                    align="center"
                     className="product-down"
                     onClick={() => sorting2("sellPrice")}
                   >
@@ -226,7 +221,6 @@ export default function Product() {
                     <DropDown></DropDown>
                   </StyledTableCell>
                   <StyledTableCell
-                    align="center"
                     className="product-down"
                     onClick={() => sorting2("quantity")}
                   >
@@ -234,24 +228,26 @@ export default function Product() {
                     <DropDown></DropDown>
                   </StyledTableCell>
                   <StyledTableCell
-                    align="center"
                     className="product-down"
                     onClick={() => sorting("disable")}
                   >
                     Tình trạng
                     <DropDown></DropDown>
                   </StyledTableCell>
-                  <StyledTableCell align="center">Thao tác</StyledTableCell>
+                  <StyledTableCell>Thao tác</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {products.map((product, index) => {
                   return (
-                    <StyledTableRow key={index}>
-                      <StyledTableCell align="center">
+                    <StyledTableRow
+                      key={index}
+                      sx={{ maxWidth: 50, padding: 0 }}
+                    >
+                      <StyledTableCell sx={{ maxWidth: 100, padding: 0 }}>
                         {product.nameProduct}
                       </StyledTableCell>
-                      <StyledTableCell align="center">
+                      <StyledTableCell>
                         <img
                           src={product.image}
                           alt=""

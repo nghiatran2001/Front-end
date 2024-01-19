@@ -14,6 +14,7 @@ import "./Follow.css";
 import { useSelector } from "react-redux";
 import { Modal } from "antd";
 import See from "@mui/icons-material/VisibilityOutlined";
+import { notification } from "antd";
 
 import { payment as paymentAPI } from "../../API";
 
@@ -36,6 +37,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 export default function Follow() {
+  const [api, contextHolder] = notification.useNotification();
+
   const [value, setValue] = React.useState(0);
   const [idOrder, setIdOrder] = React.useState();
 
@@ -66,6 +69,15 @@ export default function Follow() {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleCancelOrder = async (e) => {
+    const result = await paymentAPI.cancelOrder({ id: e });
+    api.open({
+      type: "success",
+      message: "Huỷ đơn hàng thành công.",
+    });
+    window.location.reload(true);
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -99,6 +111,7 @@ export default function Follow() {
 
   return (
     <div>
+      {contextHolder}
       <Box className="follow">
         <Box sx={{ marginTop: 5, marginLeft: 5 }}>
           {/* <Typography variant="h5" sx={{ marginBottom: 5 }}>
@@ -235,6 +248,7 @@ export default function Follow() {
                               <Button
                                 sx={{ marginRight: 2 }}
                                 variant="contained"
+                                onClick={() => handleCancelOrder(o._id)}
                               >
                                 Huỷ đơn
                               </Button>
@@ -244,7 +258,8 @@ export default function Follow() {
                           </StyledTableCell>
                         </StyledTableRow>
                       );
-                    } else if (value === 1 && o.status === "Đang xử lý") {
+                    }
+                    if (value === 1 && o.status === "Đang xử lý") {
                       return (
                         <StyledTableRow key={i}>
                           <StyledTableCell component="th" scope="row">
@@ -252,8 +267,12 @@ export default function Follow() {
                           </StyledTableCell>
                           <StyledTableCell>{o.name}</StyledTableCell>
                           <StyledTableCell>{o.email}</StyledTableCell>
-                          <StyledTableCell>{o.phone}</StyledTableCell>
+                          <StyledTableCell>0{o.phone}</StyledTableCell>
+                          <StyledTableCell>{o.address}</StyledTableCell>
                           <StyledTableCell>{o.status}</StyledTableCell>
+                          <TableCell align="right">
+                            {VND.format(o.total)}
+                          </TableCell>
                           <StyledTableCell align="center">
                             <See
                               className="follow-delete"
@@ -339,7 +358,8 @@ export default function Follow() {
                           </StyledTableCell>
                         </StyledTableRow>
                       );
-                    } else if (value === 2 && o.status === "Đã xác nhận") {
+                    }
+                    if (value === 2 && o.status === "Đã xác nhận") {
                       return (
                         <StyledTableRow key={i}>
                           <StyledTableCell component="th" scope="row">
@@ -347,8 +367,12 @@ export default function Follow() {
                           </StyledTableCell>
                           <StyledTableCell>{o.name}</StyledTableCell>
                           <StyledTableCell>{o.email}</StyledTableCell>
-                          <StyledTableCell>{o.phone}</StyledTableCell>
+                          <StyledTableCell>0{o.phone}</StyledTableCell>
+                          <StyledTableCell>{o.address}</StyledTableCell>
                           <StyledTableCell>{o.status}</StyledTableCell>
+                          <TableCell align="right">
+                            {VND.format(o.total)}
+                          </TableCell>
                           <StyledTableCell align="center">
                             <See
                               className="follow-delete"
@@ -434,11 +458,8 @@ export default function Follow() {
                           </StyledTableCell>
                         </StyledTableRow>
                       );
-                    } else if (
-                      value === 3 &&
-                      o.status === "Đang giao" &&
-                      o.email
-                    ) {
+                    }
+                    if (value === 3 && o.status === "Đang giao") {
                       return (
                         <StyledTableRow key={i}>
                           <StyledTableCell component="th" scope="row">
@@ -446,8 +467,12 @@ export default function Follow() {
                           </StyledTableCell>
                           <StyledTableCell>{o.name}</StyledTableCell>
                           <StyledTableCell>{o.email}</StyledTableCell>
-                          <StyledTableCell>{o.phone}</StyledTableCell>
+                          <StyledTableCell>0{o.phone}</StyledTableCell>
+                          <StyledTableCell>{o.address}</StyledTableCell>
                           <StyledTableCell>{o.status}</StyledTableCell>
+                          <TableCell align="right">
+                            {VND.format(o.total)}
+                          </TableCell>
                           <StyledTableCell align="center">
                             <See
                               className="follow-delete"
@@ -528,7 +553,8 @@ export default function Follow() {
                           </StyledTableCell>
                         </StyledTableRow>
                       );
-                    } else if (value === 4 && o.status === "Đã giao") {
+                    }
+                    if (value === 4 && o.status === "Đã giao") {
                       return (
                         <StyledTableRow key={i}>
                           <StyledTableCell component="th" scope="row">
@@ -536,8 +562,12 @@ export default function Follow() {
                           </StyledTableCell>
                           <StyledTableCell>{o.name}</StyledTableCell>
                           <StyledTableCell>{o.email}</StyledTableCell>
-                          <StyledTableCell>{o.phone}</StyledTableCell>
+                          <StyledTableCell>0{o.phone}</StyledTableCell>
+                          <StyledTableCell>{o.address}</StyledTableCell>
                           <StyledTableCell>{o.status}</StyledTableCell>
+                          <TableCell align="right">
+                            {VND.format(o.total)}
+                          </TableCell>
                           <StyledTableCell align="center">
                             <See
                               className="follow-delete"
@@ -618,7 +648,8 @@ export default function Follow() {
                           </StyledTableCell>
                         </StyledTableRow>
                       );
-                    } else if (value === 5 && o.status === "Đã hủy") {
+                    }
+                    if (value === 5 && o.status === "Đã huỷ") {
                       return (
                         <StyledTableRow key={i}>
                           <StyledTableCell component="th" scope="row">
@@ -626,8 +657,12 @@ export default function Follow() {
                           </StyledTableCell>
                           <StyledTableCell>{o.name}</StyledTableCell>
                           <StyledTableCell>{o.email}</StyledTableCell>
-                          <StyledTableCell>{o.phone}</StyledTableCell>
+                          <StyledTableCell>0{o.phone}</StyledTableCell>
+                          <StyledTableCell>{o.address}</StyledTableCell>
                           <StyledTableCell>{o.status}</StyledTableCell>
+                          <TableCell align="right">
+                            {VND.format(o.total)}
+                          </TableCell>
                           <StyledTableCell align="center">
                             <See
                               className="follow-delete"

@@ -104,6 +104,14 @@ export default function Order() {
             return (result2 = await cartAPI.update({ cart: e }));
           });
         });
+        let updateAmount;
+        order.map(async (o) => {
+          return o.orderArray.map(async (e) => {
+            if (e.disable === false) {
+              return (updateAmount = await cartAPI.updateAmount({ id: e._id }));
+            }
+          });
+        });
         navigate("/payment");
       }
     } catch (error) {

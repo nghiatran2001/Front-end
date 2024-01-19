@@ -18,6 +18,10 @@ const payment = {
     const url = BACKEND_API + `/payment/${order._id}`;
     return await axios.put(url, order);
   },
+  cancelOrder: async ({ id }) => {
+    const url = BACKEND_API + `/payment/cancel/${id}`;
+    return await axios.put(url, id);
+  },
   getConfig: async () => {
     const url = BACKEND_API + `/payment/config`;
     return await axios.get(url);

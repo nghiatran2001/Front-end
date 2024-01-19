@@ -95,13 +95,7 @@ export default function Cart() {
       const result = await cartAPI.updateQuantityTru({
         cart: e,
       });
-      if (result.status === 200) {
-        await getProducts();
-        api.open({
-          type: "success",
-          message: "Xóa thành công.",
-        });
-      }
+      await getProducts();
     } catch (error) {
       console.log(error);
     }
@@ -111,13 +105,7 @@ export default function Cart() {
       const result = await cartAPI.updateQuantity({
         cart: e,
       });
-      if (result.status === 200) {
-        await getProducts();
-        api.open({
-          type: "success",
-          message: "Xóa thành công.",
-        });
-      }
+      await getProducts();
     } catch (error) {
       console.log(error);
     }
