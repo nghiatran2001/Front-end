@@ -125,49 +125,299 @@ export default function Type() {
           })}
         </Tabs>
       </Box>
-      <Row style={{ marginTop: "50px", marginBottom: "50px" }}>
+      <Row
+        style={{ marginTop: "50px", marginBottom: "50px", minHeight: "60vh" }}
+      >
         <Col span={20} offset={2}>
           <Box className="type">
             {products.map((product, index) => {
-              return product.disable === "Ngừng hoạt động" ? (
-                ""
-              ) : (
-                <NavLink
-                  to={`/productdetail?idProduct=${product._id}`}
-                  className="type-link"
-                >
-                  <Card key={index} className="card" sx={{ width: 200 }}>
-                    <CardActionArea>
-                      <img className="img" src={product.image} alt="" />
-                      <CardContent>
-                        <Typography
-                          gutterBottom
-                          variant="h5"
-                          className="text1"
-                          sx={{ height: 120 }}
-                        >
-                          {product.nameProduct}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          color="text.secondary"
-                          className="text"
-                        >
-                          {VND.format(product.originPrice)}
-                        </Typography>
-                        <Typography
-                          gutterBottom
-                          variant="h6"
-                          color="red"
-                          className="text2"
-                        >
-                          {VND.format(product.sellPrice)}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </NavLink>
-              );
+              if (value === 0) {
+                return product.disable === "Ngừng hoạt động" ? (
+                  ""
+                ) : (
+                  <NavLink
+                    to={`/productdetail?idProduct=${product._id}`}
+                    className="type-link"
+                  >
+                    <Card key={index} className="card" sx={{ width: 200 }}>
+                      <CardActionArea>
+                        <img className="img" src={product.image} alt="" />
+                        <CardContent>
+                          <Typography
+                            gutterBottom
+                            variant="h5"
+                            className="text1"
+                            sx={{ height: 120 }}
+                          >
+                            {product.nameProduct}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            className="text"
+                          >
+                            {VND.format(product.originPrice)}
+                          </Typography>
+                          <Typography
+                            gutterBottom
+                            variant="h6"
+                            color="red"
+                            className="text2"
+                          >
+                            {VND.format(product.sellPrice)}
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </NavLink>
+                );
+              }
+              if (value === 1 && product.nameCategory === "LAPTOP") {
+                return product.disable === "Ngừng hoạt động" ? (
+                  ""
+                ) : (
+                  <NavLink
+                    to={`/productdetail?idProduct=${product._id}`}
+                    className="type-link"
+                  >
+                    <Card key={index} className="card" sx={{ width: 200 }}>
+                      <CardActionArea>
+                        <img className="img" src={product.image} alt="" />
+                        <CardContent>
+                          <Typography
+                            gutterBottom
+                            variant="h5"
+                            className="text1"
+                            sx={{ height: 120 }}
+                          >
+                            {product.nameProduct}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            className="text"
+                          >
+                            {VND.format(product.originPrice)}
+                          </Typography>
+                          <Typography
+                            gutterBottom
+                            variant="h6"
+                            color="red"
+                            className="text2"
+                          >
+                            {VND.format(product.sellPrice)}
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </NavLink>
+                );
+              }
+              if (value === 2 && product.nameCategory === "SSD") {
+                return product.disable === "Ngừng hoạt động" ? (
+                  ""
+                ) : (
+                  <NavLink
+                    to={`/productdetail?idProduct=${product._id}`}
+                    className="type-link"
+                  >
+                    <Card key={index} className="card" sx={{ width: 200 }}>
+                      <CardActionArea>
+                        <img className="img" src={product.image} alt="" />
+                        <CardContent>
+                          <Typography
+                            gutterBottom
+                            variant="h5"
+                            className="text1"
+                            sx={{ height: 120 }}
+                          >
+                            {product.nameProduct}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            className="text"
+                          >
+                            {VND.format(product.originPrice)}
+                          </Typography>
+                          <Typography
+                            gutterBottom
+                            variant="h6"
+                            color="red"
+                            className="text2"
+                          >
+                            {VND.format(product.sellPrice)}
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </NavLink>
+                );
+              }
+              if (value === 3 && product.nameCategory === "RAM") {
+                return product.disable === "Ngừng hoạt động" ? (
+                  ""
+                ) : (
+                  <NavLink
+                    to={`/productdetail?idProduct=${product._id}`}
+                    className="type-link"
+                  >
+                    <Card key={index} className="card" sx={{ width: 200 }}>
+                      <CardActionArea>
+                        <img className="img" src={product.image} alt="" />
+                        <CardContent>
+                          <Typography
+                            gutterBottom
+                            variant="h5"
+                            className="text1"
+                            sx={{ height: 120 }}
+                          >
+                            {product.nameProduct}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            className="text"
+                          >
+                            {VND.format(product.originPrice)}
+                          </Typography>
+                          <Typography
+                            gutterBottom
+                            variant="h6"
+                            color="red"
+                            className="text2"
+                          >
+                            {VND.format(product.sellPrice)}
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </NavLink>
+                );
+              }
+              if (value === 4 && product.nameCategory === "CHUỘT") {
+                return product.disable === "Ngừng hoạt động" ? (
+                  ""
+                ) : (
+                  <NavLink
+                    to={`/productdetail?idProduct=${product._id}`}
+                    className="type-link"
+                  >
+                    <Card key={index} className="card" sx={{ width: 200 }}>
+                      <CardActionArea>
+                        <img className="img" src={product.image} alt="" />
+                        <CardContent>
+                          <Typography
+                            gutterBottom
+                            variant="h5"
+                            className="text1"
+                            sx={{ height: 120 }}
+                          >
+                            {product.nameProduct}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            className="text"
+                          >
+                            {VND.format(product.originPrice)}
+                          </Typography>
+                          <Typography
+                            gutterBottom
+                            variant="h6"
+                            color="red"
+                            className="text2"
+                          >
+                            {VND.format(product.sellPrice)}
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </NavLink>
+                );
+              }
+              if (value === 5 && product.nameCategory === "BÀN PHÍM") {
+                return product.disable === "Ngừng hoạt động" ? (
+                  ""
+                ) : (
+                  <NavLink
+                    to={`/productdetail?idProduct=${product._id}`}
+                    className="type-link"
+                  >
+                    <Card key={index} className="card" sx={{ width: 200 }}>
+                      <CardActionArea>
+                        <img className="img" src={product.image} alt="" />
+                        <CardContent>
+                          <Typography
+                            gutterBottom
+                            variant="h5"
+                            className="text1"
+                            sx={{ height: 120 }}
+                          >
+                            {product.nameProduct}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            className="text"
+                          >
+                            {VND.format(product.originPrice)}
+                          </Typography>
+                          <Typography
+                            gutterBottom
+                            variant="h6"
+                            color="red"
+                            className="text2"
+                          >
+                            {VND.format(product.sellPrice)}
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </NavLink>
+                );
+              }
+              if (value === 6 && product.nameCategory === "HDD") {
+                return product.disable === "Ngừng hoạt động" ? (
+                  ""
+                ) : (
+                  <NavLink
+                    to={`/productdetail?idProduct=${product._id}`}
+                    className="type-link"
+                  >
+                    <Card key={index} className="card" sx={{ width: 200 }}>
+                      <CardActionArea>
+                        <img className="img" src={product.image} alt="" />
+                        <CardContent>
+                          <Typography
+                            gutterBottom
+                            variant="h5"
+                            className="text1"
+                            sx={{ height: 120 }}
+                          >
+                            {product.nameProduct}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            className="text"
+                          >
+                            {VND.format(product.originPrice)}
+                          </Typography>
+                          <Typography
+                            gutterBottom
+                            variant="h6"
+                            color="red"
+                            className="text2"
+                          >
+                            {VND.format(product.sellPrice)}
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </NavLink>
+                );
+              }
             })}
           </Box>
         </Col>

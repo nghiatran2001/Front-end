@@ -4,8 +4,10 @@ import "./Register.css";
 import { Button, InputLabel } from "@mui/material";
 import { Form, Link } from "react-router-dom";
 import { Input, notification } from "antd";
-
+import EyeOn from "@mui/icons-material/Visibility";
+import EyeOff from "@mui/icons-material/VisibilityOff";
 import { isEmpty, isEmail } from "validator";
+
 import { user as userAPI } from "../../API/index";
 
 export default function Register() {
@@ -17,6 +19,9 @@ export default function Register() {
 
   const [api, contextHolder] = notification.useNotification();
   const [validation, setValidation] = useState("");
+
+  const [eye, setEye] = useState("");
+  const [eye1, setEye1] = useState("");
 
   const validateAll = () => {
     const msg = {};
@@ -30,6 +35,8 @@ export default function Register() {
     }
     if (isEmpty(password)) {
       msg.password = "*Vui lòng nhập mật khẩu";
+    } else if (password.length < 8 || password.length > 16) {
+      msg.password = "*Mật khẩu từ 8 - 16 ký tự";
     }
     if (isEmpty(confirmPassword)) {
       msg.confirmPassword = "*Vui lòng nhập xác nhận mật khẩu";
@@ -38,6 +45,8 @@ export default function Register() {
     }
     if (isEmpty(phone)) {
       msg.phone = "*Vui lòng nhập số điện thoại";
+    } else if (phone.length < 10 || phone.length > 10) {
+      msg.phone = "*Vui lòng nhập đủ 10 số";
     }
     setValidation(msg);
     if (Object.keys(msg).length > 0) return false;
@@ -75,6 +84,23 @@ export default function Register() {
       }
     }
   };
+
+  const handleEyeOn = async () => {
+    setEye(true);
+  };
+
+  const handleEyeOff = async () => {
+    setEye(false);
+  };
+
+  const handleEyeOn1 = async () => {
+    setEye1(true);
+  };
+
+  const handleEyeOff1 = async () => {
+    setEye1(false);
+  };
+
   return (
     <>
       {contextHolder}
@@ -112,16 +138,21 @@ export default function Register() {
               }}
             ></span>
             <Input
+              maxLength={16}
               required
               placeholder="********"
-              type="password"
+              type={eye ? "text" : "password"}
               className="input"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             ></Input>
+            {eye ? (
+              <EyeOn onClick={handleEyeOff} className="eye-off"></EyeOn>
+            ) : (
+              <EyeOff onClick={handleEyeOn} className="eye-off"></EyeOff>
+            )}
             <p className="validate">{validation.password}</p>
           </div>
-
           <InputLabel className="label">Xác Nhận Mật Khẩu(*)</InputLabel>
           <div style={{ position: "relative" }}>
             <span
@@ -133,18 +164,25 @@ export default function Register() {
               }}
             ></span>
             <Input
+              maxLength={16}
               required
               placeholder="********"
-              type="password"
+              type={eye1 ? "text" : "password"}
               className="input"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             ></Input>
+            {eye1 ? (
+              <EyeOn onClick={handleEyeOff1} className="eye-off"></EyeOn>
+            ) : (
+              <EyeOff onClick={handleEyeOn1} className="eye-off"></EyeOff>
+            )}
             <p className="validate">{validation.confirmPassword}</p>
           </div>
 
           <InputLabel className="label">Số Điện Thoại(*)</InputLabel>
           <Input
+            maxLength={10}
             required
             placeholder="093 xxx xxxx"
             type="phone"

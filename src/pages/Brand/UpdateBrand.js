@@ -62,7 +62,10 @@ export default function UpdateBrand() {
         });
       }
     } catch (error) {
-      console.log(error);
+      api.open({
+        type: "error",
+        message: "Tên hãng đã tồn tại.",
+      });
     }
   };
 
@@ -101,7 +104,7 @@ export default function UpdateBrand() {
         <Box sx={{ marginTop: 5, marginLeft: 5 }}>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography variant="h5" sx={{ marginBottom: 5 }}>
-              Sửa sản phẩm
+              Sửa hãng
             </Typography>
             <Typography variant="h5" sx={{ marginBottom: 5 }}>
               <Link to="/brand">

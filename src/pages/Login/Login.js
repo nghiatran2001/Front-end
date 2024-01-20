@@ -6,12 +6,15 @@ import { Input, notification } from "antd";
 import { loginUser } from "../../redux/apiRequest";
 import { useDispatch } from "react-redux";
 import { isEmpty, isEmail } from "validator";
+import EyeOn from "@mui/icons-material/Visibility";
+import EyeOff from "@mui/icons-material/VisibilityOff";
 
 import { user as userAPI } from "../../API/index";
 
 export default function Login() {
   const [api, contextHolder] = notification.useNotification();
   const [validation, setValidation] = useState("");
+  const [eye, setEye] = useState("");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,6 +31,8 @@ export default function Login() {
     }
     if (isEmpty(password)) {
       msg.password = "*Vui lòng nhập mật khẩu";
+    } else if (password.length < 8 || password.length > 16) {
+      msg.password = "*Mật khẩu từ 8 - 16 ký tự";
     }
     setValidation(msg);
     if (Object.keys(msg).length > 0) return false;
@@ -65,6 +70,14 @@ export default function Login() {
     }
   };
 
+  const handleEyeOn = async () => {
+    setEye(true);
+  };
+
+  const handleEyeOff = async () => {
+    setEye(false);
+  };
+
   return (
     <div>
       {contextHolder}
@@ -92,13 +105,19 @@ export default function Login() {
               }}
             ></span>
             <Input
+              maxLength={16}
               required
-              type="password"
+              type={eye ? "text" : "password"}
               placeholder="********"
               className="input"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             ></Input>
+            {eye ? (
+              <EyeOn className="eye-off" onClick={handleEyeOff}></EyeOn>
+            ) : (
+              <EyeOff className="eye-off" onClick={handleEyeOn}></EyeOff>
+            )}
             <p className="validation">{validation.password}</p>
           </div>
           <Button className="button" onClick={handleLogin}>

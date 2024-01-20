@@ -86,7 +86,10 @@ export default function EditProduct() {
         });
       }
     } catch (error) {
-      console.log(error);
+      api.open({
+        type: "error",
+        message: "Tên sản phẩm đã tồn tại.",
+      });
     }
   };
 

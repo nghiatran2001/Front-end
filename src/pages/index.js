@@ -17,3 +17,5 @@ export { default as Brand } from "./Brand/Brand";
 export { default as AddBrand } from "./Brand/AddBrand";
 export { default as UpdateOrderAdmin } from "./OrderAdmin/UpdateOrderAdmin";
 export { default as UpdateBrand } from "./Brand/UpdateBrand";
+export { default as UpdateCategory } from "./Categories/UpdateCategory";
+export { default as SearchProduct } from "./Search/SearchProduct";

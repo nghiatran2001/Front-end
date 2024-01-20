@@ -10,7 +10,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DoubleRight from "@mui/icons-material/KeyboardDoubleArrowRightOutlined";
 import DoubleLeft from "@mui/icons-material/KeyboardDoubleArrowLeftOutlined";
 import Update from "@mui/icons-material/ConstructionOutlined";
@@ -44,6 +44,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function Product() {
   const [listProduct, setListProduct] = useState([]);
   const [sortProduct, setSortProduct] = useState("ASC");
+
+  const [keywords, setKeyWords] = useState("");
+  const navigate = useNavigate();
 
   const [currentPage, setCurrentPage] = useState(1);
   const productPerPage = 4;
@@ -148,6 +151,15 @@ export default function Product() {
       setSortProduct("ASC");
     }
   };
+
+  const handleChangeInput = (e) => {
+    let keywords = e.target.value;
+    setKeyWords(keywords);
+    keywords.length > 0
+      ? navigate(`/product?keywords=${keywords.trim()}`)
+      : navigate(`/product`);
+  };
+
   return (
     <div>
       {contextHolder}
@@ -160,7 +172,6 @@ export default function Product() {
           sx={{
             width: "100%",
             maxWidth: 250,
-            bgcolor: "#999999",
             height: "100%",
           }}
         >
@@ -172,6 +183,15 @@ export default function Product() {
               Danh sách sản phẩm
             </Typography>
             <Typography variant="h5" sx={{ marginBottom: 5 }}>
+              <input
+                className="search-product"
+                type="search"
+                placeholder="Nhập cần tìm..."
+                onChange={handleChangeInput}
+                inputProps={{ "aria-label": "search" }}
+              ></input>
+            </Typography>
+            <Typography variant="h5" sx={{ marginBottom: 5 }}>
               <Link to="/addproduct">
                 <Button variant="contained">
                   <Add></Add>
@@ -179,7 +199,7 @@ export default function Product() {
               </Link>
             </Typography>
           </Box>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{ borderRadius: 5 }}>
             <Table sx={{ maxWidth: 1200 }} aria-label="customized table">
               <TableHead>
                 <TableRow>
@@ -288,11 +308,6 @@ export default function Product() {
                         >
                           <Delete className="product-delete "></Delete>
                         </Popconfirm>
-                        {/* <Link to={`/techdetail?idProduct=${product._id}`}>
-                          <Button sx={{ margin: "1px" }} variant="contained">
-                            Chi tiết
-                          </Button>
-                        </Link> */}
                       </StyledTableCell>
                     </StyledTableRow>
                   );

@@ -174,7 +174,6 @@ export default function User() {
           sx={{
             width: "100%",
             maxWidth: 250,
-            bgcolor: "#999999",
             height: "100%",
           }}
         >
@@ -184,7 +183,7 @@ export default function User() {
           <Typography variant="h5" sx={{ marginBottom: 5 }}>
             Danh sách người dùng
           </Typography>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{ borderRadius: 5 }}>
             <Table sx={{ minWidth: 1000 }} aria-label="customized table">
               <TableHead>
                 <TableRow>

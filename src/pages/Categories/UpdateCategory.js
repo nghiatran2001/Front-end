@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Admin from "../Admin/Admin";
+
 import {
   Box,
   Button,
+  OutlinedInput,
   Table,
   TableBody,
   TableCell,
@@ -14,8 +16,9 @@ import {
 import { styled } from "@mui/material/styles";
 import { tableCellClasses } from "@mui/material/TableCell";
 import { notification } from "antd";
+import TextArea from "antd/es/input/TextArea";
 
-import { payment as paymentAPI } from "../../API";
+import { category as categoryAPI } from "../../API";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -36,47 +39,49 @@ const StyledTableRow = styled(TableRow)(() => ({
   },
 }));
 
-export default function UpdateOrderAdmin() {
+export default function UpdateCategory() {
   const [api, contextHolder] = notification.useNotification();
   const keyValue = window.location.search;
   const urlParams = new URLSearchParams(keyValue);
-  const idOrder = urlParams.get("idOrder");
+  const idCategory = urlParams.get("idCategory");
 
-  const [order, setOrder] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
 
-  const handleUpdateOrder = async () => {
+  const handleUpdateCategory = async () => {
     try {
-      if (order.status === "") {
+      if (categoryList.nameCategory === "") {
         api.open({
           type: "error",
-          message: "Vui lòng chọn trạng thái.",
+          message: "Vui lòng nhập đủ thông tin.",
         });
       } else {
-        const result = await paymentAPI.editOrder(order);
+        const result = await categoryAPI.updateCategory(categoryList);
         api.open({
           type: "success",
-          message: "Sửa trạng thái thành công.",
+          message: "Sửa thành công.",
         });
       }
     } catch (error) {
-      console.log(error);
+      api.open({
+        type: "error",
+        message: "Tên loại đã tồn tại.",
+      });
     }
   };
 
   useEffect(() => {
     (async () => {
-      await getIdOrder();
+      await getIdCategory();
     })();
   }, []);
-  const getIdOrder = async () => {
+  const getIdCategory = async () => {
     try {
-      const result = await paymentAPI.getIdOrder({ id: idOrder });
-      setOrder(result.data);
+      const result = await categoryAPI.getIdCategory({ id: idCategory });
+      setCategoryList(result.data);
     } catch (error) {
       console.log(error);
     }
   };
-  console.log(order);
 
   return (
     <div>
@@ -99,17 +104,17 @@ export default function UpdateOrderAdmin() {
         <Box sx={{ marginTop: 5, marginLeft: 5 }}>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography variant="h5" sx={{ marginBottom: 5 }}>
-              Sửa đơn hàng
+              Sửa loại
             </Typography>
             <Typography variant="h5" sx={{ marginBottom: 5 }}>
-              <Link to="/orderadmin">
-                <Button variant="contained">Danh sách đơn hàng</Button>
+              <Link to="/categories">
+                <Button variant="contained">Danh sách loại</Button>
               </Link>
             </Typography>
           </Box>
           <TableContainer
             sx={{
-              minWidth: 600,
+              minWidth: 800,
               border: 1,
               borderRadius: 5,
             }}
@@ -118,36 +123,49 @@ export default function UpdateOrderAdmin() {
             <Table>
               <TableBody>
                 <StyledTableRow>
-                  <StyledTableCell>Trạng Thái:</StyledTableCell>
+                  <StyledTableCell>Tên hãng:</StyledTableCell>
                   <StyledTableCell>
-                    <select
-                      value={order.status || ""}
+                    <OutlinedInput
+                      value={categoryList.nameCategory || ""}
                       onChange={(e) =>
-                        setOrder((pre) => ({
+                        setCategoryList((pre) => ({
                           ...pre,
-                          status: e.target.value,
+                          nameCategory: e.target.value,
                         }))
                       }
-                    >
-                      <option>Đang xử lý</option>
-                      <option>Đã xác nhận</option>
-                      <option>Đang giao</option>
-                      <option>Đã giao</option>
-                      <option>Đã hủy</option>
-                    </select>
+                      type="text"
+                      sx={{ width: "100%", height: "40px" }}
+                    ></OutlinedInput>
                   </StyledTableCell>
                 </StyledTableRow>
               </TableBody>
-
+              <TableBody>
+                <StyledTableRow>
+                  <StyledTableCell>Mô tả:</StyledTableCell>
+                  <StyledTableCell>
+                    <TextArea
+                      value={categoryList.description || ""}
+                      onChange={(e) =>
+                        setCategoryList((pre) => ({
+                          ...pre,
+                          description: e.target.value,
+                        }))
+                      }
+                      type="text"
+                      sx={{ width: "100%", height: "40px" }}
+                    ></TextArea>
+                  </StyledTableCell>
+                </StyledTableRow>
+              </TableBody>
               <TableBody>
                 <StyledTableRow>
                   <StyledTableCell></StyledTableCell>
                   <StyledTableCell>
                     <Button
+                      onClick={() => handleUpdateCategory()}
                       variant="contained"
-                      onClick={() => handleUpdateOrder()}
                     >
-                      Sửa đơn hàng
+                      Sửa
                     </Button>
                   </StyledTableCell>
                 </StyledTableRow>

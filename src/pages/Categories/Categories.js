@@ -139,7 +139,6 @@ export default function Categories() {
           sx={{
             width: "100%",
             maxWidth: 250,
-            bgcolor: "#999999",
             height: "100%",
           }}
         >
@@ -158,7 +157,7 @@ export default function Categories() {
               </Link>
             </Typography>
           </Box>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{ borderRadius: 5 }}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
                 <TableRow>
@@ -208,9 +207,10 @@ export default function Categories() {
                         {category.description}
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        <Link>
+                        <Link to={`/updatecategory?idCategory=${category._id}`}>
                           <Update className="category-delete "></Update>
                         </Link>
+
                         <Popconfirm
                           title="Xóa"
                           description="Bạn chắc chắn muốn xóa?"

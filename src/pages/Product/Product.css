@@ -40,3 +40,7 @@
 .product-down {
   cursor: pointer;
 }
+.search-product {
+  font-size: 18px;
+  padding: 10px;
+}

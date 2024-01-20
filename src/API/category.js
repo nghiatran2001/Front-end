@@ -18,7 +18,7 @@ const category = {
     const url = BACKEND_API + `/category/${id}`;
     return await axios.get(url);
   },
-  editCategory: async ({ ...category }) => {
+  updateCategory: async ({ ...category }) => {
     const url = BACKEND_API + `/category/${category._id}`;
     return await axios.put(url, category);
   },

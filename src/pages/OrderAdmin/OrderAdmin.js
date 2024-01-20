@@ -16,6 +16,7 @@ import { Modal } from "antd";
 import DoubleRight from "@mui/icons-material/KeyboardDoubleArrowRightOutlined";
 import DoubleLeft from "@mui/icons-material/KeyboardDoubleArrowLeftOutlined";
 import { Link } from "react-router-dom";
+import DropDown from "@mui/icons-material/ArrowDropDownOutlined";
 
 import { payment as paymentAPI } from "../../API";
 
@@ -46,6 +47,7 @@ export default function OrderAdmin() {
   const [idOrder, setIdOrder] = React.useState();
   const [order, setOrder] = useState([]);
   const [idProduct, setIdProduct] = useState([]);
+  const [sortProduct, setSortProduct] = useState("ASC");
 
   const [currentPage, setCurrentPage] = useState(1);
   const productPerPage = 5;
@@ -116,6 +118,36 @@ export default function OrderAdmin() {
     setCurrentPage(id);
   };
 
+  const sorting = (col) => {
+    if (sortProduct === "ASC") {
+      const sorted = [...order].sort((a, b) =>
+        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+      );
+      setOrder(sorted);
+      setSortProduct("DSC");
+    }
+    if (sortProduct === "DSC") {
+      const sorted = [...order].sort((a, b) =>
+        a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
+      );
+      setOrder(sorted);
+      setSortProduct("ASC");
+    }
+  };
+
+  const sorting2 = (col) => {
+    if (sortProduct === "ASC") {
+      const sorted = [...order].sort((a, b) => (a[col] > b[col] ? 1 : -1));
+      setOrder(sorted);
+      setSortProduct("DSC");
+    }
+    if (sortProduct === "DSC") {
+      const sorted = [...order].sort((a, b) => (a[col] < b[col] ? 1 : -1));
+      setOrder(sorted);
+      setSortProduct("ASC");
+    }
+  };
+
   return (
     <div>
       <Box
@@ -127,7 +159,6 @@ export default function OrderAdmin() {
           sx={{
             width: "100%",
             maxWidth: 250,
-            bgcolor: "#999999",
             height: "100%",
           }}
         >
@@ -137,17 +168,56 @@ export default function OrderAdmin() {
           <Typography variant="h5" sx={{ marginBottom: 5 }}>
             Danh sách đơn hàng
           </Typography>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 1000 }} aria-label="customized table">
+          <TableContainer
+            component={Paper}
+            sx={{ maxWidth: "1400px", borderRadius: 5 }}
+          >
+            <Table aria-label="customized table">
               <TableHead>
                 <TableRow>
                   <StyledTableCell>Mã Đơn Hàng</StyledTableCell>
-                  <StyledTableCell>Người Nhận</StyledTableCell>
-                  <StyledTableCell>Email</StyledTableCell>
-                  <StyledTableCell>Số Điện Thoại</StyledTableCell>
-                  <StyledTableCell>Địa chỉ</StyledTableCell>
-                  <StyledTableCell>Tổng tiền</StyledTableCell>
-                  <StyledTableCell>Trạng thái</StyledTableCell>
+                  <StyledTableCell
+                    className="product-down"
+                    onClick={() => sorting("name")}
+                  >
+                    Người Nhận
+                    <DropDown></DropDown>
+                  </StyledTableCell>
+                  <StyledTableCell
+                    className="product-down"
+                    onClick={() => sorting("email")}
+                  >
+                    Email
+                    <DropDown></DropDown>
+                  </StyledTableCell>
+                  <StyledTableCell
+                    className="product-down"
+                    onClick={() => sorting2("phone")}
+                  >
+                    Số Điện Thoại
+                    <DropDown></DropDown>
+                  </StyledTableCell>
+                  <StyledTableCell
+                    className="product-down"
+                    onClick={() => sorting("address")}
+                  >
+                    Địa chỉ
+                    <DropDown></DropDown>
+                  </StyledTableCell>
+                  <StyledTableCell
+                    className="product-down"
+                    onClick={() => sorting2(parseInt("total"))}
+                  >
+                    Tổng tiền
+                    <DropDown></DropDown>
+                  </StyledTableCell>
+                  <StyledTableCell
+                    className="product-down"
+                    onClick={() => sorting("status")}
+                  >
+                    Trạng thái
+                    <DropDown></DropDown>
+                  </StyledTableCell>
                   <StyledTableCell>Chi tiết sản phẩm</StyledTableCell>
                   <StyledTableCell>Thao tác</StyledTableCell>
                 </TableRow>
@@ -159,8 +229,12 @@ export default function OrderAdmin() {
                       <StyledTableCell component="th" scope="row">
                         {o._id}
                       </StyledTableCell>
-                      <StyledTableCell>{o.name}</StyledTableCell>
-                      <StyledTableCell>{o.email}</StyledTableCell>
+                      <StyledTableCell sx={{ maxWidth: "150px" }}>
+                        {o.name}
+                      </StyledTableCell>
+                      <StyledTableCell sx={{ minWidth: "200px" }}>
+                        {o.email}
+                      </StyledTableCell>
                       <StyledTableCell>0{o.phone}</StyledTableCell>
                       <StyledTableCell>{o.address}</StyledTableCell>
                       <StyledTableCell>{VND.format(o.total)}</StyledTableCell>
@@ -242,9 +316,13 @@ export default function OrderAdmin() {
                         </Modal>
                       </StyledTableCell>
                       <StyledTableCell align="center">
-                        <Link to={`/updateorderadmin?idOrder=${o._id}`}>
-                          <Update className="orderadm-delete"></Update>
-                        </Link>
+                        {o.status === "Đã huỷ" || o.status === "Đã giao" ? (
+                          ""
+                        ) : (
+                          <Link to={`/updateorderadmin?idOrder=${o._id}`}>
+                            <Update className="orderadm-delete"></Update>
+                          </Link>
+                        )}
                       </StyledTableCell>
                     </StyledTableRow>
                   );

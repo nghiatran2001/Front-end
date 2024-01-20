@@ -90,6 +90,7 @@ export default function Header() {
   const accessToken = user?.accessToken;
   const id = user?._id;
   const [keywords, setKeyWords] = useState("");
+
   let axiosJWT = createAxios(user, dispatch, logoutSuccess);
 
   const handleLogout = () => {

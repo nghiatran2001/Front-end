@@ -133,7 +133,6 @@ export default function Brand() {
           sx={{
             width: "100%",
             maxWidth: 250,
-            bgcolor: "#999999",
             height: "100%",
           }}
         >
@@ -152,7 +151,7 @@ export default function Brand() {
               </Link>
             </Typography>
           </Box>
-          <TableContainer component={Paper}>
+          <TableContainer component={Paper} sx={{ borderRadius: 5 }}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
                 <TableRow>
