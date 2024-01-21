@@ -61,6 +61,13 @@ export default function Brand() {
       const result = await brandAPI.deleteBrand({
         id,
       });
+      if (result.status === 211) {
+        await getBrandList();
+        api.open({
+          type: "error",
+          message: "Không thể xoá vì tồn tại sản phẩm",
+        });
+      }
       if (result.status === 200) {
         await getBrandList();
         api.open({
@@ -164,21 +171,11 @@ export default function Brand() {
                     Hãng
                     <DropDown></DropDown>
                   </StyledTableCell>
-                  <StyledTableCell
-                    align="center"
-                    className="brand-down"
-                    onClick={() => sorting("slug")}
-                  >
+                  <StyledTableCell align="center" className="brand-down">
                     Tiêu đề
-                    <DropDown></DropDown>
                   </StyledTableCell>
-                  <StyledTableCell
-                    align="center"
-                    className="brand-down"
-                    onClick={() => sorting("description")}
-                  >
+                  <StyledTableCell align="center" className="brand-down">
                     Mô tả
-                    <DropDown></DropDown>
                   </StyledTableCell>
                   <StyledTableCell align="center">Thao tác</StyledTableCell>
                 </TableRow>
@@ -191,13 +188,19 @@ export default function Brand() {
                       <StyledTableCell align="center">
                         {index + 1}
                       </StyledTableCell>
-                      <StyledTableCell align="center">
+                      <StyledTableCell
+                        sx={{ minWidth: "250px" }}
+                        align="center"
+                      >
                         {brand.nameBrand}
                       </StyledTableCell>
                       <StyledTableCell align="center">
                         {brand.slug}
                       </StyledTableCell>
-                      <StyledTableCell align="center">
+                      <StyledTableCell
+                        sx={{ maxWidth: "500px" }}
+                        align="center"
+                      >
                         {brand.description}
                       </StyledTableCell>
                       <StyledTableCell align="center">

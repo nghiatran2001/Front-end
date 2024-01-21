@@ -9,13 +9,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useSelector } from "react-redux";
-import { Radio, notification } from "antd";
+import { Input, Radio, notification } from "antd";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 import { user as userAPI } from "../../API";
 import { order as orderAPI } from "../../API";
 import { payment as paymentAPI } from "../../API";
 import { cart as cartAPI } from "../../API";
+import TextArea from "antd/es/input/TextArea";
 
 export default function Order() {
   const user = useSelector((state) => state.auth.login?.currentUser);
@@ -91,6 +92,7 @@ export default function Order() {
               email,
               content,
               address,
+              dateOrder: new Date(),
             });
           }
         });
@@ -141,6 +143,7 @@ export default function Order() {
               email,
               content,
               address,
+              dateOrder: new Date(),
             });
           }
         });
@@ -152,6 +155,14 @@ export default function Order() {
         order.map(async (o) => {
           return o.orderArray.map(async (e) => {
             return (result2 = await cartAPI.update({ cart: e }));
+          });
+        });
+        let updateAmount;
+        order.map(async (o) => {
+          return o.orderArray.map(async (e) => {
+            if (e.disable === false) {
+              return (updateAmount = await cartAPI.updateAmount({ id: e._id }));
+            }
           });
         });
       }
@@ -250,77 +261,106 @@ export default function Order() {
               <TableRow>
                 <TableCell>Email:</TableCell>
                 <TableCell>
-                  <OutlinedInput
+                  {/* <OutlinedInput
                     value={email || ""}
                     onChange={(e) => setEmail(e.target.value)}
                     type="text"
                     sx={{ width: "100%", height: "40px" }}
-                  ></OutlinedInput>
+                  ></OutlinedInput> */}
+                  <Input
+                    value={email || ""}
+                    onChange={(e) => setEmail(e.target.value)}
+                    type="text"
+                    sx={{ width: "100%", height: "40px" }}
+                  ></Input>
                 </TableCell>
               </TableRow>
 
               <TableRow>
                 <TableCell>Họ tên:</TableCell>
                 <TableCell>
-                  <OutlinedInput
+                  {/* <OutlinedInput
                     value={name || ""}
                     onChange={(e) => setName(e.target.value)}
                     type="text"
                     sx={{ width: "100%", height: "40px" }}
-                  ></OutlinedInput>
+                  ></OutlinedInput> */}
+                  <Input
+                    value={name || ""}
+                    onChange={(e) => setName(e.target.value)}
+                    type="text"
+                    sx={{ width: "100%", height: "40px" }}
+                  ></Input>
                 </TableCell>
               </TableRow>
 
               <TableRow>
                 <TableCell>Số điện thoại:</TableCell>
                 <TableCell>
-                  <OutlinedInput
+                  {/* <OutlinedInput
+                    maxLength={10}
                     value={phone || ""}
                     onChange={(e) => setPhone(e.target.value)}
                     type="text"
                     sx={{ width: "100%", height: "40px" }}
-                  ></OutlinedInput>
+                  ></OutlinedInput> */}
+                  <Input
+                    maxLength={10}
+                    value={phone || ""}
+                    onChange={(e) => setPhone(e.target.value)}
+                    type="text"
+                    sx={{ width: "100%", height: "40px" }}
+                  ></Input>
                 </TableCell>
               </TableRow>
 
               <TableRow>
                 <TableCell>Địa chỉ:</TableCell>
                 <TableCell>
-                  <OutlinedInput
+                  {/* <OutlinedInput
                     value={address || ""}
                     onChange={(e) => setAddress(e.target.value)}
                     type="text"
                     sx={{ width: "100%", height: "40px" }}
-                  ></OutlinedInput>
+                  ></OutlinedInput> */}
+                  <Input
+                    value={address || ""}
+                    onChange={(e) => setAddress(e.target.value)}
+                    type="text"
+                    sx={{ width: "100%", height: "40px" }}
+                  ></Input>
                 </TableCell>
               </TableRow>
 
               <TableRow>
                 <TableCell>Nội dung:</TableCell>
                 <TableCell>
-                  <OutlinedInput
+                  {/* <OutlinedInput
                     value={content || ""}
                     onChange={(e) => setContent(e.target.value)}
                     type="text"
                     sx={{ width: "100%", height: "40px" }}
-                  ></OutlinedInput>
+                  ></OutlinedInput> */}
+                  <TextArea
+                    value={content || ""}
+                    onChange={(e) => setContent(e.target.value)}
+                    type="text"
+                    sx={{ width: "100%", height: "40px" }}
+                  ></TextArea>
                 </TableCell>
               </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
         <Box className="order-pay">
-          {/* <h2>
-            <span>Hình thức thanh toán: </span>
-            <select style={{ fontSize: "20px" }}>
-              <option>Paypal</option>
-              <option>COD</option>
-            </select>
-          </h2> */}
           <div>
             <Radio.Group onChange={onChange} value={value}>
-              <Radio value="tm">Thanh toán tiền mặt</Radio>
-              <Radio value="paypal">Thanh toán PayPal</Radio>
+              <Radio className="order-tt" value="tm">
+                Thanh toán tiền mặt
+              </Radio>
+              <Radio className="order-tt" value="paypal">
+                Thanh toán PayPal
+              </Radio>
             </Radio.Group>
           </div>
           {value === "paypal" ? (

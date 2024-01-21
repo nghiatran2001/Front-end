@@ -12,11 +12,12 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import "./Follow.css";
 import { useSelector } from "react-redux";
-import { Modal } from "antd";
+import { Modal, Popconfirm } from "antd";
 import See from "@mui/icons-material/VisibilityOutlined";
 import { notification } from "antd";
 
 import { payment as paymentAPI } from "../../API";
+import { cart as cartAPI } from "../../API";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -71,12 +72,21 @@ export default function Follow() {
     }
   };
 
+  const cancel = (e) => {};
+
   const handleCancelOrder = async (e) => {
     const result = await paymentAPI.cancelOrder({ id: e });
+    let updateKho;
+    order.map(async (o) => {
+      return o.order.map(async (e) => {
+        return (updateKho = await cartAPI.updateKho({ id: e._id }));
+      });
+    });
     api.open({
       type: "success",
       message: "Huỷ đơn hàng thành công.",
     });
+
     window.location.reload(true);
   };
 
@@ -114,9 +124,6 @@ export default function Follow() {
       {contextHolder}
       <Box className="follow">
         <Box sx={{ marginTop: 5, marginLeft: 5 }}>
-          {/* <Typography variant="h5" sx={{ marginBottom: 5 }}>
-            <h3>Tra cứu đơn hàng</h3>
-          </Typography> */}
           <Typography variant="h5" sx={{ marginBottom: 5 }}>
             <h3>Danh sách đơn hàng</h3>
           </Typography>
@@ -135,6 +142,7 @@ export default function Follow() {
               <TableHead>
                 <TableRow>
                   <StyledTableCell>Mã đơn hàng</StyledTableCell>
+                  <StyledTableCell>Ngày đặt</StyledTableCell>
                   <StyledTableCell>Họ Tên</StyledTableCell>
                   <StyledTableCell>Email</StyledTableCell>
                   <StyledTableCell>Số Điện Thoại</StyledTableCell>
@@ -154,6 +162,7 @@ export default function Follow() {
                           <StyledTableCell component="th" scope="row">
                             {o._id}
                           </StyledTableCell>
+                          <StyledTableCell>{o.createdAt}</StyledTableCell>
                           <StyledTableCell>{o.name}</StyledTableCell>
                           <StyledTableCell>{o.email}</StyledTableCell>
                           <StyledTableCell>0{o.phone}</StyledTableCell>
@@ -245,13 +254,21 @@ export default function Follow() {
                           <StyledTableCell>
                             {o.status === "Đang xử lý" ||
                             o.status === "Đã xác nhận" ? (
-                              <Button
-                                sx={{ marginRight: 2 }}
-                                variant="contained"
-                                onClick={() => handleCancelOrder(o._id)}
+                              <Popconfirm
+                                onConfirm={() => handleCancelOrder(o._id)}
+                                title="Xóa"
+                                description="Bạn chắc chắn muốn huỷ đơn hàng?"
+                                onCancel={cancel}
+                                okText="Có"
+                                cancelText="Không"
                               >
-                                Huỷ đơn
-                              </Button>
+                                <Button
+                                  sx={{ marginRight: 2 }}
+                                  variant="contained"
+                                >
+                                  Huỷ đơn
+                                </Button>
+                              </Popconfirm>
                             ) : (
                               ""
                             )}
@@ -265,6 +282,7 @@ export default function Follow() {
                           <StyledTableCell component="th" scope="row">
                             {o._id}
                           </StyledTableCell>
+                          <StyledTableCell>{o.createdAt}</StyledTableCell>
                           <StyledTableCell>{o.name}</StyledTableCell>
                           <StyledTableCell>{o.email}</StyledTableCell>
                           <StyledTableCell>0{o.phone}</StyledTableCell>
@@ -279,18 +297,15 @@ export default function Follow() {
                               onClick={(e) => showModal(o._id)}
                             ></See>
                             <Modal
-                              width="100%"
+                              width="70%"
                               title="Thông tin sản phẩm"
                               open={isModalOpen}
                               onCancel={handleCancel}
                             >
-                              <TableContainer className="cart-bg">
+                              <TableContainer className="follow-bg">
                                 <Table
                                   sx={{
-                                    maxWidth: "85%",
-                                    margin: 10,
-                                    borderRadius: 10,
-                                    background: "white",
+                                    maxWidth: "100%",
                                   }}
                                   aria-label="spanning table"
                                 >
@@ -316,35 +331,39 @@ export default function Follow() {
                                   </TableHead>
                                   <TableBody>
                                     {idProduct?.order?.map((o) => {
-                                      return (
-                                        <TableRow>
-                                          <TableCell>{o.nameProduct}</TableCell>
-                                          <TableCell>
-                                            <img
-                                              className="image-cart"
-                                              src={o.image}
-                                              alt=""
+                                      if (o.disable === false) {
+                                        return (
+                                          <TableRow>
+                                            <TableCell>
+                                              {o.nameProduct}
+                                            </TableCell>
+                                            <TableCell>
+                                              <img
+                                                className="image-cart"
+                                                src={o.image}
+                                                alt=""
+                                                align="center"
+                                              ></img>
+                                            </TableCell>
+                                            <TableCell
                                               align="center"
-                                            ></img>
-                                          </TableCell>
-                                          <TableCell
-                                            align="center"
-                                            className="btn"
-                                          >
-                                            <span className="btn-quantity">
-                                              {o.quantity}
-                                            </span>
-                                          </TableCell>
-                                          <TableCell align="center">
-                                            {VND.format(o.sellPrice)}
-                                          </TableCell>
-                                          <TableCell align="right">
-                                            {VND.format(
-                                              o.quantity * o.sellPrice
-                                            )}
-                                          </TableCell>
-                                        </TableRow>
-                                      );
+                                              className="btn"
+                                            >
+                                              <span className="btn-quantity">
+                                                {o.quantity}
+                                              </span>
+                                            </TableCell>
+                                            <TableCell align="center">
+                                              {VND.format(o.sellPrice)}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                              {VND.format(
+                                                o.quantity * o.sellPrice
+                                              )}
+                                            </TableCell>
+                                          </TableRow>
+                                        );
+                                      }
                                     })}
                                   </TableBody>
                                 </Table>
@@ -352,9 +371,21 @@ export default function Follow() {
                             </Modal>
                           </StyledTableCell>
                           <StyledTableCell>
-                            <Button sx={{ marginRight: 2 }} variant="contained">
-                              Huỷ đơn
-                            </Button>
+                            <Popconfirm
+                              onConfirm={() => handleCancelOrder(o._id)}
+                              title="Xóa"
+                              description="Bạn chắc chắn muốn huỷ đơn hàng?"
+                              onCancel={cancel}
+                              okText="Có"
+                              cancelText="Không"
+                            >
+                              <Button
+                                sx={{ marginRight: 2 }}
+                                variant="contained"
+                              >
+                                Huỷ đơn
+                              </Button>
+                            </Popconfirm>
                           </StyledTableCell>
                         </StyledTableRow>
                       );
@@ -365,6 +396,7 @@ export default function Follow() {
                           <StyledTableCell component="th" scope="row">
                             {o._id}
                           </StyledTableCell>
+                          <StyledTableCell>{o.createdAt}</StyledTableCell>
                           <StyledTableCell>{o.name}</StyledTableCell>
                           <StyledTableCell>{o.email}</StyledTableCell>
                           <StyledTableCell>0{o.phone}</StyledTableCell>
@@ -379,18 +411,15 @@ export default function Follow() {
                               onClick={(e) => showModal(o._id)}
                             ></See>
                             <Modal
-                              width="100%"
+                              width="70%"
                               title="Thông tin sản phẩm"
                               open={isModalOpen}
                               onCancel={handleCancel}
                             >
-                              <TableContainer className="cart-bg">
+                              <TableContainer className="follow-bg">
                                 <Table
                                   sx={{
-                                    maxWidth: "85%",
-                                    margin: 10,
-                                    borderRadius: 10,
-                                    background: "white",
+                                    maxWidth: "100%",
                                   }}
                                   aria-label="spanning table"
                                 >
@@ -416,35 +445,39 @@ export default function Follow() {
                                   </TableHead>
                                   <TableBody>
                                     {idProduct?.order?.map((o) => {
-                                      return (
-                                        <TableRow>
-                                          <TableCell>{o.nameProduct}</TableCell>
-                                          <TableCell>
-                                            <img
-                                              className="image-cart"
-                                              src={o.image}
-                                              alt=""
+                                      if (o.disable === false) {
+                                        return (
+                                          <TableRow>
+                                            <TableCell>
+                                              {o.nameProduct}
+                                            </TableCell>
+                                            <TableCell>
+                                              <img
+                                                className="image-cart"
+                                                src={o.image}
+                                                alt=""
+                                                align="center"
+                                              ></img>
+                                            </TableCell>
+                                            <TableCell
                                               align="center"
-                                            ></img>
-                                          </TableCell>
-                                          <TableCell
-                                            align="center"
-                                            className="btn"
-                                          >
-                                            <span className="btn-quantity">
-                                              {o.quantity}
-                                            </span>
-                                          </TableCell>
-                                          <TableCell align="center">
-                                            {VND.format(o.sellPrice)}
-                                          </TableCell>
-                                          <TableCell align="right">
-                                            {VND.format(
-                                              o.quantity * o.sellPrice
-                                            )}
-                                          </TableCell>
-                                        </TableRow>
-                                      );
+                                              className="btn"
+                                            >
+                                              <span className="btn-quantity">
+                                                {o.quantity}
+                                              </span>
+                                            </TableCell>
+                                            <TableCell align="center">
+                                              {VND.format(o.sellPrice)}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                              {VND.format(
+                                                o.quantity * o.sellPrice
+                                              )}
+                                            </TableCell>
+                                          </TableRow>
+                                        );
+                                      }
                                     })}
                                   </TableBody>
                                 </Table>
@@ -452,9 +485,21 @@ export default function Follow() {
                             </Modal>
                           </StyledTableCell>
                           <StyledTableCell>
-                            <Button sx={{ marginRight: 2 }} variant="contained">
-                              Huỷ đơn
-                            </Button>
+                            <Popconfirm
+                              onConfirm={() => handleCancelOrder(o._id)}
+                              title="Xóa"
+                              description="Bạn chắc chắn muốn huỷ đơn hàng?"
+                              onCancel={cancel}
+                              okText="Có"
+                              cancelText="Không"
+                            >
+                              <Button
+                                sx={{ marginRight: 2 }}
+                                variant="contained"
+                              >
+                                Huỷ đơn
+                              </Button>
+                            </Popconfirm>
                           </StyledTableCell>
                         </StyledTableRow>
                       );
@@ -465,6 +510,7 @@ export default function Follow() {
                           <StyledTableCell component="th" scope="row">
                             {o._id}
                           </StyledTableCell>
+                          <StyledTableCell>{o.createdAt}</StyledTableCell>
                           <StyledTableCell>{o.name}</StyledTableCell>
                           <StyledTableCell>{o.email}</StyledTableCell>
                           <StyledTableCell>0{o.phone}</StyledTableCell>
@@ -479,18 +525,15 @@ export default function Follow() {
                               onClick={(e) => showModal(o._id)}
                             ></See>
                             <Modal
-                              width="100%"
+                              width="70%"
                               title="Thông tin sản phẩm"
                               open={isModalOpen}
                               onCancel={handleCancel}
                             >
-                              <TableContainer className="cart-bg">
+                              <TableContainer className="follow-bg">
                                 <Table
                                   sx={{
-                                    maxWidth: "85%",
-                                    margin: 10,
-                                    borderRadius: 10,
-                                    background: "white",
+                                    maxWidth: "100%",
                                   }}
                                   aria-label="spanning table"
                                 >
@@ -516,35 +559,39 @@ export default function Follow() {
                                   </TableHead>
                                   <TableBody>
                                     {idProduct?.order?.map((o) => {
-                                      return (
-                                        <TableRow>
-                                          <TableCell>{o.nameProduct}</TableCell>
-                                          <TableCell>
-                                            <img
-                                              className="image-cart"
-                                              src={o.image}
-                                              alt=""
+                                      if (o.disable === false) {
+                                        return (
+                                          <TableRow>
+                                            <TableCell>
+                                              {o.nameProduct}
+                                            </TableCell>
+                                            <TableCell>
+                                              <img
+                                                className="image-cart"
+                                                src={o.image}
+                                                alt=""
+                                                align="center"
+                                              ></img>
+                                            </TableCell>
+                                            <TableCell
                                               align="center"
-                                            ></img>
-                                          </TableCell>
-                                          <TableCell
-                                            align="center"
-                                            className="btn"
-                                          >
-                                            <span className="btn-quantity">
-                                              {o.quantity}
-                                            </span>
-                                          </TableCell>
-                                          <TableCell align="center">
-                                            {VND.format(o.sellPrice)}
-                                          </TableCell>
-                                          <TableCell align="right">
-                                            {VND.format(
-                                              o.quantity * o.sellPrice
-                                            )}
-                                          </TableCell>
-                                        </TableRow>
-                                      );
+                                              className="btn"
+                                            >
+                                              <span className="btn-quantity">
+                                                {o.quantity}
+                                              </span>
+                                            </TableCell>
+                                            <TableCell align="center">
+                                              {VND.format(o.sellPrice)}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                              {VND.format(
+                                                o.quantity * o.sellPrice
+                                              )}
+                                            </TableCell>
+                                          </TableRow>
+                                        );
+                                      }
                                     })}
                                   </TableBody>
                                 </Table>
@@ -560,6 +607,7 @@ export default function Follow() {
                           <StyledTableCell component="th" scope="row">
                             {o._id}
                           </StyledTableCell>
+                          <StyledTableCell>{o.createdAt}</StyledTableCell>
                           <StyledTableCell>{o.name}</StyledTableCell>
                           <StyledTableCell>{o.email}</StyledTableCell>
                           <StyledTableCell>0{o.phone}</StyledTableCell>
@@ -574,18 +622,15 @@ export default function Follow() {
                               onClick={(e) => showModal(o._id)}
                             ></See>
                             <Modal
-                              width="100%"
+                              width="70%"
                               title="Thông tin sản phẩm"
                               open={isModalOpen}
                               onCancel={handleCancel}
                             >
-                              <TableContainer className="cart-bg">
+                              <TableContainer className="follow-bg">
                                 <Table
                                   sx={{
-                                    maxWidth: "85%",
-                                    margin: 10,
-                                    borderRadius: 10,
-                                    background: "white",
+                                    maxWidth: "100%",
                                   }}
                                   aria-label="spanning table"
                                 >
@@ -611,35 +656,39 @@ export default function Follow() {
                                   </TableHead>
                                   <TableBody>
                                     {idProduct?.order?.map((o) => {
-                                      return (
-                                        <TableRow>
-                                          <TableCell>{o.nameProduct}</TableCell>
-                                          <TableCell>
-                                            <img
-                                              className="image-cart"
-                                              src={o.image}
-                                              alt=""
+                                      if (o.disable === false) {
+                                        return (
+                                          <TableRow>
+                                            <TableCell>
+                                              {o.nameProduct}
+                                            </TableCell>
+                                            <TableCell>
+                                              <img
+                                                className="image-cart"
+                                                src={o.image}
+                                                alt=""
+                                                align="center"
+                                              ></img>
+                                            </TableCell>
+                                            <TableCell
                                               align="center"
-                                            ></img>
-                                          </TableCell>
-                                          <TableCell
-                                            align="center"
-                                            className="btn"
-                                          >
-                                            <span className="btn-quantity">
-                                              {o.quantity}
-                                            </span>
-                                          </TableCell>
-                                          <TableCell align="center">
-                                            {VND.format(o.sellPrice)}
-                                          </TableCell>
-                                          <TableCell align="right">
-                                            {VND.format(
-                                              o.quantity * o.sellPrice
-                                            )}
-                                          </TableCell>
-                                        </TableRow>
-                                      );
+                                              className="btn"
+                                            >
+                                              <span className="btn-quantity">
+                                                {o.quantity}
+                                              </span>
+                                            </TableCell>
+                                            <TableCell align="center">
+                                              {VND.format(o.sellPrice)}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                              {VND.format(
+                                                o.quantity * o.sellPrice
+                                              )}
+                                            </TableCell>
+                                          </TableRow>
+                                        );
+                                      }
                                     })}
                                   </TableBody>
                                 </Table>
@@ -655,6 +704,7 @@ export default function Follow() {
                           <StyledTableCell component="th" scope="row">
                             {o._id}
                           </StyledTableCell>
+                          <StyledTableCell>{o.createdAt}</StyledTableCell>
                           <StyledTableCell>{o.name}</StyledTableCell>
                           <StyledTableCell>{o.email}</StyledTableCell>
                           <StyledTableCell>0{o.phone}</StyledTableCell>
@@ -669,18 +719,15 @@ export default function Follow() {
                               onClick={(e) => showModal(o._id)}
                             ></See>
                             <Modal
-                              width="100%"
+                              width="70%"
                               title="Thông tin sản phẩm"
                               open={isModalOpen}
                               onCancel={handleCancel}
                             >
-                              <TableContainer className="cart-bg">
+                              <TableContainer className="follow-bg">
                                 <Table
                                   sx={{
-                                    maxWidth: "85%",
-                                    margin: 10,
-                                    borderRadius: 10,
-                                    background: "white",
+                                    maxWidth: "100%",
                                   }}
                                   aria-label="spanning table"
                                 >
@@ -706,35 +753,39 @@ export default function Follow() {
                                   </TableHead>
                                   <TableBody>
                                     {idProduct?.order?.map((o) => {
-                                      return (
-                                        <TableRow>
-                                          <TableCell>{o.nameProduct}</TableCell>
-                                          <TableCell>
-                                            <img
-                                              className="image-cart"
-                                              src={o.image}
-                                              alt=""
+                                      if (o.disable === false) {
+                                        return (
+                                          <TableRow>
+                                            <TableCell>
+                                              {o.nameProduct}
+                                            </TableCell>
+                                            <TableCell>
+                                              <img
+                                                className="image-cart"
+                                                src={o.image}
+                                                alt=""
+                                                align="center"
+                                              ></img>
+                                            </TableCell>
+                                            <TableCell
                                               align="center"
-                                            ></img>
-                                          </TableCell>
-                                          <TableCell
-                                            align="center"
-                                            className="btn"
-                                          >
-                                            <span className="btn-quantity">
-                                              {o.quantity}
-                                            </span>
-                                          </TableCell>
-                                          <TableCell align="center">
-                                            {VND.format(o.sellPrice)}
-                                          </TableCell>
-                                          <TableCell align="right">
-                                            {VND.format(
-                                              o.quantity * o.sellPrice
-                                            )}
-                                          </TableCell>
-                                        </TableRow>
-                                      );
+                                              className="btn"
+                                            >
+                                              <span className="btn-quantity">
+                                                {o.quantity}
+                                              </span>
+                                            </TableCell>
+                                            <TableCell align="center">
+                                              {VND.format(o.sellPrice)}
+                                            </TableCell>
+                                            <TableCell align="right">
+                                              {VND.format(
+                                                o.quantity * o.sellPrice
+                                              )}
+                                            </TableCell>
+                                          </TableRow>
+                                        );
+                                      }
                                     })}
                                   </TableBody>
                                 </Table>

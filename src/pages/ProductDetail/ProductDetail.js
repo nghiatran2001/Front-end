@@ -107,10 +107,6 @@ export default function ProductDetail() {
                 </Typography>
                 <Box>
                   <Box sx={{ paddingLeft: 3 }}>
-                    <Typography gutterBottom>
-                      Kho: <span>{product.quantity}</span>
-                    </Typography>
-
                     <Typography
                       gutterBottom
                       className="text"

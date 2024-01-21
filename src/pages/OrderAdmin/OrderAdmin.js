@@ -16,6 +16,8 @@ import { Modal } from "antd";
 import DoubleRight from "@mui/icons-material/KeyboardDoubleArrowRightOutlined";
 import DoubleLeft from "@mui/icons-material/KeyboardDoubleArrowLeftOutlined";
 import { Link } from "react-router-dom";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
 import DropDown from "@mui/icons-material/ArrowDropDownOutlined";
 
 import { payment as paymentAPI } from "../../API";
@@ -40,6 +42,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function OrderAdmin() {
+  const [value, setValue] = React.useState(0);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
   const VND = new Intl.NumberFormat("vi-VN", {
     style: "currency",
     currency: "VND",
@@ -168,9 +174,24 @@ export default function OrderAdmin() {
           <Typography variant="h5" sx={{ marginBottom: 5 }}>
             Danh sách đơn hàng
           </Typography>
+          <Typography>
+            <Tabs
+              sx={{ marginBottom: 2 }}
+              value={value}
+              onChange={handleChange}
+              centered
+            >
+              <Tab className="follow-tab" label="Tất cả"></Tab>
+              <Tab className="follow-tab" label="Đang xử lý"></Tab>
+              <Tab className="follow-tab" label="Đã xác nhận"></Tab>
+              <Tab className="follow-tab" label="Đang giao"></Tab>
+              <Tab className="follow-tab" label="Đã giao"></Tab>
+              <Tab className="follow-tab" label="Đã hủy"></Tab>
+            </Tabs>
+          </Typography>
           <TableContainer
             component={Paper}
-            sx={{ maxWidth: "1400px", borderRadius: 5 }}
+            sx={{ maxWidth: "1200px", borderRadius: 5 }}
           >
             <Table aria-label="customized table">
               <TableHead>
@@ -181,151 +202,697 @@ export default function OrderAdmin() {
                     onClick={() => sorting("name")}
                   >
                     Người Nhận
-                    <DropDown></DropDown>
+                    <p>
+                      <DropDown></DropDown>
+                    </p>
                   </StyledTableCell>
                   <StyledTableCell
                     className="product-down"
                     onClick={() => sorting("email")}
                   >
                     Email
-                    <DropDown></DropDown>
+                    <p>
+                      <DropDown></DropDown>
+                    </p>
                   </StyledTableCell>
                   <StyledTableCell
                     className="product-down"
                     onClick={() => sorting2("phone")}
                   >
-                    Số Điện Thoại
-                    <DropDown></DropDown>
+                    Điện Thoại
+                    <p>
+                      <DropDown></DropDown>
+                    </p>
                   </StyledTableCell>
                   <StyledTableCell
                     className="product-down"
                     onClick={() => sorting("address")}
                   >
-                    Địa chỉ
-                    <DropDown></DropDown>
+                    Địa Chỉ
+                    <p>
+                      <DropDown></DropDown>
+                    </p>
                   </StyledTableCell>
                   <StyledTableCell
                     className="product-down"
                     onClick={() => sorting2(parseInt("total"))}
                   >
-                    Tổng tiền
-                    <DropDown></DropDown>
+                    Tổng Tiền
+                    <p>
+                      <DropDown></DropDown>
+                    </p>
                   </StyledTableCell>
                   <StyledTableCell
                     className="product-down"
                     onClick={() => sorting("status")}
                   >
                     Trạng thái
-                    <DropDown></DropDown>
+                    <p>
+                      <DropDown></DropDown>
+                    </p>
                   </StyledTableCell>
-                  <StyledTableCell>Chi tiết sản phẩm</StyledTableCell>
-                  <StyledTableCell>Thao tác</StyledTableCell>
+                  <StyledTableCell>Chi Tiết </StyledTableCell>
+                  <StyledTableCell>Thao Tác</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {orders.map((o, i) => {
-                  return (
-                    <StyledTableRow key={i}>
-                      <StyledTableCell component="th" scope="row">
-                        {o._id}
-                      </StyledTableCell>
-                      <StyledTableCell sx={{ maxWidth: "150px" }}>
-                        {o.name}
-                      </StyledTableCell>
-                      <StyledTableCell sx={{ minWidth: "200px" }}>
-                        {o.email}
-                      </StyledTableCell>
-                      <StyledTableCell>0{o.phone}</StyledTableCell>
-                      <StyledTableCell>{o.address}</StyledTableCell>
-                      <StyledTableCell>{VND.format(o.total)}</StyledTableCell>
-                      <StyledTableCell>{o.status}</StyledTableCell>
-                      <StyledTableCell align="center">
-                        <See
-                          className="orderadm-delete"
-                          onClick={(e) => showModal(o._id)}
-                        ></See>
-                        <Modal
-                          width="70%"
-                          title="Thông tin sản phẩm"
-                          open={isModalOpen}
-                          onCancel={handleCancel}
-                          onOk={handleOk}
-                        >
-                          <TableContainer className="orderadmin-bg">
-                            <Table
-                              sx={{
-                                maxWidth: "100%",
-                              }}
-                              aria-label="spanning table"
-                            >
-                              <TableHead>
-                                <TableRow>
-                                  <TableCell>
-                                    <h3>Tên sản phẩm</h3>
-                                  </TableCell>
-                                  <TableCell>
-                                    <h3>Hình ảnh</h3>
-                                  </TableCell>
-                                  <TableCell align="center">
-                                    <h3>Số lượng</h3>
-                                  </TableCell>
-                                  <TableCell align="center">
-                                    <h3>Đơn giá</h3>
-                                  </TableCell>
-                                  <TableCell align="right">
-                                    <h3>Thành tiền</h3>
-                                  </TableCell>
-                                  <TableCell align="right"></TableCell>
-                                </TableRow>
-                              </TableHead>
-                              <TableBody>
-                                {idProduct?.order?.map((o) => {
-                                  if (o.disable === false) {
-                                    return (
-                                      <TableRow>
-                                        <TableCell>{o.nameProduct}</TableCell>
-                                        <TableCell>
-                                          <img
-                                            className="image-cart"
-                                            src={o.image}
-                                            alt=""
+                  if (value === 0) {
+                    return (
+                      <StyledTableRow key={i}>
+                        <StyledTableCell component="th" scope="row">
+                          {o._id}
+                        </StyledTableCell>
+                        <StyledTableCell sx={{ maxWidth: "150px" }}>
+                          {o.name}
+                        </StyledTableCell>
+                        <StyledTableCell sx={{ minWidth: "200px" }}>
+                          {o.email}
+                        </StyledTableCell>
+                        <StyledTableCell>0{o.phone}</StyledTableCell>
+                        <StyledTableCell>{o.address}</StyledTableCell>
+                        <StyledTableCell>{VND.format(o.total)}</StyledTableCell>
+                        <StyledTableCell>{o.status}</StyledTableCell>
+                        <StyledTableCell align="center">
+                          <See
+                            className="orderadm-delete"
+                            onClick={(e) => showModal(o._id)}
+                          ></See>
+                          <Modal
+                            width="70%"
+                            title="Thông tin sản phẩm"
+                            open={isModalOpen}
+                            onCancel={handleCancel}
+                            onOk={handleOk}
+                          >
+                            <TableContainer className="orderadmin-bg">
+                              <Table
+                                sx={{
+                                  maxWidth: "100%",
+                                }}
+                                aria-label="spanning table"
+                              >
+                                <TableHead>
+                                  <TableRow>
+                                    <TableCell>
+                                      <h3>Tên sản phẩm</h3>
+                                    </TableCell>
+                                    <TableCell>
+                                      <h3>Hình ảnh</h3>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                      <h3>Số lượng</h3>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                      <h3>Đơn giá</h3>
+                                    </TableCell>
+                                    <TableCell align="right">
+                                      <h3>Thành tiền</h3>
+                                    </TableCell>
+                                    <TableCell align="right"></TableCell>
+                                  </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                  {idProduct?.order?.map((o) => {
+                                    if (o.disable === false) {
+                                      return (
+                                        <TableRow>
+                                          <TableCell>{o.nameProduct}</TableCell>
+                                          <TableCell>
+                                            <img
+                                              className="image-cart"
+                                              src={o.image}
+                                              alt=""
+                                              align="center"
+                                            ></img>
+                                          </TableCell>
+                                          <TableCell
                                             align="center"
-                                          ></img>
-                                        </TableCell>
-                                        <TableCell
-                                          align="center"
-                                          className="btn"
-                                        >
-                                          <span className="btn-quantity">
-                                            {o.quantity}
-                                          </span>
-                                        </TableCell>
-                                        <TableCell align="center">
-                                          {VND.format(o.sellPrice)}
-                                        </TableCell>
-                                        <TableCell align="right">
-                                          {VND.format(o.quantity * o.sellPrice)}
-                                        </TableCell>
-                                      </TableRow>
-                                    );
-                                  }
-                                })}
-                              </TableBody>
-                            </Table>
-                          </TableContainer>
-                        </Modal>
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
-                        {o.status === "Đã huỷ" || o.status === "Đã giao" ? (
-                          ""
-                        ) : (
-                          <Link to={`/updateorderadmin?idOrder=${o._id}`}>
-                            <Update className="orderadm-delete"></Update>
-                          </Link>
-                        )}
-                      </StyledTableCell>
-                    </StyledTableRow>
-                  );
+                                            className="btn"
+                                          >
+                                            <span className="btn-quantity">
+                                              {o.quantity}
+                                            </span>
+                                          </TableCell>
+                                          <TableCell align="center">
+                                            {VND.format(o.sellPrice)}
+                                          </TableCell>
+                                          <TableCell align="right">
+                                            {VND.format(
+                                              o.quantity * o.sellPrice
+                                            )}
+                                          </TableCell>
+                                        </TableRow>
+                                      );
+                                    }
+                                  })}
+                                </TableBody>
+                              </Table>
+                            </TableContainer>
+                          </Modal>
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          {o.status === "Đã huỷ" || o.status === "Đã giao" ? (
+                            ""
+                          ) : (
+                            <Link to={`/updateorderadmin?idOrder=${o._id}`}>
+                              <Update className="orderadm-delete"></Update>
+                            </Link>
+                          )}
+                        </StyledTableCell>
+                      </StyledTableRow>
+                    );
+                  }
+                  if (value === 1 && o.status === "Đang xử lý") {
+                    return (
+                      <StyledTableRow key={i}>
+                        <StyledTableCell component="th" scope="row">
+                          {o._id}
+                        </StyledTableCell>
+                        <StyledTableCell sx={{ maxWidth: "150px" }}>
+                          {o.name}
+                        </StyledTableCell>
+                        <StyledTableCell sx={{ minWidth: "200px" }}>
+                          {o.email}
+                        </StyledTableCell>
+                        <StyledTableCell>0{o.phone}</StyledTableCell>
+                        <StyledTableCell>{o.address}</StyledTableCell>
+                        <StyledTableCell>{VND.format(o.total)}</StyledTableCell>
+                        <StyledTableCell>{o.status}</StyledTableCell>
+                        <StyledTableCell align="center">
+                          <See
+                            className="orderadm-delete"
+                            onClick={(e) => showModal(o._id)}
+                          ></See>
+                          <Modal
+                            width="70%"
+                            title="Thông tin sản phẩm"
+                            open={isModalOpen}
+                            onCancel={handleCancel}
+                            onOk={handleOk}
+                          >
+                            <TableContainer className="orderadmin-bg">
+                              <Table
+                                sx={{
+                                  maxWidth: "100%",
+                                }}
+                                aria-label="spanning table"
+                              >
+                                <TableHead>
+                                  <TableRow>
+                                    <TableCell>
+                                      <h3>Tên sản phẩm</h3>
+                                    </TableCell>
+                                    <TableCell>
+                                      <h3>Hình ảnh</h3>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                      <h3>Số lượng</h3>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                      <h3>Đơn giá</h3>
+                                    </TableCell>
+                                    <TableCell align="right">
+                                      <h3>Thành tiền</h3>
+                                    </TableCell>
+                                    <TableCell align="right"></TableCell>
+                                  </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                  {idProduct?.order?.map((o) => {
+                                    if (o.disable === false) {
+                                      return (
+                                        <TableRow>
+                                          <TableCell>{o.nameProduct}</TableCell>
+                                          <TableCell>
+                                            <img
+                                              className="image-cart"
+                                              src={o.image}
+                                              alt=""
+                                              align="center"
+                                            ></img>
+                                          </TableCell>
+                                          <TableCell
+                                            align="center"
+                                            className="btn"
+                                          >
+                                            <span className="btn-quantity">
+                                              {o.quantity}
+                                            </span>
+                                          </TableCell>
+                                          <TableCell align="center">
+                                            {VND.format(o.sellPrice)}
+                                          </TableCell>
+                                          <TableCell align="right">
+                                            {VND.format(
+                                              o.quantity * o.sellPrice
+                                            )}
+                                          </TableCell>
+                                        </TableRow>
+                                      );
+                                    }
+                                  })}
+                                </TableBody>
+                              </Table>
+                            </TableContainer>
+                          </Modal>
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          {o.status === "Đã huỷ" || o.status === "Đã giao" ? (
+                            ""
+                          ) : (
+                            <Link to={`/updateorderadmin?idOrder=${o._id}`}>
+                              <Update className="orderadm-delete"></Update>
+                            </Link>
+                          )}
+                        </StyledTableCell>
+                      </StyledTableRow>
+                    );
+                  }
+                  if (value === 2 && o.status === "Đã xác nhận") {
+                    return (
+                      <StyledTableRow key={i}>
+                        <StyledTableCell component="th" scope="row">
+                          {o._id}
+                        </StyledTableCell>
+                        <StyledTableCell sx={{ maxWidth: "150px" }}>
+                          {o.name}
+                        </StyledTableCell>
+                        <StyledTableCell sx={{ minWidth: "200px" }}>
+                          {o.email}
+                        </StyledTableCell>
+                        <StyledTableCell>0{o.phone}</StyledTableCell>
+                        <StyledTableCell>{o.address}</StyledTableCell>
+                        <StyledTableCell>{VND.format(o.total)}</StyledTableCell>
+                        <StyledTableCell>{o.status}</StyledTableCell>
+                        <StyledTableCell align="center">
+                          <See
+                            className="orderadm-delete"
+                            onClick={(e) => showModal(o._id)}
+                          ></See>
+                          <Modal
+                            width="70%"
+                            title="Thông tin sản phẩm"
+                            open={isModalOpen}
+                            onCancel={handleCancel}
+                            onOk={handleOk}
+                          >
+                            <TableContainer className="orderadmin-bg">
+                              <Table
+                                sx={{
+                                  maxWidth: "100%",
+                                }}
+                                aria-label="spanning table"
+                              >
+                                <TableHead>
+                                  <TableRow>
+                                    <TableCell>
+                                      <h3>Tên sản phẩm</h3>
+                                    </TableCell>
+                                    <TableCell>
+                                      <h3>Hình ảnh</h3>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                      <h3>Số lượng</h3>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                      <h3>Đơn giá</h3>
+                                    </TableCell>
+                                    <TableCell align="right">
+                                      <h3>Thành tiền</h3>
+                                    </TableCell>
+                                    <TableCell align="right"></TableCell>
+                                  </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                  {idProduct?.order?.map((o) => {
+                                    if (o.disable === false) {
+                                      return (
+                                        <TableRow>
+                                          <TableCell>{o.nameProduct}</TableCell>
+                                          <TableCell>
+                                            <img
+                                              className="image-cart"
+                                              src={o.image}
+                                              alt=""
+                                              align="center"
+                                            ></img>
+                                          </TableCell>
+                                          <TableCell
+                                            align="center"
+                                            className="btn"
+                                          >
+                                            <span className="btn-quantity">
+                                              {o.quantity}
+                                            </span>
+                                          </TableCell>
+                                          <TableCell align="center">
+                                            {VND.format(o.sellPrice)}
+                                          </TableCell>
+                                          <TableCell align="right">
+                                            {VND.format(
+                                              o.quantity * o.sellPrice
+                                            )}
+                                          </TableCell>
+                                        </TableRow>
+                                      );
+                                    }
+                                  })}
+                                </TableBody>
+                              </Table>
+                            </TableContainer>
+                          </Modal>
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          {o.status === "Đã huỷ" || o.status === "Đã giao" ? (
+                            ""
+                          ) : (
+                            <Link to={`/updateorderadmin?idOrder=${o._id}`}>
+                              <Update className="orderadm-delete"></Update>
+                            </Link>
+                          )}
+                        </StyledTableCell>
+                      </StyledTableRow>
+                    );
+                  }
+                  if (value === 3 && o.status === "Đang giao") {
+                    return (
+                      <StyledTableRow key={i}>
+                        <StyledTableCell component="th" scope="row">
+                          {o._id}
+                        </StyledTableCell>
+                        <StyledTableCell sx={{ maxWidth: "150px" }}>
+                          {o.name}
+                        </StyledTableCell>
+                        <StyledTableCell sx={{ minWidth: "200px" }}>
+                          {o.email}
+                        </StyledTableCell>
+                        <StyledTableCell>0{o.phone}</StyledTableCell>
+                        <StyledTableCell>{o.address}</StyledTableCell>
+                        <StyledTableCell>{VND.format(o.total)}</StyledTableCell>
+                        <StyledTableCell>{o.status}</StyledTableCell>
+                        <StyledTableCell align="center">
+                          <See
+                            className="orderadm-delete"
+                            onClick={(e) => showModal(o._id)}
+                          ></See>
+                          <Modal
+                            width="70%"
+                            title="Thông tin sản phẩm"
+                            open={isModalOpen}
+                            onCancel={handleCancel}
+                            onOk={handleOk}
+                          >
+                            <TableContainer className="orderadmin-bg">
+                              <Table
+                                sx={{
+                                  maxWidth: "100%",
+                                }}
+                                aria-label="spanning table"
+                              >
+                                <TableHead>
+                                  <TableRow>
+                                    <TableCell>
+                                      <h3>Tên sản phẩm</h3>
+                                    </TableCell>
+                                    <TableCell>
+                                      <h3>Hình ảnh</h3>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                      <h3>Số lượng</h3>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                      <h3>Đơn giá</h3>
+                                    </TableCell>
+                                    <TableCell align="right">
+                                      <h3>Thành tiền</h3>
+                                    </TableCell>
+                                    <TableCell align="right"></TableCell>
+                                  </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                  {idProduct?.order?.map((o) => {
+                                    if (o.disable === false) {
+                                      return (
+                                        <TableRow>
+                                          <TableCell>{o.nameProduct}</TableCell>
+                                          <TableCell>
+                                            <img
+                                              className="image-cart"
+                                              src={o.image}
+                                              alt=""
+                                              align="center"
+                                            ></img>
+                                          </TableCell>
+                                          <TableCell
+                                            align="center"
+                                            className="btn"
+                                          >
+                                            <span className="btn-quantity">
+                                              {o.quantity}
+                                            </span>
+                                          </TableCell>
+                                          <TableCell align="center">
+                                            {VND.format(o.sellPrice)}
+                                          </TableCell>
+                                          <TableCell align="right">
+                                            {VND.format(
+                                              o.quantity * o.sellPrice
+                                            )}
+                                          </TableCell>
+                                        </TableRow>
+                                      );
+                                    }
+                                  })}
+                                </TableBody>
+                              </Table>
+                            </TableContainer>
+                          </Modal>
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          {o.status === "Đã huỷ" || o.status === "Đã giao" ? (
+                            ""
+                          ) : (
+                            <Link to={`/updateorderadmin?idOrder=${o._id}`}>
+                              <Update className="orderadm-delete"></Update>
+                            </Link>
+                          )}
+                        </StyledTableCell>
+                      </StyledTableRow>
+                    );
+                  }
+                  if (value === 4 && o.status === "Đã giao") {
+                    return (
+                      <StyledTableRow key={i}>
+                        <StyledTableCell component="th" scope="row">
+                          {o._id}
+                        </StyledTableCell>
+                        <StyledTableCell sx={{ maxWidth: "150px" }}>
+                          {o.name}
+                        </StyledTableCell>
+                        <StyledTableCell sx={{ minWidth: "200px" }}>
+                          {o.email}
+                        </StyledTableCell>
+                        <StyledTableCell>0{o.phone}</StyledTableCell>
+                        <StyledTableCell>{o.address}</StyledTableCell>
+                        <StyledTableCell>{VND.format(o.total)}</StyledTableCell>
+                        <StyledTableCell>{o.status}</StyledTableCell>
+                        <StyledTableCell align="center">
+                          <See
+                            className="orderadm-delete"
+                            onClick={(e) => showModal(o._id)}
+                          ></See>
+                          <Modal
+                            width="70%"
+                            title="Thông tin sản phẩm"
+                            open={isModalOpen}
+                            onCancel={handleCancel}
+                            onOk={handleOk}
+                          >
+                            <TableContainer className="orderadmin-bg">
+                              <Table
+                                sx={{
+                                  maxWidth: "100%",
+                                }}
+                                aria-label="spanning table"
+                              >
+                                <TableHead>
+                                  <TableRow>
+                                    <TableCell>
+                                      <h3>Tên sản phẩm</h3>
+                                    </TableCell>
+                                    <TableCell>
+                                      <h3>Hình ảnh</h3>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                      <h3>Số lượng</h3>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                      <h3>Đơn giá</h3>
+                                    </TableCell>
+                                    <TableCell align="right">
+                                      <h3>Thành tiền</h3>
+                                    </TableCell>
+                                    <TableCell align="right"></TableCell>
+                                  </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                  {idProduct?.order?.map((o) => {
+                                    if (o.disable === false) {
+                                      return (
+                                        <TableRow>
+                                          <TableCell>{o.nameProduct}</TableCell>
+                                          <TableCell>
+                                            <img
+                                              className="image-cart"
+                                              src={o.image}
+                                              alt=""
+                                              align="center"
+                                            ></img>
+                                          </TableCell>
+                                          <TableCell
+                                            align="center"
+                                            className="btn"
+                                          >
+                                            <span className="btn-quantity">
+                                              {o.quantity}
+                                            </span>
+                                          </TableCell>
+                                          <TableCell align="center">
+                                            {VND.format(o.sellPrice)}
+                                          </TableCell>
+                                          <TableCell align="right">
+                                            {VND.format(
+                                              o.quantity * o.sellPrice
+                                            )}
+                                          </TableCell>
+                                        </TableRow>
+                                      );
+                                    }
+                                  })}
+                                </TableBody>
+                              </Table>
+                            </TableContainer>
+                          </Modal>
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          {o.status === "Đã huỷ" || o.status === "Đã giao" ? (
+                            ""
+                          ) : (
+                            <Link to={`/updateorderadmin?idOrder=${o._id}`}>
+                              <Update className="orderadm-delete"></Update>
+                            </Link>
+                          )}
+                        </StyledTableCell>
+                      </StyledTableRow>
+                    );
+                  }
+                  if (value === 5 && o.status === "Đã huỷ") {
+                    return (
+                      <StyledTableRow key={i}>
+                        <StyledTableCell component="th" scope="row">
+                          {o._id}
+                        </StyledTableCell>
+                        <StyledTableCell sx={{ maxWidth: "150px" }}>
+                          {o.name}
+                        </StyledTableCell>
+                        <StyledTableCell sx={{ minWidth: "200px" }}>
+                          {o.email}
+                        </StyledTableCell>
+                        <StyledTableCell>0{o.phone}</StyledTableCell>
+                        <StyledTableCell>{o.address}</StyledTableCell>
+                        <StyledTableCell>{VND.format(o.total)}</StyledTableCell>
+                        <StyledTableCell>{o.status}</StyledTableCell>
+                        <StyledTableCell align="center">
+                          <See
+                            className="orderadm-delete"
+                            onClick={(e) => showModal(o._id)}
+                          ></See>
+                          <Modal
+                            width="70%"
+                            title="Thông tin sản phẩm"
+                            open={isModalOpen}
+                            onCancel={handleCancel}
+                            onOk={handleOk}
+                          >
+                            <TableContainer className="orderadmin-bg">
+                              <Table
+                                sx={{
+                                  maxWidth: "100%",
+                                }}
+                                aria-label="spanning table"
+                              >
+                                <TableHead>
+                                  <TableRow>
+                                    <TableCell>
+                                      <h3>Tên sản phẩm</h3>
+                                    </TableCell>
+                                    <TableCell>
+                                      <h3>Hình ảnh</h3>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                      <h3>Số lượng</h3>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                      <h3>Đơn giá</h3>
+                                    </TableCell>
+                                    <TableCell align="right">
+                                      <h3>Thành tiền</h3>
+                                    </TableCell>
+                                    <TableCell align="right"></TableCell>
+                                  </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                  {idProduct?.order?.map((o) => {
+                                    if (o.disable === false) {
+                                      return (
+                                        <TableRow>
+                                          <TableCell>{o.nameProduct}</TableCell>
+                                          <TableCell>
+                                            <img
+                                              className="image-cart"
+                                              src={o.image}
+                                              alt=""
+                                              align="center"
+                                            ></img>
+                                          </TableCell>
+                                          <TableCell
+                                            align="center"
+                                            className="btn"
+                                          >
+                                            <span className="btn-quantity">
+                                              {o.quantity}
+                                            </span>
+                                          </TableCell>
+                                          <TableCell align="center">
+                                            {VND.format(o.sellPrice)}
+                                          </TableCell>
+                                          <TableCell align="right">
+                                            {VND.format(
+                                              o.quantity * o.sellPrice
+                                            )}
+                                          </TableCell>
+                                        </TableRow>
+                                      );
+                                    }
+                                  })}
+                                </TableBody>
+                              </Table>
+                            </TableContainer>
+                          </Modal>
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          {o.status === "Đã huỷ" || o.status === "Đã giao" ? (
+                            ""
+                          ) : (
+                            <Link to={`/updateorderadmin?idOrder=${o._id}`}>
+                              <Update className="orderadm-delete"></Update>
+                            </Link>
+                          )}
+                        </StyledTableCell>
+                      </StyledTableRow>
+                    );
+                  }
                 })}
               </TableBody>
             </Table>

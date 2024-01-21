@@ -73,17 +73,35 @@ export default function AddProduct() {
   const handleAddProduct = async (e) => {
     e.preventDefault();
     try {
-      if (
-        nameProduct === ""
-        // nameBrand === "" ||
-        // originPrice === "" ||
-        // sellPrice === "" ||
-        // quantity === "" ||
-        // description === "" ||
-      ) {
+      if (nameProduct === "") {
         api.open({
           type: "error",
-          message: "Vui lòng tên sản phẩm.",
+          message: "Vui lòng nhập tên sản phẩm.",
+        });
+      } else if (nameCategory === "") {
+        api.open({
+          type: "error",
+          message: "Vui lòng chọn loại.",
+        });
+      } else if (nameBrand === "") {
+        api.open({
+          type: "error",
+          message: "Vui lòng chọn hãng.",
+        });
+      } else if (originPrice === "") {
+        api.open({
+          type: "error",
+          message: "Vui lòng nhập giá gốc.",
+        });
+      } else if (sellPrice === "") {
+        api.open({
+          type: "error",
+          message: "Vui lòng nhập giá bán.",
+        });
+      } else if (quantity === "") {
+        api.open({
+          type: "error",
+          message: "Vui lòng nhập số lượng.",
         });
       } else if (description === "") {
         api.open({

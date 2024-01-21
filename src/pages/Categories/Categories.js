@@ -163,6 +163,7 @@ export default function Categories() {
                 <TableRow>
                   <StyledTableCell align="center">STT</StyledTableCell>
                   <StyledTableCell
+                    sx={{ maxWidth: "200px" }}
                     align="center"
                     className="down"
                     onClick={() => sorting("nameCategory")}
@@ -170,21 +171,11 @@ export default function Categories() {
                     Thể loại
                     <DropDown></DropDown>
                   </StyledTableCell>
-                  <StyledTableCell
-                    align="center"
-                    className="down"
-                    onClick={() => sorting("slug")}
-                  >
+                  <StyledTableCell align="center" className="down">
                     Tiêu đề
-                    <DropDown></DropDown>
                   </StyledTableCell>
-                  <StyledTableCell
-                    align="center"
-                    className="down"
-                    onClick={() => sorting("description")}
-                  >
+                  <StyledTableCell align="center" className="down">
                     Mô tả
-                    <DropDown></DropDown>
                   </StyledTableCell>
                   <StyledTableCell align="center">Thao tác</StyledTableCell>
                 </TableRow>
@@ -197,13 +188,22 @@ export default function Categories() {
                       <StyledTableCell align="center">
                         {index + 1}
                       </StyledTableCell>
-                      <StyledTableCell align="center">
+                      <StyledTableCell
+                        sx={{ minWidth: "200px" }}
+                        align="center"
+                      >
                         {category.nameCategory}
                       </StyledTableCell>
-                      <StyledTableCell align="center">
+                      <StyledTableCell
+                        sx={{ minWidth: "150px" }}
+                        align="center"
+                      >
                         {category.slug}
                       </StyledTableCell>
-                      <StyledTableCell align="center">
+                      <StyledTableCell
+                        align="center"
+                        sx={{ maxWidth: "500px" }}
+                      >
                         {category.description}
                       </StyledTableCell>
                       <StyledTableCell align="center">

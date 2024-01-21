@@ -34,6 +34,10 @@ const cart = {
     const url = BACKEND_API + `/cart/update/${id}`;
     return await axios.put(url, id);
   },
+  updateKho: async ({ id }) => {
+    const url = BACKEND_API + `/cart/updatekho/${id}`;
+    return await axios.put(url, id);
+  },
 };
 
 export default cart;

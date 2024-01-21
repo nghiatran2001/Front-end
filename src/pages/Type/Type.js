@@ -31,13 +31,13 @@ export default function Type() {
   const [listProduct, setListProduct] = useState([]);
   const [listCategory, setListCategory] = useState([]);
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const productPerPage = 8;
-  const lastIndex = currentPage * productPerPage;
-  const firstIndex = lastIndex - productPerPage;
-  const products = listProduct.slice(firstIndex, lastIndex);
-  const pageNumber = Math.ceil(listProduct.length / productPerPage);
-  const numbers = [...Array(pageNumber + 1).keys()].slice(1);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const productPerPage = 8;
+  // const lastIndex = currentPage * productPerPage;
+  // const firstIndex = lastIndex - productPerPage;
+  // const products = listProduct.slice(firstIndex, lastIndex);
+  // const pageNumber = Math.ceil(listProduct.length / productPerPage);
+  // const numbers = [...Array(pageNumber + 1).keys()].slice(1);
 
   useEffect(() => {
     (async () => {
@@ -52,7 +52,7 @@ export default function Type() {
       console.log(error);
     }
   };
-  console.log(listProduct);
+
   useEffect(() => {
     (async () => {
       await getCategorytList();
@@ -67,21 +67,21 @@ export default function Type() {
     }
   };
 
-  const prePage = async () => {
-    if (currentPage !== 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
+  // const prePage = async () => {
+  //   if (currentPage !== 1) {
+  //     setCurrentPage(currentPage - 1);
+  //   }
+  // };
 
-  const nextPage = async () => {
-    if (currentPage !== pageNumber) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
+  // const nextPage = async () => {
+  //   if (currentPage !== pageNumber) {
+  //     setCurrentPage(currentPage + 1);
+  //   }
+  // };
 
-  const changePage = async (id) => {
-    setCurrentPage(id);
-  };
+  // const changePage = async (id) => {
+  //   setCurrentPage(id);
+  // };
 
   return (
     <div>
@@ -130,7 +130,7 @@ export default function Type() {
       >
         <Col span={20} offset={2}>
           <Box className="type">
-            {products.map((product, index) => {
+            {listProduct.map((product, index) => {
               if (value === 0) {
                 return product.disable === "Ngừng hoạt động" ? (
                   ""
@@ -295,7 +295,7 @@ export default function Type() {
                   </NavLink>
                 );
               }
-              if (value === 4 && product.nameCategory === "CHUỘT") {
+              if (value === 4 && product.nameCategory === "BÀN PHÍM") {
                 return product.disable === "Ngừng hoạt động" ? (
                   ""
                 ) : (
@@ -336,7 +336,7 @@ export default function Type() {
                   </NavLink>
                 );
               }
-              if (value === 5 && product.nameCategory === "BÀN PHÍM") {
+              if (value === 5 && product.nameCategory === "HDD") {
                 return product.disable === "Ngừng hoạt động" ? (
                   ""
                 ) : (
@@ -377,7 +377,7 @@ export default function Type() {
                   </NavLink>
                 );
               }
-              if (value === 6 && product.nameCategory === "HDD") {
+              if (value === 6 && product.nameCategory === "CHUỘT MÁY TÍNH") {
                 return product.disable === "Ngừng hoạt động" ? (
                   ""
                 ) : (
@@ -422,7 +422,7 @@ export default function Type() {
           </Box>
         </Col>
       </Row>
-      <nav>
+      {/* <nav>
         <ul className="pagination">
           <li className="page-item ">
             <Link href="#" className="page-link" onClick={prePage}>
@@ -451,7 +451,7 @@ export default function Type() {
             </Link>
           </li>
         </ul>
-      </nav>
+      </nav> */}
     </div>
   );
 }

@@ -204,55 +204,74 @@ export default function Product() {
               <TableHead>
                 <TableRow>
                   <StyledTableCell
+                    sx={{ minWidth: "160px" }}
                     className="product-down"
                     onClick={() => sorting("nameProduct")}
                   >
                     Sản phẩm
-                    <DropDown></DropDown>
+                    <p>
+                      <DropDown></DropDown>
+                    </p>
                   </StyledTableCell>
                   <StyledTableCell>Hình ảnh</StyledTableCell>
                   <StyledTableCell
+                    align="center"
                     className="product-down"
                     onClick={() => sorting("nameBrand")}
                   >
                     Hãng
-                    <DropDown></DropDown>
+                    <p>
+                      <DropDown></DropDown>
+                    </p>
                   </StyledTableCell>
                   <StyledTableCell
+                    align="center"
                     className="product-down"
                     onClick={() => sorting("nameCategory")}
                   >
                     Thể loại
-                    <DropDown></DropDown>
+                    <p>
+                      <DropDown></DropDown>
+                    </p>
                   </StyledTableCell>
 
-                  <StyledTableCell
+                  {/* <StyledTableCell
                     className="product-down"
                     onClick={() => sorting2("originPrice")}
                   >
                     Giá gốc
-                    <DropDown></DropDown>
-                  </StyledTableCell>
+                    <p>
+                      <DropDown></DropDown>
+                    </p>
+                  </StyledTableCell> */}
                   <StyledTableCell
+                    align="center"
                     className="product-down"
                     onClick={() => sorting2("sellPrice")}
                   >
                     Giá bán
-                    <DropDown></DropDown>
+                    <p>
+                      <DropDown></DropDown>
+                    </p>
                   </StyledTableCell>
                   <StyledTableCell
+                    align="center"
                     className="product-down"
                     onClick={() => sorting2("quantity")}
                   >
                     Số lượng
-                    <DropDown></DropDown>
+                    <p>
+                      <DropDown></DropDown>
+                    </p>
                   </StyledTableCell>
                   <StyledTableCell
                     className="product-down"
                     onClick={() => sorting("disable")}
                   >
                     Tình trạng
-                    <DropDown></DropDown>
+                    <p>
+                      <DropDown></DropDown>
+                    </p>
                   </StyledTableCell>
                   <StyledTableCell>Thao tác</StyledTableCell>
                 </TableRow>
@@ -264,7 +283,7 @@ export default function Product() {
                       key={index}
                       sx={{ maxWidth: 50, padding: 0 }}
                     >
-                      <StyledTableCell sx={{ maxWidth: 100, padding: 0 }}>
+                      <StyledTableCell sx={{ minWidth: "160px" }}>
                         {product.nameProduct}
                       </StyledTableCell>
                       <StyledTableCell>
@@ -275,20 +294,32 @@ export default function Product() {
                           width="100px"
                         ></img>
                       </StyledTableCell>
-                      <StyledTableCell align="center">
+                      <StyledTableCell
+                        sx={{ minWidth: "150px" }}
+                        align="center"
+                      >
                         {product.nameBrand}
                       </StyledTableCell>
-                      <StyledTableCell align="center">
+                      <StyledTableCell
+                        sx={{ minWidth: "150px" }}
+                        align="center"
+                      >
                         {product.nameCategory}
                       </StyledTableCell>
 
-                      <StyledTableCell align="center">
+                      {/* <StyledTableCell align="center">
                         {VND.format(product.originPrice)}
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
+                      </StyledTableCell> */}
+                      <StyledTableCell
+                        sx={{ minWidth: "150px" }}
+                        align="center"
+                      >
                         {VND.format(product.sellPrice)}
                       </StyledTableCell>
-                      <StyledTableCell align="center">
+                      <StyledTableCell
+                        sx={{ minWidth: "150px" }}
+                        align="center"
+                      >
                         {product.quantity}
                       </StyledTableCell>
                       <StyledTableCell align="center">
